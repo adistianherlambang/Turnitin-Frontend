@@ -61,7 +61,7 @@ export const UploadBox = ({
 
     try {
       // Send file to Node.js backend storage server
-      const res = await axios.post(`http://localhost:5001/api/upload/${uploadType}`, formData, {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_STORAGE_SERVER}/api/upload/${uploadType}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         },

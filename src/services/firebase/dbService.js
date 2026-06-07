@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 
 // --- SEED DATA FOR SANDBOX ---
+const STORAGE = process.env.NEXT_PUBLIC_STORAGE_SERVER || "http://localhost:5001";
 const SEED_DATA = {
   settings: {
     general: {
@@ -117,7 +118,7 @@ const SEED_DATA = {
       userId: "regular-user-id",
       amount: 100000,
       credits: 20,
-      proofFile: "http://localhost:5001/uploads/payments/sample-receipt.jpg",
+      proofFile: `${STORAGE}/uploads/payments/sample-receipt.jpg`,
       status: "approved",
       createdAt: new Date(Date.now() - 10 * 24 * 3600 * 1000).toISOString(),
       verifiedAt: new Date(Date.now() - 10 * 24 * 3600 * 1000).toISOString(),
@@ -129,7 +130,7 @@ const SEED_DATA = {
       userId: "regular-user-id",
       amount: 50000,
       credits: 10,
-      proofFile: "http://localhost:5001/uploads/payments/sample-receipt2.jpg",
+      proofFile: `${STORAGE}/uploads/payments/sample-receipt2.jpg`,
       status: "pending",
       createdAt: new Date(Date.now() - 1 * 24 * 3600 * 1000).toISOString()
     }
@@ -142,8 +143,8 @@ const SEED_DATA = {
       checkTypeId: "turnitin-no-repo",
       checkTypeName: "Turnitin No-Repository (Safe Draft)",
       creditUsed: 2,
-      documentFile: "http://localhost:5001/uploads/documents/tesis_final_draf.pdf",
-      resultFile: "http://localhost:5001/uploads/results/tesis_final_draf_report.pdf",
+      documentFile: `${STORAGE}/uploads/documents/tesis_final_draf.pdf`,
+      resultFile: `${STORAGE}/uploads/results/tesis_final_draf_report.pdf`,
       status: "completed",
       notes: "Hasil plagiasi 12%. Aman di bawah batas minimal 20%.",
       options: {
@@ -161,7 +162,7 @@ const SEED_DATA = {
       checkTypeId: "turnitin-repo",
       checkTypeName: "Turnitin Repository (Final Check)",
       creditUsed: 3,
-      documentFile: "http://localhost:5001/uploads/documents/jurnal_internasional_v2.docx",
+      documentFile: `${STORAGE}/uploads/documents/jurnal_internasional_v2.docx`,
       resultFile: "",
       status: "waiting",
       notes: "",

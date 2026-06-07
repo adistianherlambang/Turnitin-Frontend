@@ -76,6 +76,9 @@ console.log(`  User   (${USER_PASSWORD}): ${userPasswordHash.substring(0, 20)}..
 // ─── Seed Data ─────────────────────────────────────────────────────────────────
 const now = new Date();
 const daysAgo = (n) => new Date(now - n * 24 * 3600 * 1000).toISOString();
+const STORAGE = envVars["NEXT_PUBLIC_STORAGE_SERVER"] || "http://localhost:5001";
+
+console.log(`✓ Storage server: ${STORAGE}`);
 
 const SEED_DATA = {
   // ── Settings ──────────────────────────────────────────────────────────────────
