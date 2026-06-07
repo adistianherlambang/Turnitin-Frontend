@@ -1,5 +1,6 @@
 import React from "react";
 import Badge from "./Badge";
+import styles from "./Badge.module.css";
 
 export const StatusBadge = ({ status, className = "" }) => {
   // Map raw status keys to localized text and badge variants
@@ -23,8 +24,8 @@ export const StatusBadge = ({ status, className = "" }) => {
 
   return (
     <Badge variant={config.variant} size="sm" className={className}>
-      {/* Dynamic small status indicator dot */}
-      <span className="w-1.5 h-1.5 rounded-full bg-current opacity-80"></span>
+      {/* Dynamic small status indicator dot using CSS Modules class */}
+      <span className={styles.statusDot}></span>
       {config.label}
     </Badge>
   );

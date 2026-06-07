@@ -22,9 +22,9 @@ export const Input = forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className={`flex flex-col gap-1.5 w-full ${className}`}>
+    <div className={`${styles.inputWrapper} ${className}`}>
       {label && (
-        <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+        <label className={styles.label}>
           {label}
         </label>
       )}
@@ -32,13 +32,13 @@ export const Input = forwardRef(({
         ref={ref}
         type={type}
         placeholder={placeholder}
-        className={`w-full px-4 py-2.5 text-sm bg-zinc-900 border ${
-          error ? "border-danger focus:ring-danger" : "border-border focus:ring-primary"
-        } rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
+        className={`${styles.inputField} ${
+          error ? styles["border-error"] : styles["border-normal"]
+        }`}
         {...props}
       />
       {error && (
-        <span className="text-xs font-medium text-danger animate-pulse pl-1">
+        <span className={styles.errorText}>
           {error.message || error}
         </span>
       )}
@@ -73,27 +73,27 @@ export const Select = forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className={`flex flex-col gap-1.5 w-full ${className}`}>
+    <div className={`${styles.inputWrapper} ${className}`}>
       {label && (
-        <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+        <label className={styles.label}>
           {label}
         </label>
       )}
       <select
         ref={ref}
-        className={`w-full px-4 py-2.5 text-sm bg-zinc-900 border ${
-          error ? "border-danger focus:ring-danger" : "border-border focus:ring-primary"
-        } rounded-xl text-white focus:outline-none focus:ring-2 focus:border-transparent transition-all`}
+        className={`${styles.selectField} ${
+          error ? styles["border-error"] : styles["border-normal"]
+        }`}
         {...props}
       >
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value} className="bg-zinc-950 text-white">
+          <option key={opt.value} value={opt.value} className={styles.selectOption}>
             {opt.label}
           </option>
         ))}
       </select>
       {error && (
-        <span className="text-xs font-medium text-danger pl-1">
+        <span className={styles.errorTextNoPulse}>
           {error.message || error}
         </span>
       )}
@@ -124,9 +124,9 @@ export const Textarea = forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className={`flex flex-col gap-1.5 w-full ${className}`}>
+    <div className={`${styles.inputWrapper} ${className}`}>
       {label && (
-        <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+        <label className={styles.label}>
           {label}
         </label>
       )}
@@ -134,13 +134,13 @@ export const Textarea = forwardRef(({
         ref={ref}
         rows={rows}
         placeholder={placeholder}
-        className={`w-full px-4 py-2.5 text-sm bg-zinc-900 border ${
-          error ? "border-danger focus:ring-danger" : "border-border focus:ring-primary"
-        } rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all resize-none`}
+        className={`${styles.textareaField} ${
+          error ? styles["border-error"] : styles["border-normal"]
+        }`}
         {...props}
       />
       {error && (
-        <span className="text-xs font-medium text-danger pl-1">
+        <span className={styles.errorTextNoPulse}>
           {error.message || error}
         </span>
       )}
@@ -169,23 +169,23 @@ export const Checkbox = forwardRef(({
   ...props
 }, ref) => {
   return (
-    <div className={`flex flex-col gap-1 ${className}`}>
-      <div className="flex items-center gap-3 select-none">
+    <div className={`${styles.checkboxContainer} ${className}`}>
+      <div className={styles.checkboxRow}>
         <input
           ref={ref}
           type="checkbox"
           id={id}
-          className="w-4 h-4 rounded border-border bg-zinc-900 text-primary focus:ring-primary focus:ring-offset-background"
+          className={styles.checkboxField}
           {...props}
         />
         {label && (
-          <label htmlFor={id} className="text-sm font-medium text-zinc-300 cursor-pointer">
+          <label htmlFor={id} className={styles.checkboxLabel}>
             {label}
           </label>
         )}
       </div>
       {error && (
-        <span className="text-xs font-medium text-danger pl-7">
+        <span className={styles.checkboxErrorText}>
           {error.message || error}
         </span>
       )}

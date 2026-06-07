@@ -1,8 +1,20 @@
-/* Styles for Logo Component */
-.logoContainer {
-  transition: transform 0.2s ease;
-}
+@reference "../../app/globals.css";
 
-.logoContainer:hover {
-  transform: scale(1.02);
+.logoContainer {
+  @apply flex items-center gap-2 font-bold text-xl tracking-tight text-white select-none;
+}
+.iconWrapper {
+  @apply relative flex items-center justify-center w-8 h-8 rounded-lg bg-primary glow-primary overflow-hidden;
+}
+.iconBg {
+  @apply absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-400;
+}
+.svgIcon {
+  @apply w-5 h-5 text-white relative z-10;
+}
+.text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-400 font-sans tracking-wide;
+}
+.badge {
+  @apply text-primary font-extrabold font-mono text-sm uppercase px-1.5 py-0.5 rounded bg-primary/10 border border-primary/20 ml-1.5 align-middle;
 }

@@ -1,4 +1,35 @@
-/* Loading styles */
-.spinner {
-  display: block;
+@reference "../../app/globals.css";
+
+.spinnerBase {
+  @apply rounded-full border-t-primary border-r-transparent border-b-zinc-800 border-l-zinc-800 animate-spin;
+}
+.size-sm {
+  @apply w-5 h-5 border-2;
+}
+.size-md {
+  @apply w-8 h-8 border-3;
+}
+.size-lg {
+  @apply w-12 h-12 border-4;
+}
+
+.fullPageContainer {
+  @apply fixed inset-0 z-50 bg-background/80 backdrop-blur-md flex items-center justify-center;
+}
+.inlineContainer {
+  @apply flex items-center justify-center p-6;
+}
+
+/* Skeleton animation and base colors */
+.skeleton {
+  @apply bg-zinc-800 animate-pulse-slow;
+}
+.shape-rect {
+  @apply rounded-xl;
+}
+.shape-circle {
+  @apply rounded-full;
+}
+.shape-text {
+  @apply rounded-md;
 }

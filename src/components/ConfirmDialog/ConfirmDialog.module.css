@@ -1,4 +1,11 @@
-/* ConfirmDialog Styles module */
-.confirmBody {
-  font-size: 0.875rem;
+@reference "../../app/globals.css";
+
+.container {
+  @apply space-y-4;
+}
+.message {
+  @apply text-sm text-text-secondary leading-relaxed;
+}
+.actions {
+  @apply flex justify-end gap-3 pt-2;
 }

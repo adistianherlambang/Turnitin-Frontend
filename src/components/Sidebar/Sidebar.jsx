@@ -155,15 +155,15 @@ export const Sidebar = ({ onBuyCreditsClick }) => {
   return (
     <>
       {/* Mobile Toggle Button */}
-      <div className="md:hidden flex items-center justify-between bg-zinc-950 border-b border-border/80 px-4 py-3 sticky top-0 z-40">
-        <span className="font-bold text-white tracking-wide">
-          Turnitin<span className="text-primary font-mono text-xs uppercase px-1 py-0.5 rounded bg-primary/10 border border-primary/20 ml-1">PANEL</span>
+      <div className={styles.mobileHeader}>
+        <span className={styles.mobileHeaderTitle}>
+          Turnitin<span className={styles.mobileHeaderBrand}>PANEL</span>
         </span>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-zinc-400 hover:text-white focus:outline-none"
+          className={styles.mobileToggleBtn}
         >
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className={styles.mobileToggleIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
           </svg>
         </button>
@@ -172,59 +172,59 @@ export const Sidebar = ({ onBuyCreditsClick }) => {
       {/* Sidebar Overlay for Mobile */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 md:hidden backdrop-blur-sm"
+          className={styles.overlay}
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-64 border-r border-border/80 bg-zinc-950 flex flex-col transition-transform duration-300 md:translate-x-0 md:sticky md:h-screen ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } ${styles.sidebarContainer}`}
+        className={`${styles.sidebar} ${
+          isOpen ? styles["sidebar-open"] : styles["sidebar-closed"]
+        }`}
       >
         {/* Sidebar Brand Header */}
-        <div className="h-16 flex items-center px-6 border-b border-border/80 gap-3">
-          <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center">
-            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+        <div className={styles.brandHeader}>
+          <div className={styles.brandIconWrapper}>
+            <svg className={styles.brandIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
             </svg>
           </div>
           <div>
-            <span className="font-bold text-white tracking-tight">Turnitin Checker</span>
-            <span className="block text-[10px] text-primary font-mono tracking-widest uppercase font-bold">
+            <span className={styles.brandTitle}>Turnitin Checker</span>
+            <span className={styles.brandSubtitle}>
               {isAdmin ? "Admin Portal" : "User Portal"}
             </span>
           </div>
         </div>
 
         {/* User Card Details */}
-        <div className="p-4 border-b border-border/50">
-          <div className="flex items-center gap-3 p-2 bg-zinc-900/60 rounded-xl border border-border/40">
+        <div className={styles.profileSection}>
+          <div className={styles.profileCard}>
             <img
               src={user?.photoURL || "https://api.dicebear.com/7.x/avataaars/svg?seed=fallback"}
               alt="avatar"
-              className="w-10 h-10 rounded-lg bg-zinc-800"
+              className={styles.avatar}
             />
-            <div className="overflow-hidden">
-              <span className="block text-sm font-semibold text-white truncate leading-tight">{user?.name || "Memuat..."}</span>
-              <span className="block text-xs text-text-secondary truncate">{user?.email || ""}</span>
+            <div className={styles.profileInfo}>
+              <span className={styles.profileName}>{user?.name || "Memuat..."}</span>
+              <span className={styles.profileEmail}>{user?.email || ""}</span>
             </div>
           </div>
 
           {/* Credits Quick Check (User Only) */}
           {!isAdmin && user && (
-            <div className="mt-3 p-3 bg-gradient-to-br from-primary/10 to-indigo-950/10 border border-primary/20 rounded-xl flex items-center justify-between">
+            <div className={styles.creditsWidget}>
               <div>
-                <span className="block text-[10px] text-text-secondary font-semibold uppercase tracking-wider">Kredit Saya</span>
-                <span className="text-lg font-bold text-white font-mono">{user.credits} <span className="text-xs font-normal text-text-secondary">kredit</span></span>
+                <span className={styles.creditsLabel}>Kredit Saya</span>
+                <span className={styles.creditsValue}>{user.credits} <span className={styles.creditsValueUnit}>kredit</span></span>
               </div>
               <button
                 onClick={() => {
                   setIsOpen(false);
                   if (onBuyCreditsClick) onBuyCreditsClick();
                 }}
-                className="px-2.5 py-1.5 text-xs font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-all shadow-md active:scale-95"
+                className={styles.creditsBuyBtn}
               >
                 Isi
               </button>
@@ -233,14 +233,14 @@ export const Sidebar = ({ onBuyCreditsClick }) => {
 
           {/* Low Credit Warning */}
           {!isAdmin && user && user.credits <= 1 && (
-            <div className="mt-2 p-2 bg-danger/10 border border-danger/20 rounded-xl text-center">
-              <span className="text-[10px] text-danger font-medium animate-pulse">⚠️ Peringatan: Kredit Anda hampir habis!</span>
+            <div className={styles.warningBox}>
+              <span className={styles.warningText}>⚠️ Peringatan: Kredit Anda hampir habis!</span>
             </div>
           )}
         </div>
 
         {/* Menu Items Links */}
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        <nav className={styles.navigation}>
           {menuItems.map((item) => {
             const isActive = pathname === item.path;
             return (
@@ -248,11 +248,7 @@ export const Sidebar = ({ onBuyCreditsClick }) => {
                 key={item.name}
                 href={item.path}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all ${
-                  isActive
-                    ? "bg-primary/10 text-primary border-l-4 border-primary pl-2.5"
-                    : "text-text-secondary hover:bg-zinc-900/60 hover:text-white"
-                }`}
+                className={isActive ? styles.navLinkActive : styles.navLink}
               >
                 {item.icon}
                 {item.name}
@@ -262,12 +258,12 @@ export const Sidebar = ({ onBuyCreditsClick }) => {
         </nav>
 
         {/* Logout Footer Button */}
-        <div className="p-4 border-t border-border/80">
+        <div className={styles.sidebarFooter}>
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-danger rounded-xl hover:bg-danger/10 hover:text-white transition-all group"
+            className={`${styles.logoutBtn} group`}
           >
-            <svg className="w-5 h-5 text-danger group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={styles.logoutIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
             Keluar

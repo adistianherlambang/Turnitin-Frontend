@@ -1,4 +1,17 @@
-/* UserAvatar style module */
-.avatar {
-  border-radius: 0.75rem;
+@reference "../../app/globals.css";
+
+.avatarContainer {
+  @apply relative rounded-xl overflow-hidden bg-zinc-800 border border-zinc-700 select-none flex-shrink-0 flex items-center justify-center;
+}
+.size-sm {
+  @apply w-8 h-8 text-xs;
+}
+.size-md {
+  @apply w-10 h-10 text-sm;
+}
+.size-lg {
+  @apply w-16 h-16 text-xl;
+}
+.image {
+  @apply w-full h-full object-cover;
 }

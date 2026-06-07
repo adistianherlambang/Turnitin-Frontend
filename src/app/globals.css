@@ -56,64 +56,67 @@ html, body {
   background: #3f3f46;
 }
 
-/* Glassmorphism utilities */
-.glass-panel {
+/* Glassmorphism utilities registered as Tailwind utilities */
+@utility glass-panel {
   background: rgba(24, 24, 27, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(39, 39, 42, 0.8);
 }
 
-.glass-card {
+@utility glass-card {
   background: linear-gradient(135deg, rgba(24, 24, 27, 0.8) 0%, rgba(15, 15, 17, 0.8) 100%);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(39, 39, 42, 0.6);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.15);
+    transform: translateY(-2px);
+  }
 }
 
-.glass-card:hover {
-  border-color: rgba(37, 99, 235, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.15);
-  transform: translateY(-2px);
-}
-
-/* Glow effects */
-.glow-primary {
+/* Glow effects registered as Tailwind utilities */
+@utility glow-primary {
   box-shadow: 0 0 40px -5px rgba(37, 99, 235, 0.2);
 }
 
-.glow-text {
+@utility glow-text {
   text-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
 }
 
-/* Table styles */
-.custom-table {
+/* Table styles registered as Tailwind utilities */
+@utility custom-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-}
-.custom-table th {
-  background-color: rgba(24, 24, 27, 0.9);
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  text-align: left;
-  padding: 12px 16px;
-  font-size: 0.875rem;
-  border-bottom: 1px solid var(--color-border);
-}
-.custom-table td {
-  padding: 16px;
-  font-size: 0.875rem;
-  border-bottom: 1px solid rgba(39, 39, 42, 0.5);
-  color: #e4e4e7;
-}
-.custom-table tr:hover td {
-  background-color: rgba(39, 39, 42, 0.2);
+  
+  & th {
+    background-color: rgba(24, 24, 27, 0.9);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  & td {
+    padding: 16px;
+    font-size: 0.875rem;
+    border-bottom: 1px solid rgba(39, 39, 42, 0.5);
+    color: #e4e4e7;
+  }
+  
+  & tr:hover td {
+    background-color: rgba(39, 39, 42, 0.2);
+  }
 }
 
-/* Custom active classes */
-.active-nav-link {
+/* Custom active classes registered as Tailwind utilities */
+@utility active-nav-link {
   background-color: rgba(37, 99, 235, 0.1);
   color: #ffffff;
   border-left: 3px solid var(--color-primary);

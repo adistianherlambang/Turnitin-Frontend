@@ -1,4 +1,153 @@
-/* Card Module style */
-.cardBase {
-  box-sizing: border-box;
+@reference "../../app/globals.css";
+
+/* Card Base */
+.card {
+  @apply rounded-2xl border border-border/80 bg-zinc-900/40 p-6 backdrop-blur-sm transition-all duration-300;
+}
+.card-hoverable {
+  @apply hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5;
+}
+.header {
+  @apply mb-4;
+}
+.title {
+  @apply text-base font-bold text-white leading-tight;
+}
+.subtitle {
+  @apply text-xs text-text-secondary mt-1;
+}
+.content {
+  @apply text-sm text-zinc-100;
+}
+.footer {
+  @apply mt-4 pt-4 border-t border-border/50 flex items-center justify-between;
+}
+
+/* Credit Card specific styling */
+.creditCard {
+  @apply relative w-full h-48 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-700 to-zinc-950 p-6 text-white overflow-hidden shadow-2xl border border-white/10 glow-primary select-none;
+}
+.glowTopRight {
+  @apply absolute -right-10 -top-10 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl;
+}
+.glowLeftBottom {
+  @apply absolute -left-10 -bottom-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl;
+}
+.ccHeader {
+  @apply flex justify-between items-start relative z-10;
+}
+.ccBrand {
+  @apply text-[10px] uppercase tracking-widest text-blue-200 font-semibold font-mono;
+}
+.ccTitle {
+  @apply text-sm font-bold text-white tracking-wide mt-0.5;
+}
+.ccIcons {
+  @apply flex items-center gap-3;
+}
+.ccContactless {
+  @apply w-6 h-6 text-white/40;
+}
+.ccChip {
+  @apply w-9 h-7 rounded bg-amber-400/80 border border-amber-300/40 relative flex items-center justify-center;
+}
+.ccChipInner {
+  @apply absolute w-5 h-4 border border-zinc-800/40 rounded-sm;
+}
+.ccChipLine {
+  @apply absolute w-2 h-7 border-l border-zinc-800/40;
+}
+.ccBalanceArea {
+  @apply mt-4 relative z-10;
+}
+.ccBalanceLabel {
+  @apply text-[9px] uppercase tracking-wider text-blue-200;
+}
+.ccBalanceValueContainer {
+  @apply flex items-baseline gap-2;
+}
+.ccBalanceValue {
+  @apply text-3xl font-extrabold tracking-tight text-white font-mono;
+}
+.ccBalanceUnit {
+  @apply text-xs text-blue-200;
+}
+.ccFooter {
+  @apply absolute bottom-6 left-6 right-6 flex justify-between items-end z-10;
+}
+.ccHolderLabel {
+  @apply block text-[8px] uppercase tracking-wider text-blue-200 font-semibold;
+}
+.ccHolderName {
+  @apply text-sm font-semibold tracking-wide truncate max-w-[150px] block;
+}
+.ccRupiahLabel {
+  @apply block text-[8px] uppercase tracking-wider text-blue-200 font-semibold;
+}
+.ccRupiahValue {
+  @apply text-sm font-bold text-emerald-400 font-mono;
+}
+
+/* Statistic Card specific styling */
+.statCard {
+  @apply relative overflow-hidden rounded-2xl border border-border/80 bg-zinc-900/40 p-6 backdrop-blur-sm transition-all duration-300 hover:border-zinc-700;
+}
+.statLayout {
+  @apply flex justify-between items-center;
+}
+.statLabel {
+  @apply text-xs font-semibold text-text-secondary tracking-wide uppercase;
+}
+.statValue {
+  @apply text-2xl font-extrabold text-white font-mono mt-1;
+}
+.statIconContainer {
+  @apply p-3 rounded-xl bg-zinc-800 border border-zinc-700 text-primary glow-primary flex items-center justify-center;
+}
+.trendContainer {
+  @apply mt-4 flex items-center gap-2;
+}
+.trendBadge {
+  @apply inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-medium border;
+}
+.trendSvg {
+  @apply w-3 h-3;
+}
+.trend-up {
+  @apply text-emerald-400 bg-emerald-500/10 border-emerald-500/20;
+}
+.trend-down {
+  @apply text-red-400 bg-red-500/10 border-red-500/20;
+}
+.trend-neutral {
+  @apply text-zinc-400 bg-zinc-500/10 border-zinc-500/20;
+}
+
+/* Notification Card specific styling */
+.notifCard {
+  @apply p-5 rounded-2xl border border-border bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 relative overflow-hidden;
+}
+.notifAccent {
+  @apply absolute top-0 bottom-0 left-0 w-1.5 bg-primary glow-primary;
+}
+.notifContent {
+  @apply pl-3;
+}
+.notifHeader {
+  @apply flex justify-between items-start gap-4;
+}
+.notifTitle {
+  @apply text-sm font-bold text-white leading-tight;
+}
+.notifDate {
+  @apply text-[10px] text-text-secondary font-mono flex-shrink-0;
+}
+.notifMessage {
+  @apply text-xs text-text-secondary mt-2 leading-relaxed;
+}
+.notifCreator {
+  @apply mt-3 flex items-center justify-end gap-1.5 text-[10px] text-text-secondary;
+}
+.notifCreatorName {
+  @apply font-semibold text-zinc-300;
 }

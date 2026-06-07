@@ -1,4 +1,20 @@
-/* EmptyState styles */
-.emptyContainer {
-  display: flex;
+@reference "../../app/globals.css";
+
+.container {
+  @apply flex flex-col items-center justify-center p-12 text-center rounded-2xl border border-dashed border-border bg-zinc-900/10 max-w-lg mx-auto my-6;
+}
+.iconContainer {
+  @apply p-4 rounded-full bg-zinc-900 border border-zinc-800 text-text-secondary mb-4;
+}
+.svgIcon {
+  @apply w-8 h-8;
+}
+.title {
+  @apply text-base font-bold text-white tracking-wide;
+}
+.description {
+  @apply text-xs text-text-secondary mt-1.5 max-w-sm leading-relaxed;
+}
+.action {
+  @apply mt-6;
 }

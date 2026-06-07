@@ -1,4 +1,41 @@
-/* Custom styling for Footer */
-.footerContainer {
-  margin-top: auto;
+@reference "../../app/globals.css";
+
+.footer {
+  @apply bg-zinc-950 border-t border-border/80 text-zinc-400 py-12;
+}
+.container {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+.grid {
+  @apply grid grid-cols-1 md:grid-cols-4 gap-8;
+}
+.brandCol {
+  @apply md:col-span-2 space-y-4;
+}
+.description {
+  @apply text-sm text-text-secondary max-w-sm;
+}
+.navColTitle {
+  @apply text-sm font-semibold text-white tracking-wider uppercase mb-4;
+}
+.navColList {
+  @apply space-y-2.5 text-sm;
+}
+.navLink {
+  @apply hover:text-white transition-colors;
+}
+.contactItem {
+  @apply flex items-center gap-2;
+}
+.contactIconPrimary {
+  @apply w-4 h-4 text-primary;
+}
+.contactIconSuccess {
+  @apply w-4 h-4 text-success;
+}
+.bottomBar {
+  @apply mt-12 pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-secondary;
+}
+.bottomLinks {
+  @apply flex gap-6;
 }

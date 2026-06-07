@@ -15,39 +15,39 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+    <nav className={styles.navbar}>
+      <div className={styles.container}>
+        <div className={styles.inner}>
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className={styles.logoWrapper}>
             <Logo />
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#fitur" className="text-sm text-text-secondary hover:text-white transition-colors">
+          <div className={styles.navLinks}>
+            <a href="#fitur" className={styles.navLink}>
               Fitur
             </a>
-            <a href="#cara-kerja" className="text-sm text-text-secondary hover:text-white transition-colors">
+            <a href="#cara-kerja" className={styles.navLink}>
               Cara Kerja
             </a>
-            <a href="#pricing" className="text-sm text-text-secondary hover:text-white transition-colors">
+            <a href="#pricing" className={styles.navLink}>
               Harga
             </a>
-            <a href="#faq" className="text-sm text-text-secondary hover:text-white transition-colors">
+            <a href="#faq" className={styles.navLink}>
               FAQ
             </a>
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className={styles.desktopAuth}>
             {user ? (
               <Link
                 href={user.role === "admin" ? "/admin" : "/dashboard"}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-colors glow-primary"
+                className={styles.dashboardBtn}
               >
                 Dashboard
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={styles.dashboardIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
@@ -55,13 +55,13 @@ export const Navbar = () => {
               <>
                 <Link
                   href="/login"
-                  className="text-sm font-semibold text-text-secondary hover:text-white transition-colors px-3 py-2"
+                  className={styles.loginLink}
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 text-sm font-semibold text-white bg-zinc-800 rounded-lg hover:bg-zinc-700 border border-zinc-700 transition-colors"
+                  className={styles.registerBtn}
                 >
                   Mulai Cek
                 </Link>
@@ -70,21 +70,21 @@ export const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className={styles.mobileMenuBtnWrapper}>
             <button
               onClick={toggleMobileMenu}
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-white hover:bg-zinc-800 focus:outline-none"
+              className={styles.mobileMenuBtn}
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
               {mobileMenuOpen ? (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <svg className={styles.mobileMenuIcon} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <svg className={styles.mobileMenuIcon} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
               )}
@@ -95,41 +95,41 @@ export const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border/80 bg-zinc-950/95 px-4 py-4 space-y-3" id="mobile-menu">
+        <div className={styles.mobileMenu} id="mobile-menu">
           <a
             href="#fitur"
             onClick={() => setMobileMenuOpen(false)}
-            className="block rounded-md px-3 py-2 text-base font-medium text-text-secondary hover:bg-zinc-800 hover:text-white"
+            className={styles.mobileNavLink}
           >
             Fitur
           </a>
           <a
             href="#cara-kerja"
             onClick={() => setMobileMenuOpen(false)}
-            className="block rounded-md px-3 py-2 text-base font-medium text-text-secondary hover:bg-zinc-800 hover:text-white"
+            className={styles.mobileNavLink}
           >
             Cara Kerja
           </a>
           <a
             href="#pricing"
             onClick={() => setMobileMenuOpen(false)}
-            className="block rounded-md px-3 py-2 text-base font-medium text-text-secondary hover:bg-zinc-800 hover:text-white"
+            className={styles.mobileNavLink}
           >
             Harga
           </a>
           <a
             href="#faq"
             onClick={() => setMobileMenuOpen(false)}
-            className="block rounded-md px-3 py-2 text-base font-medium text-text-secondary hover:bg-zinc-800 hover:text-white"
+            className={styles.mobileNavLink}
           >
             FAQ
           </a>
-          <div className="border-t border-zinc-800 pt-4 flex flex-col gap-2">
+          <div className={styles.mobileAuthSection}>
             {user ? (
               <Link
                 href={user.role === "admin" ? "/admin" : "/dashboard"}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex w-full justify-center items-center gap-2 px-4 py-2.5 text-base font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-colors text-center"
+                className={styles.mobileDashboardBtn}
               >
                 Dashboard
               </Link>
@@ -138,14 +138,14 @@ export const Navbar = () => {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2 text-base font-semibold text-text-secondary hover:text-white"
+                  className={styles.mobileLoginLink}
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 text-base font-semibold text-white bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700"
+                  className={styles.mobileRegisterBtn}
                 >
                   Mulai Cek
                 </Link>

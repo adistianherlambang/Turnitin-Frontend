@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./EmptyState.module.css";
 
 /**
  * @param {object} props
@@ -14,19 +15,19 @@ export const EmptyState = ({
   actionButton
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl border border-dashed border-border bg-zinc-900/10 max-w-lg mx-auto my-6">
-      <div className="p-4 rounded-full bg-zinc-900 border border-zinc-800 text-text-secondary mb-4">
+    <div className={styles.container}>
+      <div className={styles.iconContainer}>
         {icon ? (
           icon
         ) : (
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className={styles.svgIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m9-4h.01M9 16h.01" />
           </svg>
         )}
       </div>
-      <h4 className="text-base font-bold text-white tracking-wide">{title}</h4>
-      <p className="text-xs text-text-secondary mt-1.5 max-w-sm leading-relaxed">{description}</p>
-      {actionButton && <div className="mt-6">{actionButton}</div>}
+      <h4 className={styles.title}>{title}</h4>
+      <p className={styles.description}>{description}</p>
+      {actionButton && <div className={styles.action}>{actionButton}</div>}
     </div>
   );
 };

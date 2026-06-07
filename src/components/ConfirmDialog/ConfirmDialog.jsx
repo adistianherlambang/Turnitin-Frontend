@@ -16,11 +16,11 @@ export const ConfirmDialog = ({
 }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm" showCloseButton={!loading}>
-      <div className="space-y-4">
-        <p className="text-sm text-text-secondary leading-relaxed">
+      <div className={styles.container}>
+        <p className={styles.message}>
           {message}
         </p>
-        <div className="flex justify-end gap-3 pt-2">
+        <div className={styles.actions}>
           <Button variant="outline" onClick={onClose} disabled={loading}>
             {cancelText}
           </Button>

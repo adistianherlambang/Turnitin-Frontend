@@ -1,9 +1,118 @@
-/* Sidebar Styling module */
-.sidebarContainer {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+@reference "../../app/globals.css";
+
+/* Mobile Header style */
+.mobileHeader {
+  @apply md:hidden flex items-center justify-between bg-zinc-950 border-b border-border/80 px-4 py-3 sticky top-0 z-40;
 }
-@media (max-width: 768px) {
-  .sidebarContainer {
-    height: 100vh !important;
-  }
+.mobileHeaderTitle {
+  @apply font-bold text-white tracking-wide;
+}
+.mobileHeaderBrand {
+  @apply text-primary font-mono text-xs uppercase px-1 py-0.5 rounded bg-primary/10 border border-primary/20 ml-1;
+}
+.mobileToggleBtn {
+  @apply text-zinc-400 hover:text-white focus:outline-none;
+}
+.mobileToggleIcon {
+  @apply w-6 h-6;
+}
+
+/* Sidebar Overlay for Mobile */
+.overlay {
+  @apply fixed inset-0 z-40 bg-black/60 md:hidden backdrop-blur-sm;
+}
+
+/* Sidebar Container */
+.sidebar {
+  @apply fixed top-0 bottom-0 left-0 z-50 w-64 border-r border-border/80 bg-zinc-950 flex flex-col transition-transform duration-300 md:translate-x-0 md:sticky md:h-screen;
+}
+.sidebar-open {
+  @apply translate-x-0;
+}
+.sidebar-closed {
+  @apply -translate-x-full;
+}
+
+/* Brand Header */
+.brandHeader {
+  @apply h-16 flex items-center px-6 border-b border-border/80 gap-3;
+}
+.brandIconWrapper {
+  @apply w-7 h-7 rounded-md bg-primary flex items-center justify-center;
+}
+.brandIcon {
+  @apply w-4 h-4 text-white;
+}
+.brandTitle {
+  @apply font-bold text-white tracking-tight;
+}
+.brandSubtitle {
+  @apply block text-[10px] text-primary font-mono tracking-widest uppercase font-bold;
+}
+
+/* User Profile Section */
+.profileSection {
+  @apply p-4 border-b border-border/50;
+}
+.profileCard {
+  @apply flex items-center gap-3 p-2 bg-zinc-900/60 rounded-xl border border-border/40;
+}
+.avatar {
+  @apply w-10 h-10 rounded-lg bg-zinc-800;
+}
+.profileInfo {
+  @apply overflow-hidden;
+}
+.profileName {
+  @apply block text-sm font-semibold text-white truncate leading-tight;
+}
+.profileEmail {
+  @apply block text-xs text-text-secondary truncate;
+}
+
+/* Credits Quick Check */
+.creditsWidget {
+  @apply mt-3 p-3 bg-gradient-to-br from-primary/10 to-indigo-950/10 border border-primary/20 rounded-xl flex items-center justify-between;
+}
+.creditsLabel {
+  @apply block text-[10px] text-text-secondary font-semibold uppercase tracking-wider;
+}
+.creditsValue {
+  @apply text-lg font-bold text-white font-mono;
+}
+.creditsValueUnit {
+  @apply text-xs font-normal text-text-secondary;
+}
+.creditsBuyBtn {
+  @apply px-2.5 py-1.5 text-xs font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-all shadow-md active:scale-95;
+}
+
+/* Low Credit Warning */
+.warningBox {
+  @apply mt-2 p-2 bg-danger/10 border border-danger/20 rounded-xl text-center;
+}
+.warningText {
+  @apply text-[10px] text-danger font-medium animate-pulse;
+}
+
+/* Menu Navigation links */
+.navigation {
+  @apply flex-1 px-3 py-4 space-y-1 overflow-y-auto;
+}
+.navLink {
+  @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all text-text-secondary hover:bg-zinc-900/60 hover:text-white;
+}
+.navLinkActive {
+  @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all bg-primary/10 text-primary border-l-4 border-primary pl-2.5;
+}
+
+/* Sidebar Footer (Logout) */
+.sidebarFooter {
+  @apply p-4 border-t border-border/80;
+}
+.logoutBtn {
+  @apply flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-danger rounded-xl hover:bg-danger/10 hover:text-white transition-all;
+}
+.logoutIcon {
+  @apply w-5 h-5 text-danger group-hover:scale-110 transition-transform;
 }

@@ -1,4 +1,64 @@
-/* Navbar Custom styling */
-.navContainer {
-  position: relative;
+@reference "../../app/globals.css";
+
+.navbar {
+  @apply sticky top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-md;
+}
+.container {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+.inner {
+  @apply flex h-16 items-center justify-between;
+}
+.logoWrapper {
+  @apply flex-shrink-0;
+}
+.navLinks {
+  @apply hidden md:flex items-center gap-8;
+}
+.navLink {
+  @apply text-sm text-text-secondary hover:text-white transition-colors;
+}
+.desktopAuth {
+  @apply hidden md:flex items-center gap-4;
+}
+.dashboardBtn {
+  @apply flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-colors glow-primary;
+}
+.dashboardIcon {
+  @apply w-4 h-4;
+}
+.loginLink {
+  @apply text-sm font-semibold text-text-secondary hover:text-white transition-colors px-3 py-2;
+}
+.registerBtn {
+  @apply px-4 py-2 text-sm font-semibold text-white bg-zinc-800 rounded-lg hover:bg-zinc-700 border border-zinc-700 transition-colors;
+}
+
+/* Mobile styles */
+.mobileMenuBtnWrapper {
+  @apply md:hidden;
+}
+.mobileMenuBtn {
+  @apply inline-flex items-center justify-center p-2 rounded-md text-text-secondary hover:text-white hover:bg-zinc-800 focus:outline-none;
+}
+.mobileMenuIcon {
+  @apply block h-6 w-6;
+}
+.mobileMenu {
+  @apply md:hidden border-b border-border/80 bg-zinc-950/95 px-4 py-4 space-y-3;
+}
+.mobileNavLink {
+  @apply block rounded-md px-3 py-2 text-base font-medium text-text-secondary hover:bg-zinc-800 hover:text-white;
+}
+.mobileAuthSection {
+  @apply border-t border-zinc-800 pt-4 flex flex-col gap-2;
+}
+.mobileDashboardBtn {
+  @apply flex w-full justify-center items-center gap-2 px-4 py-2.5 text-base font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-colors text-center;
+}
+.mobileLoginLink {
+  @apply w-full text-center py-2 text-base font-semibold text-text-secondary hover:text-white;
+}
+.mobileRegisterBtn {
+  @apply w-full text-center py-2.5 text-base font-semibold text-white bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700;
 }

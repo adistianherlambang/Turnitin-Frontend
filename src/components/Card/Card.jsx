@@ -21,19 +21,19 @@ export const Card = ({
 }) => {
   return (
     <div
-      className={`rounded-2xl border border-border/80 bg-zinc-900/40 p-6 backdrop-blur-sm transition-all duration-300 ${
-        hoverable ? "hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5" : ""
+      className={`${styles.card} ${
+        hoverable ? styles["card-hoverable"] : ""
       } ${className}`}
       {...props}
     >
       {(title || subtitle) && (
-        <div className="mb-4">
-          {title && <h4 className="text-base font-bold text-white leading-tight">{title}</h4>}
-          {subtitle && <p className="text-xs text-text-secondary mt-1">{subtitle}</p>}
+        <div className={styles.header}>
+          {title && <h4 className={styles.title}>{title}</h4>}
+          {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
         </div>
       )}
-      <div className="text-sm text-zinc-100">{children}</div>
-      {footer && <div className="mt-4 pt-4 border-t border-border/50 flex items-center justify-between">{footer}</div>}
+      <div className={styles.content}>{children}</div>
+      {footer && <div className={styles.footer}>{footer}</div>}
     </div>
   );
 };

@@ -123,13 +123,13 @@ export const UploadBox = ({
   };
 
   return (
-    <div className="w-full">
+    <div className={styles.wrapper}>
       <input
         ref={fileInputRef}
         type="file"
         onChange={handleFileChange}
         accept={allowedExtensions.join(",")}
-        className="hidden"
+        className={styles.hiddenInput}
       />
 
       {status === "idle" && (
@@ -139,52 +139,50 @@ export const UploadBox = ({
           onDragLeave={handleDrag}
           onDrop={handleDrop}
           onClick={triggerFileInput}
-          className={`flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-8 cursor-pointer transition-all ${
-            isDragActive
-              ? "border-primary bg-primary/5 scale-[0.99]"
-              : "border-border hover:border-zinc-700 bg-zinc-900/10 hover:bg-zinc-900/30"
+          className={`${styles.idleDropzone} ${
+            isDragActive ? styles.isDragActive : styles.isDragInactive
           }`}
         >
-          <div className="p-4 rounded-full bg-zinc-900 border border-zinc-800 text-text-secondary group-hover:text-white mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className={styles.iconContainer}>
+            <svg className={styles.svgIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
           </div>
-          <span className="text-sm font-semibold text-white">Drag & drop berkas Anda di sini</span>
-          <span className="text-xs text-text-secondary mt-1">atau klik untuk menelusuri folder</span>
-          <span className="text-[10px] text-zinc-500 mt-4 uppercase font-semibold tracking-wider">
+          <span className={styles.titleText}>Drag & drop berkas Anda di sini</span>
+          <span className={styles.descText}>atau klik untuk menelusuri folder</span>
+          <span className={styles.infoText}>
             Format: {allowedExtensions.join(", ")} (Maks. {maxSizeMB}MB)
           </span>
         </div>
       )}
 
       {status === "uploading" && (
-        <div className="border border-border bg-zinc-900/20 rounded-2xl p-6 flex flex-col items-center text-center">
-          <div className="relative w-16 h-16 flex items-center justify-center mb-4">
+        <div className={styles.uploadingContainer}>
+          <div className={styles.progressCircleWrapper}>
             {/* Spinning Circle */}
-            <svg className="animate-spin w-16 h-16 text-primary" viewBox="0 0 36 36">
-              <circle className="text-zinc-800" strokeWidth="3" stroke="currentColor" fill="none" r="16" cx="18" cy="18" />
+            <svg className={styles.progressSvg} viewBox="0 0 36 36">
+              <circle className={styles.progressBgCircle} strokeWidth="3" stroke="currentColor" fill="none" r="16" cx="18" cy="18" />
               <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" strokeWidth="3" strokeDasharray={`${progress}, 100`} />
             </svg>
-            <span className="absolute text-xs font-bold text-white font-mono">{progress}%</span>
+            <span className={styles.progressValue}>{progress}%</span>
           </div>
-          <span className="text-sm font-semibold text-white">Mengunggah Berkas...</span>
-          <span className="text-xs text-text-secondary mt-1">Mohon tunggu hingga proses selesai</span>
+          <span className={styles.uploadingTitle}>Mengunggah Berkas...</span>
+          <span className={styles.uploadingDesc}>Mohon tunggu hingga proses selesai</span>
         </div>
       )}
 
       {status === "success" && file && (
-        <div className="border border-success/30 bg-success/5 rounded-2xl p-6 flex flex-col items-center text-center">
-          <div className="p-3 rounded-full bg-success/10 border border-success/20 text-success mb-3">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className={styles.successContainer}>
+          <div className={styles.successIconContainer}>
+            <svg className={styles.successIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <span className="text-sm font-bold text-white truncate max-w-xs">{file.name}</span>
-          <span className="text-xs text-success mt-1">Berkas berhasil diunggah!</span>
+          <span className={styles.fileName}>{file.name}</span>
+          <span className={styles.successText}>Berkas berhasil diunggah!</span>
           <button
             onClick={resetUpload}
-            className="mt-4 text-xs font-semibold text-text-secondary hover:text-white bg-zinc-900 hover:bg-zinc-800 px-3 py-1.5 rounded-lg border border-border transition-colors"
+            className={styles.actionButton}
           >
             Ganti Berkas
           </button>
@@ -192,17 +190,17 @@ export const UploadBox = ({
       )}
 
       {status === "error" && (
-        <div className="border border-danger/30 bg-danger/5 rounded-2xl p-6 flex flex-col items-center text-center">
-          <div className="p-3 rounded-full bg-danger/10 border border-danger/20 text-danger mb-3">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className={styles.errorContainer}>
+          <div className={styles.errorIconContainer}>
+            <svg className={styles.errorIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <span className="text-sm font-bold text-white">Gagal Mengunggah</span>
-          <span className="text-xs text-danger mt-1.5 max-w-xs leading-relaxed">{errorMsg}</span>
+          <span className={styles.errorTitle}>Gagal Mengunggah</span>
+          <span className={styles.errorText}>{errorMsg}</span>
           <button
             onClick={resetUpload}
-            className="mt-4 text-xs font-semibold text-text-secondary hover:text-white bg-zinc-900 hover:bg-zinc-800 px-3 py-1.5 rounded-lg border border-border transition-colors"
+            className={styles.actionButton}
           >
             Coba Lagi
           </button>

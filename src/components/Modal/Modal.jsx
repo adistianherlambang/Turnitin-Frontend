@@ -70,30 +70,23 @@ export const Modal = ({
 
   if (!isOpen) return null;
 
-  const sizeClasses = {
-    sm: "max-w-md",
-    md: "max-w-lg",
-    lg: "max-w-2xl",
-    xl: "max-w-4xl"
-  };
-
   return (
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className={`fixed inset-0 z-50 w-full rounded-2xl border border-border/80 bg-zinc-950 p-0 text-white shadow-2xl backdrop-blur-md transition-all outline-none animate-slide-up ${sizeClasses[size]} ${styles.dialogContainer}`}
+      className={`${styles.dialog} ${styles[`size-${size}`]}`}
     >
       {/* Modal Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border/60">
-        <h3 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
+      <div className={styles.header}>
+        <h3 className={styles.title}>
           {title}
         </h3>
         {showCloseButton && (
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-text-secondary hover:text-white hover:bg-zinc-900 transition-colors"
+            className={styles.closeBtn}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={styles.closeIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -101,7 +94,7 @@ export const Modal = ({
       </div>
 
       {/* Modal Content */}
-      <div className="px-6 py-4 max-h-[75vh] overflow-y-auto">
+      <div className={styles.content}>
         {children}
       </div>
     </dialog>
