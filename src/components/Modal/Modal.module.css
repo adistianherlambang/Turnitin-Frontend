@@ -1,0 +1,11 @@
+/* Modal CSS Stylesheet */
+.dialogContainer::backdrop {
+  background-color: rgba(9, 9, 11, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.dialogContainer {
+  margin: auto;
+  border-radius: 1rem;
+}
