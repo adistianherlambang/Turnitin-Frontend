@@ -10,16 +10,19 @@
   top: 0;
   z-index: 40;
 }
+
 @media (min-width: 768px) {
   .mobileHeader {
     display: none;
   }
 }
+
 .mobileHeaderTitle {
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.025em;
 }
+
 .mobileHeaderBrand {
   color: var(--color-primary);
   font-family: var(--font-mono);
@@ -31,15 +34,18 @@
   border: 1px solid rgba(37, 99, 235, 0.2);
   margin-left: 0.25rem;
 }
+
 .mobileToggleBtn {
   color: #a1a1aa;
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
+
 .mobileToggleBtn:hover {
   color: #ffffff;
 }
+
 .mobileToggleIcon {
   width: 1.5rem;
   height: 1.5rem;
@@ -54,6 +60,7 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
+
 @media (min-width: 768px) {
   .overlay {
     display: none;
@@ -75,18 +82,22 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
 }
+
 .sidebar-open {
   transform: translateX(0);
 }
+
 .sidebar-closed {
   transform: translateX(-100%);
 }
+
 @media (min-width: 768px) {
   .sidebar {
     position: sticky;
     height: 100vh;
     transform: none;
   }
+
   .sidebar-open,
   .sidebar-closed {
     transform: none;
@@ -103,6 +114,7 @@
   border-bottom: 1px solid rgba(39, 39, 42, 0.8);
   gap: 0.75rem;
 }
+
 .brandIconWrapper {
   width: 1.75rem;
   height: 1.75rem;
@@ -112,16 +124,19 @@
   align-items: center;
   justify-content: center;
 }
+
 .brandIcon {
   width: 1rem;
   height: 1rem;
   color: #ffffff;
 }
+
 .brandTitle {
   font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.025em;
 }
+
 .brandSubtitle {
   display: block;
   font-size: 10px;
@@ -137,6 +152,7 @@
   padding: 1rem;
   border-bottom: 1px solid rgba(39, 39, 42, 0.5);
 }
+
 .profileCard {
   display: flex;
   align-items: center;
@@ -146,15 +162,18 @@
   border-radius: 0.75rem;
   border: 1px solid rgba(39, 39, 42, 0.4);
 }
+
 .avatar {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.5rem;
   background-color: #27272a;
 }
+
 .profileInfo {
   overflow: hidden;
 }
+
 .profileName {
   display: block;
   font-size: 0.875rem;
@@ -165,6 +184,7 @@
   text-overflow: ellipsis;
   line-height: 1.25;
 }
+
 .profileEmail {
   display: block;
   font-size: 0.75rem;
@@ -185,6 +205,7 @@
   align-items: center;
   justify-content: space-between;
 }
+
 .creditsLabel {
   display: block;
   font-size: 10px;
@@ -193,17 +214,20 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
 .creditsValue {
   font-size: 1.125rem;
   font-weight: 700;
   color: #ffffff;
   font-family: var(--font-mono);
 }
+
 .creditsValueUnit {
   font-size: 0.75rem;
   font-weight: 400;
   color: var(--color-text-secondary);
 }
+
 .creditsBuyBtn {
   padding: 0.375rem 0.625rem;
   font-size: 0.75rem;
@@ -216,9 +240,11 @@
   transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
+
 .creditsBuyBtn:hover {
   background-color: var(--color-primary-hover);
 }
+
 .creditsBuyBtn:active {
   transform: scale(0.95);
 }
@@ -232,6 +258,7 @@
   border-radius: 0.75rem;
   text-align: center;
 }
+
 .warningText {
   font-size: 10px;
   color: var(--color-danger);
@@ -251,6 +278,7 @@
   gap: 0.25rem;
   overflow-y: auto;
 }
+
 .navLink {
   display: flex;
   align-items: center;
@@ -263,10 +291,12 @@
   text-decoration: none;
   transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .navLink:hover {
   background-color: rgba(24, 24, 27, 0.6);
   color: #ffffff;
 }
+
 .navLinkActive {
   display: flex;
   align-items: center;
@@ -277,7 +307,7 @@
   border-radius: 0.75rem;
   color: var(--color-primary);
   background-color: rgba(37, 99, 235, 0.1);
-  border-left: 4px solid var(--color-primary);
+  /* border-left: 4px solid var(--color-primary); */
   text-decoration: none;
   transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -287,6 +317,7 @@
   padding: 1rem;
   border-top: 1px solid rgba(39, 39, 42, 0.8);
 }
+
 .logoutBtn {
   display: flex;
   width: 100%;
@@ -303,10 +334,12 @@
   transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
 }
+
 .logoutBtn:hover {
   background-color: rgba(239, 68, 68, 0.1);
   color: #ffffff;
 }
+
 .logoutIcon {
   width: 1.25rem;
   height: 1.25rem;
@@ -315,9 +348,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: .5;
   }
