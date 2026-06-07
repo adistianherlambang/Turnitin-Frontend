@@ -28,7 +28,7 @@ export default function UserDashboard() {
   // Subscribe to user's submissions
   useEffect(() => {
     if (!user) return;
-    
+
     const userId = user.uid || user.id;
     const unsub = dbService.subscribeCollection(
       "submissions",
@@ -119,7 +119,7 @@ export default function UserDashboard() {
         {/* Credit Card component */}
         <div className={styles.cardColumn}>
           <CreditCard name={user?.name || ""} credits={user?.credits || 0} />
-          
+
           <div className={styles.actionButtons}>
             <button
               onClick={() => {
@@ -233,7 +233,7 @@ export default function UserDashboard() {
         {/* Global Notifications Announcements */}
         <div className={styles.announcementsWrapper}>
           <h4 className={styles.sectionTitle}>Pengumuman Admin</h4>
-          
+
           {loadingNotifications ? (
             <Loading />
           ) : notifications.length === 0 ? (
@@ -285,11 +285,10 @@ export default function UserDashboard() {
                 return (
                   <tr key={txn.id} className={styles.tableRow}>
                     <td className="text-xs">
-                      <span className={`${styles.badgeTransaction} ${
-                        txn.type === "usage" || txn.type === "manual_deduct"
+                      <span className={`${styles.badgeTransaction} ${txn.type === "usage" || txn.type === "manual_deduct"
                           ? styles.badgeDeduct
                           : styles.badgeAdd
-                      }`}>
+                        }`}>
                         {typeLabels[txn.type] || txn.type}
                       </span>
                     </td>

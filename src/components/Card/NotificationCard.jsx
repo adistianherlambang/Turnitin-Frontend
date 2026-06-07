@@ -10,19 +10,19 @@ export const NotificationCard = ({
 }) => {
   const formattedDate = createdAt
     ? new Date(createdAt).toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      })
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
     : "";
 
   return (
     <div className={`${styles.notifCard} ${className}`}>
       {/* Visual Accent */}
-      <div className={styles.notifAccent}></div>
-      
+      {/* <div className={styles.notifAccent}></div> */}
+
       <div className={styles.notifContent}>
         <div className={styles.notifHeader}>
           <h5 className={styles.notifTitle}>{title}</h5>
