@@ -12,12 +12,12 @@ import styles from "./page.module.css";
 export default function UserAccount() {
   const { user, logout } = useAuth();
   const [supportSettings, setSupportSettings] = useState({
-    contactWhatsapp: "6281234567890",
+    contactWhatsapp: "6281776743211",
     contactEmail: "support@turnitinchecker.com"
   });
 
   useEffect(() => {
-    let unsub = () => {};
+    let unsub = () => { };
     if (user) {
       unsub = dbService.subscribeCollection("settings", (data) => {
         if (data && data.length > 0) {
@@ -58,7 +58,7 @@ export default function UserAccount() {
           />
           <h3 className={styles.profileName}>{user?.name || "Memuat..."}</h3>
           <span className={styles.profileEmail}>{user?.email}</span>
-          
+
           <div className={styles.roleBadge}>
             Peran: {user?.role === "admin" ? "Super Admin" : "Pengguna Premium"}
           </div>
@@ -91,7 +91,7 @@ export default function UserAccount() {
         <p className={styles.supportIntro}>
           Mengalami kendala saat melakukan pembayaran, kekurangan kredit, atau kendala pengunduhan laporan? Hubungi administrator kami langsung.
         </p>
-        
+
         <div className={styles.supportList}>
           {/* WhatsApp Direct Link */}
           <a
@@ -117,7 +117,7 @@ export default function UserAccount() {
           </a>
 
           {/* Email Support Link */}
-          <a
+          {/* <a
             href={`mailto:${supportSettings.contactEmail}`}
             className={`${styles.supportLink} ${styles.supportLinkEmail}`}
           >
@@ -135,7 +135,7 @@ export default function UserAccount() {
             <svg className={styles.arrowIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </a>
+          </a> */}
         </div>
       </Card>
 
