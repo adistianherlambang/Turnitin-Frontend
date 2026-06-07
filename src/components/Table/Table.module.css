@@ -19,12 +19,13 @@
 }
 
 .th {
-  padding: 1.125rem 1.5rem;
+  padding: 1.25rem 1.75rem;
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--color-text-secondary);
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  line-height: 1.5;
 }
 
 .tbody {
@@ -32,9 +33,10 @@
 }
 
 .table td {
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.75rem;
   vertical-align: middle;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+  line-height: 1.5;
 }
 
 /* Pagination specific classes */
