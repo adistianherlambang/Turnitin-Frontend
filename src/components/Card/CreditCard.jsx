@@ -38,20 +38,27 @@ export const CreditCard = ({
       </div>
 
       {/* Credit Balance Area */}
-      <div className={styles.ccBalanceArea}>
+      {/* <div className={styles.ccBalanceArea}>
         <span className={styles.ccBalanceLabel}>Saldo Kredit</span>
         <div className={styles.ccBalanceValueContainer}>
           <span className={styles.ccBalanceValue}>{credits}</span>
           <span className={styles.ccBalanceUnit}>Kredit</span>
         </div>
-      </div>
+      </div> */}
 
       {/* Card Footer: Name and Rupiah Value */}
       <div className={styles.ccFooter}>
         <div>
+          <span className={styles.ccBalanceLabel}>Saldo Kredit</span>
+          <div className={styles.ccBalanceValueContainer}>
+            <span className={styles.ccBalanceValue}>{credits}</span>
+            <span className={styles.ccBalanceUnit}>Kredit</span>
+          </div>
+        </div>
+        {/* <div>
           <span className={styles.ccHolderLabel}>Card Holder</span>
           <span className={styles.ccHolderName}>{name}</span>
-        </div>
+        </div> */}
         <div className="text-right">
           <span className={styles.ccRupiahLabel}>Rupiah Equivalent</span>
           <span className={styles.ccRupiahValue}>{rupiahValue}</span>
