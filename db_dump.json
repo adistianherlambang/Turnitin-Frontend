@@ -1,0 +1,276 @@
+{
+  "checkTypes": [
+    {
+      "_id": "turnitin-per-page",
+      "description": "Pengecekan fleksibel untuk artikel pendek, abstrak, atau per bab. Lebih hemat biaya.",
+      "createdAt": "2026-05-18T04:50:12.875Z",
+      "isActive": true,
+      "sortOrder": 3,
+      "unitType": "per_word",
+      "unitValue": 250,
+      "creditCost": 1,
+      "name": "Turnitin Premium (Per 250 Kata)",
+      "updatedAt": "2026-05-18T04:50:12.875Z",
+      "slug": "turnitin-per-page",
+      "id": "turnitin-per-page"
+    },
+    {
+      "_id": "turnitin-repo",
+      "isActive": true,
+      "sortOrder": 2,
+      "description": "Pengecekan final dengan mencocokkan dokumen ke database institusi nasional & internasional.",
+      "createdAt": "2026-05-13T04:50:12.875Z",
+      "updatedAt": "2026-05-13T04:50:12.875Z",
+      "slug": "turnitin-repo",
+      "name": "Turnitin Repository (Final Check)",
+      "id": "turnitin-repo",
+      "unitType": "fixed",
+      "unitValue": 1,
+      "creditCost": 3
+    }
+  ],
+  "creditTransactions": [
+    {
+      "_id": "WgvDrhmdGQbgI8A5NUv7",
+      "afterBalance": 510,
+      "referenceId": "PAY-83179",
+      "description": "Top-up Kredit Approved (PAY-83179)",
+      "type": "topup",
+      "beforeBalance": 505,
+      "userId": "USR-1780794290926-N5ZL",
+      "createdAt": "2026-06-07T04:55:21.294Z",
+      "amount": 5
+    },
+    {
+      "_id": "a2AuurpB1wZkLJObpV4X",
+      "userId": "USR-1780794290926-N5ZL",
+      "createdAt": "2026-06-07T01:04:53.173Z",
+      "amount": 5,
+      "type": "bonus",
+      "description": "Bonus kredit pendaftaran akun baru",
+      "beforeBalance": 0,
+      "afterBalance": 5,
+      "referenceId": "signup-bonus"
+    },
+    {
+      "_id": "nYFGzrZ7S5kLTekxwnES",
+      "amount": -2,
+      "userId": "USR-1780794290926-N5ZL",
+      "createdAt": "2026-06-07T04:56:16.541Z",
+      "beforeBalance": 510,
+      "description": "Cek Turnitin: Turnitin No-Repository (Safe Draft) (File: bukti-pendaftaran-REG-20260528-00001.pdf)",
+      "type": "usage",
+      "afterBalance": 508,
+      "referenceId": "SUB-64321"
+    },
+    {
+      "_id": "txn-1",
+      "description": "Bonus pendaftaran pengguna baru",
+      "type": "bonus",
+      "beforeBalance": 0,
+      "userId": "regular-user-id",
+      "createdAt": "2026-05-23T04:50:12.875Z",
+      "amount": 5,
+      "id": "txn-1",
+      "referenceId": "promo-bonus-initial",
+      "afterBalance": 5
+    },
+    {
+      "_id": "txn-2",
+      "id": "txn-2",
+      "referenceId": "pay-1",
+      "afterBalance": 25,
+      "type": "topup",
+      "description": "Pembelian kredit via transfer bank (Approved)",
+      "beforeBalance": 5,
+      "createdAt": "2026-05-28T04:50:12.875Z",
+      "userId": "regular-user-id",
+      "amount": 20
+    },
+    {
+      "_id": "txn-3",
+      "afterBalance": 23,
+      "referenceId": "sub-1",
+      "id": "txn-3",
+      "beforeBalance": 25,
+      "description": "Penggunaan kredit untuk Cek Turnitin No-Repository",
+      "type": "usage",
+      "amount": -2,
+      "createdAt": "2026-05-30T04:50:12.875Z",
+      "userId": "regular-user-id"
+    },
+    {
+      "_id": "xry40BM6u4xQP32UgSF3",
+      "afterBalance": 505,
+      "referenceId": "PAY-85685",
+      "description": "Top-up Kredit Approved (PAY-85685)",
+      "type": "topup",
+      "beforeBalance": 5,
+      "userId": "USR-1780794290926-N5ZL",
+      "createdAt": "2026-06-07T04:54:48.120Z",
+      "amount": 500
+    }
+  ],
+  "notifications": [
+    {
+      "_id": "notif-1",
+      "createdAt": "2026-06-05T04:50:12.875Z",
+      "id": "notif-1",
+      "createdBy": "admin-system",
+      "title": "Promo Awal Bulan: Bonus 5 Kredit Top-Up!",
+      "message": "Setiap pembelian minimal 20 kredit akan mendapatkan bonus tambahan 5 kredit secara otomatis. Berlaku hingga akhir minggu ini."
+    },
+    {
+      "_id": "notif-2",
+      "createdBy": "admin-system",
+      "title": "Server Pemeliharaan Selesai",
+      "id": "notif-2",
+      "message": "Pemeliharaan rutin server pengecekan Turnitin telah selesai. Semua proses pengecekan kini berjalan lebih cepat.",
+      "createdAt": "2026-06-02T04:50:12.875Z"
+    }
+  ],
+  "payments": [
+    {
+      "_id": "TMaMVMCeqQEzcRLlkzqs",
+      "proofFile": "http://localhost:5001/uploads/payments/1780808104937-bukti-pendaftaran-REG-20260528-00001.pdf",
+      "verifiedBy": "admin-user-id",
+      "amount": 25000,
+      "createdAt": "2026-06-07T04:55:05.522Z",
+      "userId": "USR-1780794290926-N5ZL",
+      "updatedAt": "2026-06-07T04:55:21.651Z",
+      "verifiedAt": "2026-06-07T04:55:21.651Z",
+      "credits": 5,
+      "status": "approved",
+      "paymentId": "PAY-83179"
+    },
+    {
+      "_id": "URxRXKm2JAJte011RKKp",
+      "verifiedBy": "admin-user-id",
+      "proofFile": "http://localhost:5001/uploads/payments/1780807618732-bukti-pendaftaran-REG-20260528-00001.pdf",
+      "createdAt": "2026-06-07T04:47:00.468Z",
+      "userId": "USR-1780794290926-N5ZL",
+      "amount": 2500000,
+      "updatedAt": "2026-06-07T04:54:48.474Z",
+      "verifiedAt": "2026-06-07T04:54:48.474Z",
+      "paymentId": "PAY-85685",
+      "credits": 500,
+      "status": "approved"
+    }
+  ],
+  "settings": [
+    {
+      "_id": "general",
+      "contactWhatsapp": "6281234567890",
+      "creditPrice": 5000,
+      "websiteName": "Turnitin Checker AI",
+      "seoDescription": "Jasa cek plagiasi Turnitin no-repository murah, cepat dan aman. Terpercaya untuk skripsi, tesis, dan jurnal.",
+      "footer": "© 2026 Turnitin Checker AI. All rights reserved.",
+      "contactEmail": "support@turnitinchecker.com",
+      "websiteLogo": "",
+      "seoTitle": "Turnitin Checker AI - Jasa Cek Plagiasi Turnitin Cepat & Murah",
+      "bankAccountHolder": "PT Turnitin Indonesia Group",
+      "bankName": "Bank Central Asia (BCA)",
+      "bankAccountNumber": "8029381029"
+    }
+  ],
+  "submissions": [
+    {
+      "_id": "KyTkPepe865OOfboDDE8",
+      "checkTypeId": "turnitin-no-repo",
+      "options": {
+        "excludeQuotes": false,
+        "excludeBibliography": true,
+        "wordLimit": null,
+        "percentLimit": null
+      },
+      "userId": "USR-1780794290926-N5ZL",
+      "notes": "gamau ah",
+      "checkTypeName": "Turnitin No-Repository (Safe Draft)",
+      "processedAt": "2026-06-07T04:56:53.621Z",
+      "resultFile": "http://localhost:5001/uploads/results/1780808209657-bukti-pendaftaran-REG-20260528-00001.pdf",
+      "createdAt": "2026-06-07T04:56:18.235Z",
+      "documentFile": "http://localhost:5001/uploads/documents/1780808171258-bukti-pendaftaran-REG-20260528-00001.pdf",
+      "submissionId": "SUB-64321",
+      "status": "completed",
+      "creditUsed": 2,
+      "updatedAt": "2026-06-07T04:56:53.622Z"
+    },
+    {
+      "_id": "sub-1",
+      "id": "sub-1",
+      "processedAt": "2026-05-30T04:50:12.875Z",
+      "checkTypeName": "Turnitin No-Repository (Safe Draft)",
+      "notes": "Hasil plagiasi 12%. Aman di bawah batas minimal 20%.",
+      "checkTypeId": "turnitin-no-repo",
+      "userId": "regular-user-id",
+      "options": {
+        "percentLimit": 20,
+        "excludeBibliography": true,
+        "excludeQuotes": true
+      },
+      "creditUsed": 2,
+      "submissionId": "SUB-88291",
+      "status": "completed",
+      "documentFile": "",
+      "createdAt": "2026-05-30T04:50:12.875Z",
+      "resultFile": ""
+    },
+    {
+      "_id": "sub-2",
+      "submissionId": "SUB-99381",
+      "checkTypeName": "Turnitin Repository (Final Check)",
+      "status": "waiting",
+      "creditUsed": 3,
+      "id": "sub-2",
+      "checkTypeId": "turnitin-repo",
+      "userId": "regular-user-id",
+      "createdAt": "2026-06-05T04:50:12.875Z",
+      "resultFile": "",
+      "options": {
+        "excludeQuotes": false,
+        "excludeBibliography": false
+      },
+      "notes": "",
+      "documentFile": ""
+    }
+  ],
+  "users": [
+    {
+      "_id": "USR-1780794290926-N5ZL",
+      "role": "user",
+      "id": "USR-1780794290926-N5ZL",
+      "name": "aku",
+      "updatedAt": "2026-06-07T04:56:14.387Z",
+      "photoURL": "https://api.dicebear.com/7.x/avataaars/svg?seed=aku",
+      "status": "active",
+      "credits": 508,
+      "passwordHash": "5a4de34ab4db40a4bb7416e3c5395a2288d9fbd77ef3b8bd3a70df562735d540",
+      "email": "aku@gmail.com",
+      "createdAt": "2026-06-07T01:04:50.928Z"
+    },
+    {
+      "_id": "admin-user-id",
+      "name": "Super Admin",
+      "id": "admin-user-id",
+      "role": "admin",
+      "passwordHash": "959acb5d71cd3a21f075f034d598e50c65e849b2d230f9a5e42522a24b3cf0d1",
+      "email": "admin@turnitin.com",
+      "photoURL": "https://api.dicebear.com/7.x/bottts/svg?seed=admin",
+      "credits": 9999,
+      "status": "active",
+      "createdAt": "2026-02-27T04:50:12.875Z"
+    },
+    {
+      "_id": "regular-user-id",
+      "passwordHash": "69437277f8d3047503b89905b30218cdebdf345dfb0216a7b26e9770f965c314",
+      "email": "user@turnitin.com",
+      "photoURL": "https://api.dicebear.com/7.x/avataaars/svg?seed=john",
+      "status": "active",
+      "credits": 15,
+      "name": "John Doe",
+      "role": "user",
+      "id": "regular-user-id",
+      "createdAt": "2026-05-23T04:50:12.875Z"
+    }
+  ]
+}

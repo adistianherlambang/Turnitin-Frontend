@@ -311,14 +311,21 @@ export const dbService = {
    */
   async addDocument(collectionName, data, customId = null) {
     if (isFirebaseEnabled) {
-      if (customId) {
-        const docRef = doc(db, collectionName, customId);
-        await setDoc(docRef, { ...data, createdAt: new Date().toISOString() });
-        return { id: customId, ...data };
+      let finalId = customId;
+      if (!finalId && collectionName === "creditTransactions") {
+        finalId = `TXN-${Date.now()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+      }
+
+      if (finalId) {
+        const docRef = doc(db, collectionName, finalId);
+        await setDoc(docRef, { ...data, id: finalId, createdAt: new Date().toISOString() });
+        return { id: finalId, ...data };
       } else {
         const colRef = collection(db, collectionName);
-        const docRef = await addDoc(colRef, { ...data, createdAt: new Date().toISOString() });
-        return { id: docRef.id, ...data };
+        const docRef = doc(colRef);
+        const generatedId = docRef.id;
+        await setDoc(docRef, { ...data, id: generatedId, createdAt: new Date().toISOString() });
+        return { id: generatedId, ...data };
       }
     } else {
       const dbData = getMockDB();

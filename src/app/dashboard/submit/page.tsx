@@ -137,7 +137,7 @@ export default function SubmitCheck() {
           percentLimit: percentLimit ? Number(percentLimit) : null,
           wordLimit: wordLimit ? Number(wordLimit) : null
         }
-      });
+      }, submissionId);
 
       toast.success("Dokumen berhasil disubmit ke antrean!");
       router.push("/dashboard/history");

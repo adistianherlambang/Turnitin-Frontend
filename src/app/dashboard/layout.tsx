@@ -86,7 +86,7 @@ export default function DashboardLayout({ children }) {
         credits: Number(amount),
         proofFile: proofUrl,
         status: "pending"
-      });
+      }, paymentId);
 
       toast.success("Permintaan top-up berhasil diajukan. Mohon tunggu persetujuan admin!");
       setIsBuyModalOpen(false);
