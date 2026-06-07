@@ -9,8 +9,7 @@ import Modal from "@/components/Modal/Modal";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import UploadBox from "@/components/UploadBox/UploadBox";
-import dbService from "@/services/dbService";
-// import { dbService } from "@/services/dbService";
+import { dbService } from "@/services/dbService";
 import { toast } from "react-hot-toast";
 
 export default function DashboardLayout({ children }) {

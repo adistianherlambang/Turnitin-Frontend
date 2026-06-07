@@ -1,2 +1,2 @@
 export { dbService } from "./firebase/dbService";
-export default {};
+export { dbService as default } from "./firebase/dbService";
