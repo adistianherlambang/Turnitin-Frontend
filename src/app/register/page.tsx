@@ -8,6 +8,7 @@ import Logo from "@/components/Logo/Logo";
 import Button from "@/components/Button/Button";
 import Input from "@/components/Input/Input";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function Register() {
   const router = useRouter();
@@ -62,24 +63,24 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(37,99,235,0.08),transparent)]">
-      <div className="w-full max-w-md space-y-8 glass-panel p-8 rounded-2xl border border-border/80 shadow-2xl animate-fade-in">
+    <div className={styles.container}>
+      <div className={styles.card}>
         {/* Header */}
-        <div className="flex flex-col items-center">
+        <div className={styles.header}>
           <Logo />
-          <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-white">
+          <h2 className={styles.title}>
             Daftar Akun Baru
           </h2>
-          <p className="mt-2 text-center text-xs text-text-secondary">
+          <p className={styles.subtitle}>
             Sudah punya akun?{" "}
-            <Link href="/login" className="font-semibold text-primary hover:text-blue-400 transition-colors">
+            <Link href="/login" className={styles.link}>
               Masuk di sini
             </Link>
           </p>
         </div>
 
         {/* Register Form */}
-        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             label="Nama Lengkap"
             type="text"
@@ -116,7 +117,7 @@ export default function Register() {
             error={errors.confirmPassword}
           />
 
-          <div className="pt-2">
+          <div className={styles.btnContainer}>
             <Button
               type="submit"
               loading={loading}

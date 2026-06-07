@@ -1,0 +1,222 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-white, #fff);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #a1a1aa);
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tableRow {
+  transition: background-color 0.2s ease;
+}
+
+.tableRow:hover {
+  background-color: rgba(39, 39, 42, 0.3);
+}
+
+.submissionIdCell {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-zinc-300, #d4d4d8);
+}
+
+.userCell {
+  font-size: 0.75rem;
+}
+
+.userName {
+  display: block;
+  font-weight: 700;
+  color: var(--color-white, #fff);
+  line-height: 1.25;
+}
+
+.userEmail {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary, #a1a1aa);
+  margin-top: 0.125rem;
+}
+
+.checkTypeCell {
+  font-size: 0.75rem;
+  color: var(--color-white, #fff);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dateCell {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #a1a1aa);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.notesCell {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #a1a1aa);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notesEmpty {
+  color: var(--color-zinc-700, #404040);
+}
+
+.downloadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color-primary, #3b82f6);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.downloadButton:hover {
+  color: #60a5fa;
+}
+
+.svgIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.noDocument {
+  font-size: 0.75rem;
+  color: var(--color-zinc-600, #52525b);
+}
+
+.editButton {
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-white, #fff);
+  background-color: var(--color-bg-light, #27272a);
+  border: 1px solid var(--color-border, #3f3f46);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editButton:hover {
+  background-color: var(--color-zinc-700, #3f3f46);
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+.formLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-zinc-300, #d4d4d8);
+  letter-spacing: 0.025em;
+}
+
+.selectInput {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  background-color: var(--color-bg-dark, #18181b);
+  border: 1px solid var(--color-border, #27272a);
+  border-radius: 0.75rem;
+  color: var(--color-white, #fff);
+  transition: all 0.2s ease;
+}
+
+.selectInput:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-primary, #3b82f6);
+}
+
+.selectOption {
+  background-color: #09090b;
+}
+
+.uploadSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  border-top: 1px solid rgba(39, 39, 42, 0.4);
+  padding-top: 1rem;
+}
+
+.textareaInput {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  background-color: var(--color-bg-dark, #18181b);
+  border: 1px solid var(--color-border, #27272a);
+  border-radius: 0.75rem;
+  color: var(--color-white, #fff);
+  transition: all 0.2s ease;
+  resize: none;
+}
+
+.textareaInput::placeholder {
+  color: var(--color-zinc-500, #71717a);
+}
+
+.textareaInput:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-primary, #3b82f6);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

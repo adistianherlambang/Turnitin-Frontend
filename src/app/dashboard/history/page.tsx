@@ -11,6 +11,7 @@ import EmptyState from "@/components/EmptyState/EmptyState";
 import Loading from "@/components/Loading/Loading";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
+import styles from "./page.module.css";
 
 export default function UserHistory() {
   const { user } = useAuth();
@@ -62,11 +63,11 @@ export default function UserHistory() {
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Riwayat Pengajuan</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Riwayat Pengajuan</h1>
+        <p className={styles.subtitle}>
           Pantau status pengecekan naskah Turnitin Anda dan unduh laporan tingkat kemiripan resmi di sini.
         </p>
       </div>
@@ -113,7 +114,7 @@ export default function UserHistory() {
           }
         />
       ) : (
-        <div className="space-y-4">
+        <div className={styles.tableWrapper}>
           <Table headers={["ID Pengajuan", "Layanan", "Status", "Tanggal Cek", "Catatan Admin", "Berkas Dokumen", "Hasil Laporan"]}>
             {paginatedItems.map((sub) => {
               // Extract filename from URL
@@ -124,17 +125,17 @@ export default function UserHistory() {
               };
 
               return (
-                <tr key={sub.id} className="hover:bg-zinc-900/30">
-                  <td className="font-mono text-xs font-semibold text-zinc-300">
+                <tr key={sub.id} className={styles.tableRow}>
+                  <td className={styles.fontMono}>
                     {sub.submissionId}
                   </td>
-                  <td className="text-xs text-white max-w-[150px] truncate" title={sub.checkTypeName}>
+                  <td className={styles.textWhiteTruncate} title={sub.checkTypeName}>
                     {sub.checkTypeName}
                   </td>
                   <td>
                     <StatusBadge status={sub.status} />
                   </td>
-                  <td className="text-xs text-text-secondary">
+                  <td className={styles.textMuted}>
                     {new Date(sub.createdAt).toLocaleDateString("id-ID", {
                       day: "numeric",
                       month: "short",
@@ -143,7 +144,7 @@ export default function UserHistory() {
                       minute: "2-digit"
                     })}
                   </td>
-                  <td className="text-xs text-text-secondary max-w-[180px] truncate" title={sub.notes}>
+                  <td className={styles.textMutedTruncate} title={sub.notes}>
                     {sub.notes || <span className="text-zinc-600">-</span>}
                   </td>
                   <td>
@@ -152,7 +153,7 @@ export default function UserHistory() {
                         href={sub.documentFile}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-primary hover:text-blue-400 font-semibold"
+                        className={styles.downloadLink}
                       >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -160,7 +161,7 @@ export default function UserHistory() {
                         Unduh
                       </a>
                     ) : (
-                      <span className="text-xs text-zinc-600">-</span>
+                      <span className={styles.textMuted}>-</span>
                     )}
                   </td>
                   <td>
@@ -169,7 +170,7 @@ export default function UserHistory() {
                         href={sub.resultFile}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-success hover:text-green-400 font-bold"
+                        className={styles.resultLink}
                       >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -177,9 +178,9 @@ export default function UserHistory() {
                         Hasil PDF
                       </a>
                     ) : sub.status === "rejected" ? (
-                      <span className="text-xs text-danger font-medium">Ditolak</span>
+                      <span className={`${styles.statusText} ${styles.statusRejected}`}>Ditolak</span>
                     ) : (
-                      <span className="text-xs text-text-secondary italic">Menunggu</span>
+                      <span className={`${styles.statusText} ${styles.statusPending}`}>Menunggu</span>
                     )}
                   </td>
                 </tr>

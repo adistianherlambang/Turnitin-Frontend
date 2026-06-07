@@ -14,6 +14,7 @@ import Input from "@/components/Input/Input";
 import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import UserAvatar from "@/components/UserAvatar/UserAvatar";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState<any[]>([]);
@@ -152,11 +153,11 @@ export default function AdminUsers() {
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Manajemen Pengguna</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Manajemen Pengguna</h1>
+        <p className={styles.subtitle}>
           Kelola database pelanggan Anda, tambahkan/potong kredit, dan tangguhkan akun pengguna bermasalah.
         </p>
       </div>
@@ -190,24 +191,24 @@ export default function AdminUsers() {
           description="Tidak ada pengguna terdaftar yang ditemukan."
         />
       ) : (
-        <div className="space-y-4">
+        <div className={styles.tableWrapper}>
           <Table headers={["Profil", "Email", "Jumlah Kredit", "Status Akun", "Bergabung Pada", "Kelola Saldo", "Kelola Status"]}>
             {paginatedItems.map((u) => (
-              <tr key={u.id} className="hover:bg-zinc-900/30">
-                <td className="text-xs flex items-center gap-3">
+              <tr key={u.id} className={styles.tableRow}>
+                <td className={styles.userCell}>
                   <UserAvatar src={u.photoURL} name={u.name} size="sm" />
-                  <span className="font-bold text-white leading-tight">{u.name}</span>
+                  <span className={styles.userName}>{u.name}</span>
                 </td>
-                <td className="text-xs text-text-secondary">
+                <td className={styles.userEmail}>
                   {u.email}
                 </td>
-                <td className="font-mono text-xs font-bold text-white">
+                <td className={styles.creditsCell}>
                   {u.credits || 0}
                 </td>
                 <td>
                   <StatusBadge status={u.status} />
                 </td>
-                <td className="text-xs text-text-secondary">
+                <td className={styles.dateCell}>
                   {new Date(u.createdAt).toLocaleDateString("id-ID", {
                     day: "numeric",
                     month: "short",
@@ -215,16 +216,16 @@ export default function AdminUsers() {
                   })}
                 </td>
                 <td>
-                  <div className="flex gap-2">
+                  <div className={styles.creditActions}>
                     <button
                       onClick={() => handleOpenCreditModal(u, "add")}
-                      className="px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition-colors"
+                      className={styles.creditAddBtn}
                     >
                       + Tambah
                     </button>
                     <button
                       onClick={() => handleOpenCreditModal(u, "deduct")}
-                      className="px-2 py-1 rounded bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-semibold hover:bg-zinc-700 hover:text-white transition-colors"
+                      className={styles.creditDeductBtn}
                     >
                       - Potong
                     </button>
@@ -233,11 +234,7 @@ export default function AdminUsers() {
                 <td>
                   <button
                     onClick={() => setUserToToggleStatus(u)}
-                    className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                      u.status === "active"
-                        ? "text-danger bg-danger/10 hover:bg-danger/20"
-                        : "text-success bg-success/10 hover:bg-success/20"
-                    }`}
+                    className={u.status === "active" ? styles.suspendBtn : styles.activateBtn}
                   >
                     {u.status === "active" ? "Suspend" : "Aktifkan"}
                   </button>
@@ -263,9 +260,9 @@ export default function AdminUsers() {
         size="sm"
       >
         {activeUser && (
-          <form onSubmit={handleModifyCredits} className="space-y-5">
-            <div className="text-xs text-text-secondary leading-normal">
-              Saldo kredit saat ini: <span className="font-bold text-white font-mono">{activeUser.credits} kredit</span>
+          <form onSubmit={handleModifyCredits} className={styles.modalForm}>
+            <div className={styles.modalInfo}>
+              Saldo kredit saat ini: <span className={styles.creditsHighlight}>{activeUser.credits} kredit</span>
             </div>
             <Input
               label="Jumlah Kredit"
@@ -277,7 +274,7 @@ export default function AdminUsers() {
               required
             />
             
-            <div className="flex justify-end gap-3 pt-2">
+            <div className={styles.modalActions}>
               <Button
                 variant="outline"
                 onClick={() => setIsCreditModalOpen(false)}

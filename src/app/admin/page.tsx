@@ -7,6 +7,7 @@ import Loading from "@/components/Loading/Loading";
 import Table from "@/components/Table/Table";
 import StatusBadge from "@/components/Badge/StatusBadge";
 import Link from "next/link";
+import styles from "./page.module.css";
 import {
   AreaChart,
   Area,
@@ -96,17 +97,17 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Dashboard Admin</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Dashboard Admin</h1>
+        <p className={styles.subtitle}>
           Pantau kesehatan platform, verifikasi pembayaran kredit, dan kelola draf naskah plagiarisme.
         </p>
       </div>
 
       {/* Grid of Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className={styles.statsGrid}>
         <StatisticCard
           title="Total Pengguna"
           value={totalUsersCount}
@@ -154,11 +155,11 @@ export default function AdminDashboard() {
       </div>
 
       {/* Grid of Analytical Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className={styles.chartsGrid}>
         {/* Submissions Chart */}
-        <div className="p-6 bg-zinc-900/40 border border-border rounded-2xl">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase mb-4">Statistik Pengajuan Bulanan</h4>
-          <div className="h-64 w-full">
+        <div className={styles.chartCard}>
+          <h4 className={styles.chartTitle}>Statistik Pengajuan Bulanan</h4>
+          <div className={styles.chartWrapper}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={MONTHLY_SUBMISSIONS_DATA}>
                 <defs>
@@ -178,9 +179,9 @@ export default function AdminDashboard() {
         </div>
 
         {/* Revenue Chart */}
-        <div className="p-6 bg-zinc-900/40 border border-border rounded-2xl">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase mb-4">Estimasi Pendapatan Bulanan (IDR)</h4>
-          <div className="h-64 w-full">
+        <div className={styles.chartCard}>
+          <h4 className={styles.chartTitle}>Estimasi Pendapatan Bulanan (IDR)</h4>
+          <div className={styles.chartWrapper}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={MONTHLY_REVENUE_DATA}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#27272A" />
@@ -195,28 +196,28 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent submissions lists */}
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase">Daftar Pengajuan Terbaru</h4>
-          <Link href="/admin/submissions" className="text-xs text-primary hover:underline">
+      <div className={styles.submissionsSection}>
+        <div className={styles.sectionHeader}>
+          <h4 className={styles.sectionTitle}>Daftar Pengajuan Terbaru</h4>
+          <Link href="/admin/submissions" className={styles.sectionLink}>
             Kelola Semua Pengajuan
           </Link>
         </div>
 
         {getRecentSubmissions().length === 0 ? (
-          <div className="p-8 text-center text-text-secondary bg-zinc-900/10 border border-border rounded-2xl">
+          <div className={styles.emptySubmissions}>
             Belum ada berkas cek yang diajukan oleh pengguna.
           </div>
         ) : (
           <Table headers={["ID Pengajuan", "Layanan", "Status", "Tanggal Cek", "Aksi"]}>
             {getRecentSubmissions().map((sub) => (
-              <tr key={sub.id} className="hover:bg-zinc-900/30">
-                <td className="font-mono text-xs text-zinc-300">{sub.submissionId}</td>
-                <td className="text-xs text-white max-w-[180px] truncate">{sub.checkTypeName}</td>
+              <tr key={sub.id} className={styles.tableRow}>
+                <td className={styles.fontMono}>{sub.submissionId}</td>
+                <td className={styles.textWhiteTruncate}>{sub.checkTypeName}</td>
                 <td>
                   <StatusBadge status={sub.status} />
                 </td>
-                <td className="text-xs text-text-secondary font-mono">
+                <td className={styles.textMutedMono}>
                   {new Date(sub.createdAt).toLocaleDateString("id-ID", {
                     day: "numeric",
                     month: "short",
@@ -228,7 +229,7 @@ export default function AdminDashboard() {
                 <td>
                   <Link
                     href="/admin/submissions"
-                    className="text-xs font-semibold text-primary hover:text-blue-400"
+                    className={styles.actionLink}
                   >
                     Tinjau
                   </Link>

@@ -14,6 +14,7 @@ import Button from "@/components/Button/Button";
 import EmptyState from "@/components/EmptyState/EmptyState";
 import Loading from "@/components/Loading/Loading";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function UserDashboard() {
   const { user } = useAuth();
@@ -47,6 +48,8 @@ export default function UserDashboard() {
     const unsub = dbService.subscribeCollection(
       "notifications",
       (data) => {
+        setNotifications(data);
+        setLoadingSubmissions(false);
         setNotifications(data);
         setLoadingNotifications(false);
       }
@@ -91,20 +94,20 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className={styles.container}>
       {/* Top Banner - Welcome */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className={styles.banner}>
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">
+          <h1 className={styles.bannerTitle}>
             Selamat Datang, {user?.name || "Pengguna"}!
           </h1>
-          <p className="text-xs text-text-secondary mt-1">
+          <p className={styles.bannerSubtitle}>
             Gunakan saldo kredit Anda untuk melakukan penapisan plagiasi dokumen akademik secara aman.
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className={styles.bannerActions}>
           <Link href="/dashboard/submit">
-            <Button className="glow-primary text-xs font-bold px-4 py-2.5">
+            <Button className={styles.newCheckBtn}>
               Ajukan Pengecekan Baru
             </Button>
           </Link>
@@ -112,24 +115,24 @@ export default function UserDashboard() {
       </div>
 
       {/* Credit balance card & stats indicators */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className={styles.gridCards}>
         {/* Credit Card component */}
-        <div className="lg:col-span-1 flex flex-col justify-between">
+        <div className={styles.cardColumn}>
           <CreditCard name={user?.name || ""} credits={user?.credits || 0} />
           
-          <div className="grid grid-cols-2 gap-3 mt-4">
+          <div className={styles.actionButtons}>
             <button
               onClick={() => {
-                const buyBtn = document.querySelector('button[class*="active:scale-95"]');
+                const buyBtn = document.querySelector('button[class*="creditsBuyBtn"]');
                 if (buyBtn) (buyBtn as any).click();
               }}
-              className="py-3 px-4 rounded-xl bg-zinc-900 border border-border text-xs font-semibold text-white hover:bg-zinc-800 transition-colors text-center"
+              className={styles.actionBtn}
             >
               Isi Kredit
             </button>
             <button
               onClick={openTransactionHistory}
-              className="py-3 px-4 rounded-xl bg-zinc-900 border border-border text-xs font-semibold text-white hover:bg-zinc-800 transition-colors text-center"
+              className={styles.actionBtn}
             >
               Riwayat Mutasi
             </button>
@@ -137,7 +140,7 @@ export default function UserDashboard() {
         </div>
 
         {/* Numeric stats indicator cards */}
-        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className={styles.statsColumn}>
           <StatisticCard
             title="Total Pengajuan Cek"
             value={totalSubmissions}
@@ -175,12 +178,12 @@ export default function UserDashboard() {
       </div>
 
       {/* Main Grid: Latest submissions and Notifications */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className={styles.mainContentGrid}>
         {/* Latest submissions list */}
-        <div className="lg:col-span-2 space-y-4">
-          <div className="flex justify-between items-center">
-            <h4 className="text-sm font-bold text-white tracking-wide uppercase">Pengajuan Terbaru</h4>
-            <Link href="/dashboard/history" className="text-xs text-primary hover:underline">
+        <div className={styles.submissionsWrapper}>
+          <div className={styles.sectionHeader}>
+            <h4 className={styles.sectionTitle}>Pengajuan Terbaru</h4>
+            <Link href="/dashboard/history" className={styles.viewAllLink}>
               Lihat Semua
             </Link>
           </div>
@@ -200,13 +203,13 @@ export default function UserDashboard() {
           ) : (
             <Table headers={["ID Pengajuan", "Layanan", "Status", "Tanggal", "Aksi"]}>
               {getRecentSubmissions().map((sub) => (
-                <tr key={sub.id} className="hover:bg-zinc-900/30">
-                  <td className="font-mono text-xs text-zinc-300">{sub.submissionId}</td>
-                  <td className="text-xs text-white max-w-[150px] truncate">{sub.checkTypeName}</td>
+                <tr key={sub.id} className={styles.tableRow}>
+                  <td className={styles.fontMono}>{sub.submissionId}</td>
+                  <td className={styles.textWhiteTruncate}>{sub.checkTypeName}</td>
                   <td>
                     <StatusBadge status={sub.status} />
                   </td>
-                  <td className="text-xs text-text-secondary">
+                  <td className={styles.textMuted}>
                     {new Date(sub.createdAt).toLocaleDateString("id-ID", {
                       day: "numeric",
                       month: "short",
@@ -216,7 +219,7 @@ export default function UserDashboard() {
                   <td>
                     <Link
                       href="/dashboard/history"
-                      className="text-xs font-semibold text-primary hover:text-blue-400"
+                      className={styles.detailLink}
                     >
                       Detail
                     </Link>
@@ -228,17 +231,17 @@ export default function UserDashboard() {
         </div>
 
         {/* Global Notifications Announcements */}
-        <div className="space-y-4">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase">Pengumuman Admin</h4>
+        <div className={styles.announcementsWrapper}>
+          <h4 className={styles.sectionTitle}>Pengumuman Admin</h4>
           
           {loadingNotifications ? (
             <Loading />
           ) : notifications.length === 0 ? (
-            <div className="p-6 text-center text-xs text-text-secondary bg-zinc-900/10 border border-border/60 rounded-2xl">
+            <div className={styles.announcementEmpty}>
               Tidak ada pengumuman baru saat ini.
             </div>
           ) : (
-            <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1">
+            <div className={styles.announcementsList}>
               {notifications.map((notif) => (
                 <NotificationCard
                   key={notif.id}
@@ -266,7 +269,7 @@ export default function UserDashboard() {
             description="Belum ada catatan mutasi penambahan atau pemotongan kredit pada akun Anda."
           />
         ) : (
-          <div className="space-y-4 max-h-[50vh] overflow-y-auto">
+          <div className={styles.modalContent}>
             <Table headers={["Kategori", "Jumlah Kredit", "Saldo Akhir", "Keterangan", "Tanggal"]}>
               {transactions.map((txn) => {
                 const isAddition = txn.amount > 0;
@@ -280,24 +283,24 @@ export default function UserDashboard() {
                 };
 
                 return (
-                  <tr key={txn.id} className="hover:bg-zinc-900/30">
+                  <tr key={txn.id} className={styles.tableRow}>
                     <td className="text-xs">
-                      <span className={`inline-flex px-2 py-0.5 rounded-md text-[10px] font-semibold ${
+                      <span className={`${styles.badgeTransaction} ${
                         txn.type === "usage" || txn.type === "manual_deduct"
-                          ? "bg-zinc-800 text-zinc-300"
-                          : "bg-emerald-500/10 text-emerald-400"
+                          ? styles.badgeDeduct
+                          : styles.badgeAdd
                       }`}>
                         {typeLabels[txn.type] || txn.type}
                       </span>
                     </td>
-                    <td className={`font-mono text-xs font-bold ${isAddition ? "text-emerald-400" : "text-red-400"}`}>
+                    <td className={isAddition ? styles.amountAdd : styles.amountDeduct}>
                       {isAddition ? "+" : ""}{txn.amount}
                     </td>
-                    <td className="font-mono text-xs text-white">{txn.afterBalance}</td>
-                    <td className="text-xs text-text-secondary max-w-[180px] truncate" title={txn.description}>
+                    <td className={styles.fontMono}>{txn.afterBalance}</td>
+                    <td className={styles.textMuted} style={{ maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={txn.description}>
                       {txn.description}
                     </td>
-                    <td className="text-xs text-text-secondary">
+                    <td className={styles.textMuted}>
                       {new Date(txn.createdAt).toLocaleDateString("id-ID", {
                         day: "numeric",
                         month: "short",

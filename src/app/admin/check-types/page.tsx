@@ -10,6 +10,7 @@ import Modal from "@/components/Modal/Modal";
 import Input from "@/components/Input/Input";
 import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function AdminCheckTypes() {
   const [types, setTypes] = useState<any[]>([]);
@@ -120,16 +121,16 @@ export default function AdminCheckTypes() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title & Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className={styles.header}>
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Jenis Pengecekan</h1>
-          <p className="text-xs text-text-secondary mt-1">
+          <h1 className={styles.title}>Jenis Pengecekan</h1>
+          <p className={styles.subtitle}>
             Konfigurasi jenis layanan, biaya kredit, dan perhitungan yang ditawarkan pada formulir pengajuan user.
           </p>
         </div>
-        <Button onClick={handleOpenAdd} className="glow-primary text-xs px-4 py-2.5 font-bold">
+        <Button onClick={handleOpenAdd} className={styles.addBtn}>
           Tambah Layanan Baru
         </Button>
       </div>
@@ -148,39 +149,37 @@ export default function AdminCheckTypes() {
       ) : (
         <Table headers={["Urutan", "Nama Layanan", "Slug", "Biaya Kredit", "Perhitungan", "Status", "Aksi"]}>
           {types.map((type) => (
-            <tr key={type.id} className="hover:bg-zinc-900/30">
-              <td className="font-mono text-xs font-bold text-text-secondary">{type.sortOrder}</td>
-              <td className="text-xs">
-                <span className="block font-bold text-white leading-tight">{type.name}</span>
-                <span className="block text-[10px] text-text-secondary mt-1 max-w-[200px] truncate" title={type.description}>
+            <tr key={type.id} className={styles.tableRow}>
+              <td className={styles.sortOrder}>{type.sortOrder}</td>
+              <td className={styles.serviceCell}>
+                <span className={styles.serviceName}>{type.name}</span>
+                <span className={styles.serviceDesc} title={type.description}>
                   {type.description}
                 </span>
               </td>
-              <td className="font-mono text-xs text-zinc-400">{type.slug}</td>
-              <td className="font-mono text-xs font-bold text-white">{type.creditCost} kredit</td>
-              <td className="text-xs text-text-secondary">
+              <td className={styles.slugText}>{type.slug}</td>
+              <td className={styles.costText}>{type.creditCost} kredit</td>
+              <td className={styles.unitText}>
                 {type.unitType === "fixed" ? "Tarif Tetap" : `Per ${type.unitValue} kata`}
               </td>
               <td>
-                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold ${
-                  type.isActive
-                    ? "bg-success/15 text-success border border-success/20"
-                    : "bg-zinc-800 text-zinc-500 border border-zinc-700"
+                <span className={`${styles.statusBadge} ${
+                  type.isActive ? styles.statusActive : styles.statusInactive
                 }`}>
                   {type.isActive ? "Aktif" : "Non-aktif"}
                 </span>
               </td>
               <td>
-                <div className="flex gap-2">
+                <div className={styles.actionsCell}>
                   <button
                     onClick={() => handleOpenEdit(type)}
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 transition-colors"
+                    className={styles.editBtn}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => setTypeToDelete(type)}
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-danger bg-danger/10 hover:bg-danger/20 transition-colors"
+                    className={styles.deleteBtn}
                   >
                     Hapus
                   </button>
@@ -198,7 +197,7 @@ export default function AdminCheckTypes() {
         title={editingType ? "Edit Jenis Pengecekan" : "Tambah Jenis Pengecekan"}
         size="md"
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className={styles.form}>
           <Input
             label="Nama Layanan"
             placeholder="Contoh: Turnitin No-Repository"
@@ -222,8 +221,8 @@ export default function AdminCheckTypes() {
             required
           />
 
-          <div className="flex flex-col gap-1.5 w-full">
-            <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+          <div className={styles.fieldGroup}>
+            <label className={styles.fieldLabel}>
               Deskripsi Layanan
             </label>
             <textarea
@@ -231,11 +230,11 @@ export default function AdminCheckTypes() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Deskripsi singkat yang menjelaskan detail cakupan layanan pengecekan..."
-              className="w-full px-4 py-2.5 text-sm bg-zinc-900 border border-border rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+              className={styles.textarea}
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className={styles.fieldsGrid}>
             <Input
               label="Biaya Kredit"
               type="number"
@@ -245,14 +244,14 @@ export default function AdminCheckTypes() {
               required
             />
 
-            <div className="flex flex-col gap-1.5 w-full">
-              <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+            <div className={styles.fieldGroup}>
+              <label className={styles.fieldLabel}>
                 Tipe Perhitungan Unit
               </label>
               <select
                 value={unitType}
                 onChange={(e) => setUnitType(e.target.value)}
-                className="w-full px-4 py-2.5 text-sm bg-zinc-900 border border-border rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className={styles.select}
               >
                 <option value="fixed" className="bg-zinc-950">Fixed (Tarif Tetap)</option>
                 <option value="per_word" className="bg-zinc-950">Per Word (Per Kata)</option>
@@ -272,7 +271,7 @@ export default function AdminCheckTypes() {
             />
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center pt-2">
+          <div className={styles.fieldsGridAlign}>
             <Input
               label="Urutan Urutan Tampilan"
               type="number"
@@ -282,22 +281,22 @@ export default function AdminCheckTypes() {
               required
             />
 
-            <div className="flex items-center gap-3 select-none h-full pt-4">
+            <div className={styles.checkboxWrapper}>
               <input
                 type="checkbox"
                 id="active"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="w-4 h-4 rounded border-border bg-zinc-900 text-primary focus:ring-primary"
+                className={styles.checkboxInput}
               />
-              <label htmlFor="active" className="text-sm font-semibold text-zinc-300 cursor-pointer">
+              <label htmlFor="active" className={styles.checkboxLabel}>
                 Layanan Aktif / Ditampilkan
               </label>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-border/40">
+          <div className={styles.modalActions}>
             <Button variant="outline" onClick={() => setIsModalOpen(false)} disabled={submitting}>
               Batal
             </Button>

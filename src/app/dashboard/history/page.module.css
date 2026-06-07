@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: var(--animate-fade-in);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+}
+
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tableRow:hover td {
+  background-color: rgba(39, 39, 42, 0.2);
+}
+
+.fontMono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #d4d4d8;
+}
+
+.textWhiteTruncate {
+  font-size: 0.75rem;
+  color: #ffffff;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.textMuted {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.textMutedTruncate {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.downloadLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.downloadLink:hover {
+  color: #60a5fa;
+}
+
+.resultLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-success);
+  text-decoration: none;
+}
+
+.resultLink:hover {
+  color: #4ade80;
+}
+
+.statusText {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.statusRejected {
+  color: var(--color-danger);
+}
+
+.statusPending {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}

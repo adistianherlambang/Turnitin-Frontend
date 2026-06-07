@@ -7,6 +7,7 @@ import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Loading from "@/components/Loading/Loading";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function AdminSettings() {
   const [loading, setLoading] = useState(true);
@@ -78,19 +79,19 @@ export default function AdminSettings() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Pengaturan Platform</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Pengaturan Platform</h1>
+        <p className={styles.subtitle}>
           Ubah konfigurasi transfer bank, nomor kontak admin, penyesuaian harga kredit, dan metadata SEO.
         </p>
       </div>
 
-      <form onSubmit={handleSaveSettings} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form onSubmit={handleSaveSettings} className={styles.form}>
+        <div className={styles.gridTwoCols}>
           {/* Bank Accounts Setting */}
-          <Card title="Rekening Transfer Bank" hoverable={false} className="bg-zinc-900/20 space-y-4">
+          <Card title="Rekening Transfer Bank" hoverable={false} className={styles.cardInner}>
             <Input
               label="Nama Bank"
               value={bankName}
@@ -115,7 +116,7 @@ export default function AdminSettings() {
           </Card>
 
           {/* Pricing & Support Contact settings */}
-          <Card title="Harga Kredit & Pusat Kontak" hoverable={false} className="bg-zinc-900/20 space-y-4">
+          <Card title="Harga Kredit & Pusat Kontak" hoverable={false} className={styles.cardInner}>
             <Input
               label="Harga 1 Kredit (Rupiah)"
               type="number"
@@ -143,8 +144,8 @@ export default function AdminSettings() {
         </div>
 
         {/* Branding & SEO Metadata */}
-        <Card title="Branding Website & Optimasi SEO" hoverable={false} className="bg-zinc-900/20 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Card title="Branding Website & Optimasi SEO" hoverable={false} className={styles.cardInner}>
+          <div className={styles.gridTwoColsSmall}>
             <Input
               label="Nama Website"
               value={websiteName}
@@ -161,7 +162,7 @@ export default function AdminSettings() {
             />
           </div>
           
-          <div className="border-t border-border/40 pt-4 space-y-4">
+          <div className={styles.seoSection}>
             <Input
               label="Meta Title SEO"
               value={seoTitle}
@@ -169,8 +170,8 @@ export default function AdminSettings() {
               placeholder="Cek Turnitin Murah, Cepat dan No-Repository"
               required
             />
-            <div className="flex flex-col gap-1.5 w-full">
-              <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+            <div className={styles.textareaGroup}>
+              <label className={styles.textareaLabel}>
                 Meta Description SEO
               </label>
               <textarea
@@ -178,7 +179,7 @@ export default function AdminSettings() {
                 value={seoDescription}
                 onChange={(e) => setSeoDescription(e.target.value)}
                 placeholder="Deskripsi pencarian google untuk mengoptimalkan peringkat pencarian situs..."
-                className="w-full px-4 py-2.5 text-sm bg-zinc-900 border border-border rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                className={styles.textarea}
                 required
               />
             </div>
@@ -186,11 +187,11 @@ export default function AdminSettings() {
         </Card>
 
         {/* Form Submit Button */}
-        <div className="flex justify-end pt-2">
+        <div className={styles.submitBtnContainer}>
           <Button
             type="submit"
             loading={submitting}
-            className="px-8 py-3.5 text-sm font-bold uppercase tracking-wider glow-primary"
+            className={styles.submitBtn}
           >
             Simpan Pengaturan
           </Button>

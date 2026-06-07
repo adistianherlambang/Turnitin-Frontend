@@ -12,6 +12,7 @@ import Button from "@/components/Button/Button";
 import Modal from "@/components/Modal/Modal";
 import UploadBox from "@/components/UploadBox/UploadBox";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function AdminSubmissions() {
   const [submissions, setSubmissions] = useState<any[]>([]);
@@ -143,11 +144,11 @@ export default function AdminSubmissions() {
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Manajemen Pengajuan</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Manajemen Pengajuan</h1>
+        <p className={styles.subtitle}>
           Proses dokumen Turnitin yang diajukan oleh pengguna, ubah status antrean, dan unggah berkas hasil penapisan.
         </p>
       </div>
@@ -183,34 +184,34 @@ export default function AdminSubmissions() {
           description="Tidak ada berkas pengajuan cek Turnitin yang ditemukan."
         />
       ) : (
-        <div className="space-y-4">
+        <div className={styles.tableWrapper}>
           <Table headers={["ID Pengajuan", "User", "Jenis Layanan", "Status", "Tanggal Diajukan", "Catatan Admin", "Dokumen Awal", "Aksi"]}>
             {paginatedItems.map((sub) => {
               const u = getUserDetails(sub.userId);
               return (
-                <tr key={sub.id} className="hover:bg-zinc-900/30">
-                  <td className="font-mono text-xs font-semibold text-zinc-300">
+                <tr key={sub.id} className={styles.tableRow}>
+                  <td className={styles.submissionIdCell}>
                     {sub.submissionId}
                   </td>
-                  <td className="text-xs">
-                    <span className="block font-bold text-white leading-tight">{u.name}</span>
-                    <span className="block text-[10px] text-text-secondary mt-0.5">{u.email}</span>
+                  <td className={styles.userCell}>
+                    <span className={styles.userName}>{u.name}</span>
+                    <span className={styles.userEmail}>{u.email}</span>
                   </td>
-                  <td className="text-xs text-white max-w-[150px] truncate" title={sub.checkTypeName}>
+                  <td className={styles.checkTypeCell} title={sub.checkTypeName}>
                     {sub.checkTypeName}
                   </td>
                   <td>
                     <StatusBadge status={sub.status} />
                   </td>
-                  <td className="text-xs text-text-secondary font-mono">
+                  <td className={styles.dateCell}>
                     {new Date(sub.createdAt).toLocaleDateString("id-ID", {
                       day: "numeric",
                       month: "short",
                       year: "numeric"
                     })}
                   </td>
-                  <td className="text-xs text-text-secondary max-w-[150px] truncate" title={sub.notes}>
-                    {sub.notes || <span className="text-zinc-700">-</span>}
+                  <td className={styles.notesCell} title={sub.notes}>
+                    {sub.notes || <span className={styles.notesEmpty}>-</span>}
                   </td>
                   <td>
                     {sub.documentFile ? (
@@ -218,21 +219,21 @@ export default function AdminSubmissions() {
                         href={sub.documentFile}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-primary hover:text-blue-400 font-semibold"
+                        className={styles.downloadButton}
                       >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className={styles.svgIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
                         Unduh
                       </a>
                     ) : (
-                      <span className="text-xs text-zinc-600">-</span>
+                      <span className={styles.noDocument}>-</span>
                     )}
                   </td>
                   <td>
                     <button
                       onClick={() => handleOpenStatusModal(sub)}
-                      className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 hover:text-white transition-colors"
+                      className={styles.editButton}
                     >
                       Ubah Status
                     </button>
@@ -259,28 +260,28 @@ export default function AdminSubmissions() {
         size="md"
       >
         {activeSubmission && (
-          <form onSubmit={handleUpdateStatus} className="space-y-5">
+          <form onSubmit={handleUpdateStatus} className={styles.modalForm}>
             {/* Status Select */}
-            <div className="flex flex-col gap-1.5 w-full">
-              <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>
                 Pilih Status Baru
               </label>
               <select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value)}
-                className="w-full px-4 py-2.5 text-sm bg-zinc-900 border border-border rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                className={styles.selectInput}
               >
-                <option value="waiting" className="bg-zinc-950">Menunggu Antrean</option>
-                <option value="processing" className="bg-zinc-950">Sedang Diproses</option>
-                <option value="completed" className="bg-zinc-950">Selesai (Completed)</option>
-                <option value="rejected" className="bg-zinc-950">Ditolak & Refund Kredit</option>
+                <option value="waiting" className={styles.selectOption}>Menunggu Antrean</option>
+                <option value="processing" className={styles.selectOption}>Sedang Diproses</option>
+                <option value="completed" className={styles.selectOption}>Selesai (Completed)</option>
+                <option value="rejected" className={styles.selectOption}>Ditolak & Refund Kredit</option>
               </select>
             </div>
 
             {/* Results File Uploader (Only visible when marking Completed) */}
             {newStatus === "completed" && (
-              <div className="space-y-1.5 border-t border-border/40 pt-4">
-                <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+              <div className={styles.uploadSection}>
+                <label className={styles.formLabel}>
                   Unggah Berkas Hasil Turnitin
                 </label>
                 <UploadBox
@@ -293,8 +294,8 @@ export default function AdminSubmissions() {
             )}
 
             {/* Admin Notes Textarea */}
-            <div className="flex flex-col gap-1.5 w-full">
-              <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>
                 Catatan / Umpan Balik Admin
               </label>
               <textarea
@@ -302,12 +303,12 @@ export default function AdminSubmissions() {
                 value={adminNotes}
                 onChange={(e) => setAdminNotes(e.target.value)}
                 placeholder="Masukkan persentase kecocokan plagiat atau alasan penolakan..."
-                className="w-full px-4 py-2.5 text-sm bg-zinc-900 border border-border rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                className={styles.textareaInput}
               />
             </div>
 
             {/* Actions buttons */}
-            <div className="flex justify-end gap-3 pt-2">
+            <div className={styles.modalActions}>
               <Button
                 variant="outline"
                 onClick={() => setActiveSubmission(null)}

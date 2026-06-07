@@ -1,0 +1,165 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: var(--animate-fade-in);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .chartsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.chartCard {
+  padding: 1.5rem;
+  background-color: rgba(24, 24, 27, 0.4);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+}
+
+.chartCardFlex {
+  padding: 1.5rem;
+  background-color: rgba(24, 24, 27, 0.4);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tableCard {
+  padding: 1.5rem;
+  background-color: rgba(24, 24, 27, 0.4);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chartTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.chartWrapper {
+  height: 16rem;
+  width: 100%;
+}
+
+.pieFlexContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1.5rem;
+  height: 15rem;
+}
+
+@media (min-width: 640px) {
+  .pieFlexContainer {
+    flex-direction: row;
+  }
+}
+
+.pieChartWrapper {
+  height: 11rem;
+  width: 11rem;
+}
+
+.legendList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.legendColorDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  display: inline-block;
+}
+
+.textMuted {
+  color: var(--color-text-secondary);
+}
+
+.legendValue {
+  font-weight: 700;
+  color: #ffffff;
+  font-family: var(--font-mono);
+}
+
+.emptyTableText {
+  text-align: center;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.tableRow:hover td {
+  background-color: rgba(39, 39, 42, 0.2);
+}
+
+.buyerCell {
+  font-size: 0.75rem;
+}
+
+.buyerName {
+  display: block;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.buyerEmail {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  margin-top: 0.125rem;
+}
+
+.fontMono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #d4d4d8;
+}
+
+.amountText {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #34d399;
+}

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { dbService } from "@/services/dbService";
 import Loading from "@/components/Loading/Loading";
 import Table from "@/components/Table/Table";
+import styles from "./page.module.css";
 import {
   AreaChart,
   Area,
@@ -101,21 +102,21 @@ export default function AdminAnalytics() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Analitik Platform</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Analitik Platform</h1>
+        <p className={styles.subtitle}>
           Analisis performa finansial, pertumbuhan registrasi pengguna baru, dan statistik jenis pengecekan terpopuler.
         </p>
       </div>
 
       {/* Analytics Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className={styles.chartsGrid}>
         {/* Revenue Area Chart */}
-        <div className="p-6 bg-zinc-900/40 border border-border rounded-2xl">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase mb-4">Total Pendapatan Terakumulasi</h4>
-          <div className="h-64 w-full">
+        <div className={styles.chartCard}>
+          <h4 className={styles.chartTitle}>Total Pendapatan Terakumulasi</h4>
+          <div className={styles.chartWrapper}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={REVENUE_ANALYTICS}>
                 <defs>
@@ -135,9 +136,9 @@ export default function AdminAnalytics() {
         </div>
 
         {/* User Growth Chart */}
-        <div className="p-6 bg-zinc-900/40 border border-border rounded-2xl">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase mb-4">Pertumbuhan Pendaftaran User Mingguan</h4>
-          <div className="h-64 w-full">
+        <div className={styles.chartCard}>
+          <h4 className={styles.chartTitle}>Pertumbuhan Pendaftaran User Mingguan</h4>
+          <div className={styles.chartWrapper}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={USER_GROWTH}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#27272A" />
@@ -151,10 +152,10 @@ export default function AdminAnalytics() {
         </div>
 
         {/* Popular check types Pie chart */}
-        <div className="p-6 bg-zinc-900/40 border border-border rounded-2xl flex flex-col justify-between">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase mb-4">Layanan Cek Terpopuler (%)</h4>
-          <div className="flex flex-col sm:flex-row items-center justify-around gap-6 h-60">
-            <div className="h-44 w-44">
+        <div className={styles.chartCardFlex}>
+          <h4 className={styles.chartTitle}>Layanan Cek Terpopuler (%)</h4>
+          <div className={styles.pieFlexContainer}>
+            <div className={styles.pieChartWrapper}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -175,12 +176,12 @@ export default function AdminAnalytics() {
               </ResponsiveContainer>
             </div>
             
-            <div className="space-y-3">
+            <div className={styles.legendList}>
               {CHECK_TYPES_POPULARITY.map((item, index) => (
-                <div key={index} className="flex items-center gap-2 text-xs">
-                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></span>
-                  <span className="text-text-secondary">{item.name}:</span>
-                  <span className="font-bold text-white font-mono">{item.value}%</span>
+                <div key={index} className={styles.legendItem}>
+                  <span className={styles.legendColorDot} style={{ backgroundColor: item.color }}></span>
+                  <span className={styles.textMuted}>{item.name}:</span>
+                  <span className={styles.legendValue}>{item.value}%</span>
                 </div>
               ))}
             </div>
@@ -188,22 +189,22 @@ export default function AdminAnalytics() {
         </div>
 
         {/* Top credit buyers table list */}
-        <div className="p-6 bg-zinc-900/40 border border-border rounded-2xl space-y-4">
-          <h4 className="text-sm font-bold text-white tracking-wide uppercase">Daftar Top User (Pembelian Kredit Terbanyak)</h4>
+        <div className={styles.tableCard}>
+          <h4 className={styles.chartTitle}>Daftar Top User (Pembelian Kredit Terbanyak)</h4>
           {getTopBuyers().length === 0 ? (
-            <div className="text-center py-10 text-xs text-text-secondary">
+            <div className={styles.emptyTableText}>
               Belum ada transaksi pembelian kredit disetujui.
             </div>
           ) : (
             <Table headers={["Nama Pengguna", "Kredit Dibeli", "Total Transaksi"]}>
               {getTopBuyers().map((buyer) => (
-                <tr key={buyer.id} className="hover:bg-zinc-900/20">
-                  <td className="text-xs">
-                    <span className="block font-bold text-white leading-tight">{buyer.name}</span>
-                    <span className="block text-[10px] text-text-secondary mt-0.5">{buyer.email}</span>
+                <tr key={buyer.id} className={styles.tableRow}>
+                  <td className={styles.buyerCell}>
+                    <span className={styles.buyerName}>{buyer.name}</span>
+                    <span className={styles.buyerEmail}>{buyer.email}</span>
                   </td>
-                  <td className="font-mono text-xs text-zinc-300">{buyer.creditsBought} kredit</td>
-                  <td className="font-mono text-xs font-bold text-emerald-400">{formatCurrency(buyer.amount)}</td>
+                  <td className={styles.fontMono}>{buyer.creditsBought} kredit</td>
+                  <td className={styles.amountText}>{formatCurrency(buyer.amount)}</td>
                 </tr>
               ))}
             </Table>

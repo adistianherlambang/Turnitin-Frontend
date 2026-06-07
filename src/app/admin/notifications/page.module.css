@@ -1,0 +1,159 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: var(--animate-fade-in);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+}
+
+.addBtn {
+  box-shadow: 0 0 40px -5px rgba(37, 99, 235, 0.2);
+  font-size: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-weight: 700;
+}
+
+.tableRow:hover td {
+  background-color: rgba(39, 39, 42, 0.2);
+}
+
+.dateText {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.notifTitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notifMessage {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.creatorText {
+  font-size: 0.75rem;
+  color: #d4d4d8;
+  font-weight: 600;
+}
+
+.actionsCell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editBtn {
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.editBtn:hover {
+  background-color: #3f3f46;
+}
+
+.deleteBtn {
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-danger);
+  background-color: rgba(239, 68, 68, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.deleteBtn:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+.fieldLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #d4d4d8;
+  letter-spacing: 0.025em;
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  background-color: #09090b;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(39, 39, 42, 0.4);
+}

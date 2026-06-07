@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Loading from "@/components/Loading/Loading";
+import styles from "./layout.module.css";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -25,12 +26,12 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-background">
+    <div className={styles.container}>
       {/* Admin Sidebar Navigation */}
       <Sidebar />
 
       {/* Main Admin Content Pane */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-7xl mx-auto w-full">
+      <main className={styles.mainContent}>
         {children}
       </main>
     </div>

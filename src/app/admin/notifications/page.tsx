@@ -10,6 +10,7 @@ import Modal from "@/components/Modal/Modal";
 import Input from "@/components/Input/Input";
 import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function AdminNotifications() {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -94,16 +95,16 @@ export default function AdminNotifications() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title & Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className={styles.header}>
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Pengumuman & Siaran</h1>
-          <p className="text-xs text-text-secondary mt-1">
+          <h1 className={styles.title}>Pengumuman & Siaran</h1>
+          <p className={styles.subtitle}>
             Buat siaran pengumuman penting atau banner promo pembelian kredit yang akan tampil langsung di dashboard pengguna.
           </p>
         </div>
-        <Button onClick={handleOpenAdd} className="glow-primary text-xs px-4 py-2.5 font-bold">
+        <Button onClick={handleOpenAdd} className={styles.addBtn}>
           Buat Siaran Baru
         </Button>
       </div>
@@ -122,8 +123,8 @@ export default function AdminNotifications() {
       ) : (
         <Table headers={["Tanggal Disiarkan", "Judul Pengumuman", "Pesan Pengumuman", "Pembuat", "Aksi"]}>
           {notifications.map((notif) => (
-            <tr key={notif.id} className="hover:bg-zinc-900/30">
-              <td className="text-xs text-text-secondary font-mono">
+            <tr key={notif.id} className={styles.tableRow}>
+              <td className={styles.dateText}>
                 {new Date(notif.createdAt).toLocaleDateString("id-ID", {
                   day: "numeric",
                   month: "short",
@@ -131,24 +132,24 @@ export default function AdminNotifications() {
                   minute: "2-digit"
                 })}
               </td>
-              <td className="text-xs font-bold text-white max-w-[150px] truncate" title={notif.title}>
+              <td className={styles.notifTitle} title={notif.title}>
                 {notif.title}
               </td>
-              <td className="text-xs text-text-secondary max-w-[300px] truncate" title={notif.message}>
+              <td className={styles.notifMessage} title={notif.message}>
                 {notif.message}
               </td>
-              <td className="text-xs text-zinc-300 font-semibold">{notif.createdBy}</td>
+              <td className={styles.creatorText}>{notif.createdBy}</td>
               <td>
-                <div className="flex gap-2">
+                <div className={styles.actionsCell}>
                   <button
                     onClick={() => handleOpenEdit(notif)}
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 transition-colors"
+                    className={styles.editBtn}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => setNotifToDelete(notif)}
-                    className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-danger bg-danger/10 hover:bg-danger/20 transition-colors"
+                    className={styles.deleteBtn}
                   >
                     Hapus
                   </button>
@@ -166,7 +167,7 @@ export default function AdminNotifications() {
         title={editingNotif ? "Edit Siaran Pengumuman" : "Buat Siaran Baru"}
         size="md"
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className={styles.form}>
           <Input
             label="Judul Pengumuman"
             placeholder="Contoh: Promo Cashback Kredit Akhir Tahun!"
@@ -175,8 +176,8 @@ export default function AdminNotifications() {
             required
           />
 
-          <div className="flex flex-col gap-1.5 w-full">
-            <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+          <div className={styles.fieldGroup}>
+            <label className={styles.fieldLabel}>
               Isi Pesan Pengumuman
             </label>
             <textarea
@@ -184,12 +185,12 @@ export default function AdminNotifications() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Tuliskan pesan detail pengumuman yang ingin disampaikan kepada pengguna..."
-              className="w-full px-4 py-2.5 text-sm bg-zinc-900 border border-border rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+              className={styles.textarea}
             />
           </div>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-border/40">
+          <div className={styles.modalActions}>
             <Button variant="outline" onClick={() => setIsModalOpen(false)} disabled={submitting}>
               Batal
             </Button>

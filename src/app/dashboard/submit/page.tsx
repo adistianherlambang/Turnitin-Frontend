@@ -12,6 +12,7 @@ import { Checkbox as CustomCheckbox } from "@/components/Input/Input"; // import
 import UploadBox from "@/components/UploadBox/UploadBox";
 import Loading from "@/components/Loading/Loading";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function SubmitCheck() {
   const router = useRouter();
@@ -148,33 +149,31 @@ export default function SubmitCheck() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Ajukan Pengecekan Baru</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Ajukan Pengecekan Baru</h1>
+        <p className={styles.subtitle}>
           Lengkapi langkah-langkah berikut untuk memulai penapisan plagiasi Turnitin.
         </p>
       </div>
 
       {/* Progress Wizard Header */}
-      <div className="flex items-center justify-between border-b border-border/60 pb-5 text-sm select-none">
+      <div className={styles.wizardHeader}>
         {[
           { num: 1, label: "Pilih Layanan" },
           { num: 2, label: "Opsi Turnitin" },
           { num: 3, label: "Unggah Berkas" },
           { num: 4, label: "Ringkasan" }
         ].map((item) => (
-          <div key={item.num} className="flex items-center gap-2">
-            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${
-              step >= item.num
-                ? "bg-primary text-white"
-                : "bg-zinc-800 text-zinc-500 border border-zinc-700"
+          <div key={item.num} className={styles.wizardStep}>
+            <span className={`${styles.wizardBadge} ${
+              step >= item.num ? styles.wizardBadgeActive : styles.wizardBadgeInactive
             }`}>
               {item.num}
             </span>
-            <span className={`font-semibold hidden sm:inline ${
-              step >= item.num ? "text-white" : "text-text-secondary"
+            <span className={`${styles.wizardLabel} ${
+              step >= item.num ? styles.wizardLabelActive : styles.wizardLabelInactive
             }`}>
               {item.label}
             </span>
@@ -184,33 +183,33 @@ export default function SubmitCheck() {
 
       {/* STEP 1: SELECT CHECK TYPE */}
       {step === 1 && (
-        <div className="space-y-6">
-          <h3 className="text-base font-bold text-white uppercase tracking-wider">Langkah 1: Pilih Jenis Pengecekan</h3>
+        <div className={styles.stepWrapper}>
+          <h3 className={styles.stepTitle}>Langkah 1: Pilih Jenis Pengecekan</h3>
           
           {loadingTypes ? (
             <Loading />
           ) : checkTypes.length === 0 ? (
-            <div className="p-8 text-center text-text-secondary bg-zinc-900/10 border border-border rounded-2xl">
+            <div className={styles.emptyTypes}>
               Tidak ada jenis pengecekan aktif saat ini.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className={styles.typesGrid}>
               {checkTypes.map((type) => (
                 <div
                   key={type.id}
                   onClick={() => handleSelectType(type)}
-                  className="rounded-2xl border border-border hover:border-primary/50 bg-zinc-900/20 hover:bg-zinc-900/40 p-6 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 text-left flex flex-col justify-between"
+                  className={styles.typeCard}
                 >
                   <div>
-                    <span className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
+                    <span className={styles.typeBadge}>
                       {type.unitType === "fixed" ? "Tarif Tetap" : "Tarif Fleksibel"}
                     </span>
-                    <h4 className="text-sm font-extrabold text-white mt-3 leading-tight">{type.name}</h4>
-                    <p className="text-xs text-text-secondary mt-2 leading-relaxed">{type.description}</p>
+                    <h4 className={styles.typeName}>{type.name}</h4>
+                    <p className={styles.typeDesc}>{type.description}</p>
                   </div>
-                  <div className="mt-6 border-t border-border/40 pt-4 flex items-baseline gap-1 font-mono">
-                    <span className="text-2xl font-bold text-white">{type.creditCost}</span>
-                    <span className="text-xs text-text-secondary">
+                  <div className={styles.typeCostRow}>
+                    <span className={styles.typeCostVal}>{type.creditCost}</span>
+                    <span className={styles.typeCostUnit}>
                       {type.unitType === "fixed" ? "Kredit / Dokumen" : `Kredit / ${type.unitValue} Kata`}
                     </span>
                   </div>
@@ -223,10 +222,10 @@ export default function SubmitCheck() {
 
       {/* STEP 2: EXCLUSION OPTIONS */}
       {step === 2 && selectedType && (
-        <div className="space-y-6">
-          <h3 className="text-base font-bold text-white uppercase tracking-wider">Langkah 2: Opsi Pengecualian Turnitin</h3>
+        <div className={styles.stepWrapper}>
+          <h3 className={styles.stepTitle}>Langkah 2: Opsi Pengecualian Turnitin</h3>
           
-          <div className="glass-panel p-6 rounded-2xl border border-border/80 space-y-6">
+          <div className={styles.panel}>
             <div className="space-y-4">
               <CustomCheckbox
                 id="bib"
@@ -242,7 +241,7 @@ export default function SubmitCheck() {
               />
             </div>
 
-            <div className="border-t border-border/60 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className={styles.exclusionsGrid}>
               <Input
                 label="Pengecualian Tingkat Persen (%)"
                 type="number"
@@ -267,12 +266,12 @@ export default function SubmitCheck() {
               />
             </div>
             
-            <span className="block text-[10px] text-zinc-500 font-medium leading-normal">
+            <span className={styles.footnoteText}>
               *Hanya satu batas yang diperbolehkan diisi (Batas Persen ATAU Batas Jumlah Kata). Kosongkan jika ingin memakai setting default Turnitin.
             </span>
           </div>
 
-          <div className="flex justify-between">
+          <div className={styles.stepFooter}>
             <Button variant="outline" onClick={() => setStep(1)}>
               Kembali
             </Button>
@@ -285,11 +284,11 @@ export default function SubmitCheck() {
 
       {/* STEP 3: UPLOAD DOCUMENT */}
       {step === 3 && (
-        <div className="space-y-6">
-          <h3 className="text-base font-bold text-white uppercase tracking-wider">Langkah 3: Unggah Dokumen Akademik</h3>
+        <div className={styles.stepWrapper}>
+          <h3 className={styles.stepTitle}>Langkah 3: Unggah Dokumen Akademik</h3>
 
-          <div className="glass-panel p-6 rounded-2xl border border-border/80 space-y-4">
-            <span className="block text-xs text-text-secondary">
+          <div className={styles.panel}>
+            <span className={styles.introText}>
               Dokumen akan diproses oleh server eksternal kami secara otomatis. Harap unggah berkas dengan format PDF, DOC, DOCX, atau TXT.
             </span>
             <UploadBox
@@ -300,7 +299,7 @@ export default function SubmitCheck() {
             />
           </div>
 
-          <div className="flex justify-between">
+          <div className={styles.stepFooter}>
             <Button variant="outline" onClick={() => setStep(2)}>
               Kembali
             </Button>
@@ -310,31 +309,31 @@ export default function SubmitCheck() {
 
       {/* STEP 4: SUMMARY & CONFIRMATION */}
       {step === 4 && selectedType && (
-        <div className="space-y-6">
-          <h3 className="text-base font-bold text-white uppercase tracking-wider">Langkah 4: Ringkasan Pengajuan</h3>
+        <div className={styles.stepWrapper}>
+          <h3 className={styles.stepTitle}>Langkah 4: Ringkasan Pengajuan</h3>
 
-          <div className="glass-panel p-6 rounded-2xl border border-border/80 space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm">
-              <div className="space-y-1">
-                <span className="text-xs text-text-secondary uppercase font-semibold">Jenis Layanan</span>
-                <span className="block font-bold text-white">{selectedType.name}</span>
+          <div className={styles.panel}>
+            <div className={styles.summaryGrid}>
+              <div className={styles.summaryItem}>
+                <span className={styles.summaryLabel}>Jenis Layanan</span>
+                <span className={styles.summaryValueBold}>{selectedType.name}</span>
               </div>
-              <div className="space-y-1">
-                <span className="text-xs text-text-secondary uppercase font-semibold">Dokumen Unggahan</span>
-                <span className="block font-bold text-primary truncate max-w-xs">{fileName}</span>
+              <div className={styles.summaryItem}>
+                <span className={styles.summaryLabel}>Dokumen Unggahan</span>
+                <span className={styles.summaryValuePrimary}>{fileName}</span>
               </div>
-              <div className="space-y-1">
-                <span className="text-xs text-text-secondary uppercase font-semibold">Pengecualian Daftar Pustaka</span>
-                <span className="block font-medium text-white">{excludeBibliography ? "Aktif" : "Tidak Aktif"}</span>
+              <div className={styles.summaryItem}>
+                <span className={styles.summaryLabel}>Pengecualian Daftar Pustaka</span>
+                <span className={styles.summaryValueMedium}>{excludeBibliography ? "Aktif" : "Tidak Aktif"}</span>
               </div>
-              <div className="space-y-1">
-                <span className="text-xs text-text-secondary uppercase font-semibold">Pengecualian Kutipan</span>
-                <span className="block font-medium text-white">{excludeQuotes ? "Aktif" : "Tidak Aktif"}</span>
+              <div className={styles.summaryItem}>
+                <span className={styles.summaryLabel}>Pengecualian Kutipan</span>
+                <span className={styles.summaryValueMedium}>{excludeQuotes ? "Aktif" : "Tidak Aktif"}</span>
               </div>
               {(percentLimit || wordLimit) && (
-                <div className="space-y-1 col-span-2">
-                  <span className="text-xs text-text-secondary uppercase font-semibold">Filter Limitasi Khusus</span>
-                  <span className="block font-medium text-white">
+                <div className={`${styles.summaryItem} ${styles.summaryColSpan2}`}>
+                  <span className={styles.summaryLabel}>Filter Limitasi Khusus</span>
+                  <span className={styles.summaryValueMedium}>
                     {percentLimit ? `Kecualikan sumber kemiripan < ${percentLimit}%` : `Kecualikan sumber kemiripan < ${wordLimit} kata`}
                   </span>
                 </div>
@@ -342,29 +341,29 @@ export default function SubmitCheck() {
             </div>
 
             {/* Credit Cost Block */}
-            <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-between">
-              <div>
-                <span className="text-xs font-semibold text-text-secondary uppercase">Biaya Kredit Diperlukan</span>
-                <span className="block text-2xl font-extrabold text-white font-mono mt-0.5">
-                  {calculateCreditUsed()} <span className="text-xs font-normal text-text-secondary">kredit</span>
+            <div className={styles.costBox}>
+              <div className={styles.costDetail}>
+                <span className={styles.costDetailLabel}>Biaya Kredit Diperlukan</span>
+                <span className={styles.costDetailValBig}>
+                  {calculateCreditUsed()} <span className={styles.costUnit}>kredit</span>
                 </span>
               </div>
-              <div className="text-right">
-                <span className="text-xs font-semibold text-text-secondary uppercase">Saldo Kredit Saya</span>
-                <span className="block text-lg font-bold text-white font-mono mt-0.5">
-                  {user?.credits || 0} <span className="text-xs font-normal text-text-secondary">kredit</span>
+              <div className={styles.costDetailRight}>
+                <span className={styles.costDetailLabel}>Saldo Kredit Saya</span>
+                <span className={styles.costDetailValSmall}>
+                  {user?.credits || 0} <span className={styles.costUnit}>kredit</span>
                 </span>
               </div>
             </div>
             
             {((user?.credits || 0) < calculateCreditUsed()) && (
-              <div className="p-3 bg-danger/10 border border-danger/20 rounded-xl text-center text-xs text-danger font-semibold">
+              <div className={styles.insufficientWarning}>
                 ⚠️ Kredit tidak mencukupi. Anda membutuhkan {calculateCreditUsed() - (user?.credits || 0)} kredit lagi. Silakan top-up terlebih dahulu.
               </div>
             )}
           </div>
 
-          <div className="flex justify-between">
+          <div className={styles.stepFooter}>
             <Button variant="outline" onClick={() => setStep(3)} disabled={submitting}>
               Kembali
             </Button>

@@ -1,0 +1,351 @@
+.container {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: var(--animate-fade-in);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+}
+
+.wizardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(39, 39, 42, 0.6);
+  padding-bottom: 1.25rem;
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+.wizardStep {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wizardBadge {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  transition: all 0.2s ease;
+}
+
+.wizardBadgeActive {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.wizardBadgeInactive {
+  background-color: #27272a;
+  color: #71717a;
+  border: 1px solid #3f3f46;
+}
+
+.wizardLabel {
+  font-weight: 600;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .wizardLabel {
+    display: inline;
+  }
+}
+
+.wizardLabelActive {
+  color: #ffffff;
+}
+
+.wizardLabelInactive {
+  color: var(--color-text-secondary);
+}
+
+.stepWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stepTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.typesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .typesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.typeCard {
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
+  background-color: rgba(24, 24, 27, 0.2);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.typeCard:hover {
+  border-color: rgba(37, 99, 235, 0.5);
+  background-color: rgba(24, 24, 27, 0.4);
+  transform: translateY(-0.25rem);
+}
+
+.typeBadge {
+  display: inline-flex;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--color-primary);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  align-self: flex-start;
+}
+
+.typeName {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 0.75rem;
+  line-height: 1.25;
+}
+
+.typeDesc {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.5rem;
+  line-height: 1.625;
+}
+
+.typeCostRow {
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(39, 39, 42, 0.4);
+  padding-top: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+}
+
+.typeCostVal {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.typeCostUnit {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.emptyTypes {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-secondary);
+  background-color: rgba(24, 24, 27, 0.1);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+.panel {
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(39, 39, 42, 0.8);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.exclusionsGrid {
+  border-top: 1px solid rgba(39, 39, 42, 0.6);
+  padding-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .exclusionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stepFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.introText {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.footnoteText {
+  display: block;
+  font-size: 10px;
+  color: #71717a;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem 1.5rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summaryLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.summaryValueBold {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.summaryValuePrimary {
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20rem;
+}
+
+.summaryValueMedium {
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.summaryColSpan2 {
+  grid-column: span 1;
+}
+
+@media (min-width: 640px) {
+  .summaryColSpan2 {
+    grid-column: span 2 / span 2;
+  }
+}
+
+.costBox {
+  padding: 1rem;
+  background-color: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.costDetail {
+  display: flex;
+  flex-direction: column;
+}
+
+.costDetailRight {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.costDetailLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.costDetailValBig {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  margin-top: 0.125rem;
+}
+
+.costDetailValSmall {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  margin-top: 0.125rem;
+}
+
+.costUnit {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.insufficientWarning {
+  padding: 0.75rem;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 0.75rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-danger);
+  font-weight: 600;
+}

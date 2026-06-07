@@ -6,6 +6,7 @@ import UserAvatar from "@/components/UserAvatar/UserAvatar";
 import Button from "@/components/Button/Button";
 import Card from "@/components/Card/Card";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function AdminAccount() {
   const { user, logout } = useAuth();
@@ -16,36 +17,38 @@ export default function AdminAccount() {
   };
 
   return (
-    <div className="max-w-xl mx-auto space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Akun Admin</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Akun Admin</h1>
+        <p className={styles.subtitle}>
           Kelola profil administratif Anda dan keluarlah secara aman.
         </p>
       </div>
 
       {/* Profile detail */}
-      <Card hoverable={false} className="bg-zinc-900/20 text-center flex flex-col items-center py-8">
-        <UserAvatar
-          src={user?.photoURL}
-          name={user?.name || "Admin"}
-          size="lg"
-          className="mb-4 shadow-lg border-2 border-primary/20"
-        />
-        <h3 className="text-lg font-bold text-white leading-tight">{user?.name || "Memuat..."}</h3>
-        <span className="text-xs text-text-secondary mt-1">{user?.email}</span>
-        
-        <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary uppercase tracking-widest font-mono">
-          Peran: Administrator Portal
+      <Card hoverable={false} className="bg-zinc-900/20">
+        <div className={styles.profileCardContent}>
+          <UserAvatar
+            src={user?.photoURL}
+            name={user?.name || "Admin"}
+            size="lg"
+            className={styles.avatar}
+          />
+          <h3 className={styles.profileName}>{user?.name || "Memuat..."}</h3>
+          <span className={styles.profileEmail}>{user?.email}</span>
+          
+          <div className={styles.roleBadge}>
+            Peran: Administrator Portal
+          </div>
         </div>
       </Card>
 
-      <div className="pt-4">
+      <div className={styles.logoutContainer}>
         <Button
           variant="outline"
           onClick={handleLogout}
-          className="w-full text-danger border-danger/20 hover:bg-danger/10 py-3.5 font-bold"
+          className={styles.logoutBtn}
         >
           Keluar dari Sistem Admin
         </Button>

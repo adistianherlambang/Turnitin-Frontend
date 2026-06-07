@@ -12,6 +12,7 @@ import Button from "@/components/Button/Button";
 import Modal from "@/components/Modal/Modal";
 import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import { toast } from "react-hot-toast";
+import styles from "./page.module.css";
 
 export default function AdminPayments() {
   const [payments, setPayments] = useState<any[]>([]);
@@ -156,11 +157,11 @@ export default function AdminPayments() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className={styles.container}>
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">Manajemen Pembayaran</h1>
-        <p className="text-xs text-text-secondary mt-1">
+        <h1 className={styles.title}>Manajemen Pembayaran</h1>
+        <p className={styles.subtitle}>
           Verifikasi struk bukti transfer dan setujui penambahan saldo kredit pengguna.
         </p>
       </div>
@@ -195,23 +196,23 @@ export default function AdminPayments() {
           description="Tidak ada catatan pembayaran top-up kredit yang ditemukan."
         />
       ) : (
-        <div className="space-y-4">
+        <div className={styles.tableWrapper}>
           <Table headers={["ID Pembayaran", "User", "Nominal Transfer", "Jumlah Kredit", "Status", "Bukti", "Tanggal Diajukan", "Aksi"]}>
             {paginatedItems.map((pay) => {
               const u = getUserDetails(pay.userId);
               return (
-                <tr key={pay.id} className="hover:bg-zinc-900/30">
-                  <td className="font-mono text-xs font-semibold text-zinc-300">
+                <tr key={pay.id} className={styles.tableRow}>
+                  <td className={styles.paymentIdCell}>
                     {pay.paymentId}
                   </td>
-                  <td className="text-xs">
-                    <span className="block font-bold text-white leading-tight">{u.name}</span>
-                    <span className="block text-[10px] text-text-secondary mt-0.5">{u.email}</span>
+                  <td className={styles.userCell}>
+                    <span className={styles.userName}>{u.name}</span>
+                    <span className={styles.userEmail}>{u.email}</span>
                   </td>
-                  <td className="font-mono text-xs text-white">
+                  <td className={styles.amountCell}>
                     {formatCurrency(pay.amount)}
                   </td>
-                  <td className="font-mono text-xs font-bold text-zinc-200">
+                  <td className={styles.creditsCell}>
                     {pay.credits}
                   </td>
                   <td>
@@ -221,15 +222,15 @@ export default function AdminPayments() {
                     {pay.proofFile ? (
                       <button
                         onClick={() => setSelectedProofUrl(pay.proofFile)}
-                        className="text-xs font-semibold text-primary hover:text-blue-400"
+                        className={styles.proofButton}
                       >
                         Lihat Berkas
                       </button>
                     ) : (
-                      <span className="text-xs text-zinc-600">-</span>
+                      <span className={styles.noProof}>-</span>
                     )}
                   </td>
-                  <td className="text-xs text-text-secondary">
+                  <td className={styles.dateCell}>
                     {new Date(pay.createdAt).toLocaleDateString("id-ID", {
                       day: "numeric",
                       month: "short",
@@ -238,22 +239,22 @@ export default function AdminPayments() {
                   </td>
                   <td>
                     {pay.status === "pending" ? (
-                      <div className="flex gap-2">
+                      <div className={styles.actions}>
                         <button
                           onClick={() => setPaymentToReject(pay)}
-                          className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-danger bg-danger/10 hover:bg-danger/20 transition-colors"
+                          className={styles.rejectButton}
                         >
                           Tolak
                         </button>
                         <button
                           onClick={() => setPaymentToApprove(pay)}
-                          className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-success bg-success/10 hover:bg-success/20 transition-colors"
+                          className={styles.approveButton}
                         >
                           Approve
                         </button>
                       </div>
                     ) : (
-                      <span className="text-xs text-zinc-600">Selesai Diverifikasi</span>
+                      <span className={styles.statusCompleted}>Selesai Diverifikasi</span>
                     )}
                   </td>
                 </tr>
@@ -277,14 +278,14 @@ export default function AdminPayments() {
         title="Bukti Transfer Pembayaran"
         size="lg"
       >
-        <div className="flex flex-col items-center justify-center bg-zinc-950 p-4 rounded-xl border border-border">
+        <div className={styles.lightboxContainer}>
           {selectedProofUrl && (
             selectedProofUrl.endsWith(".pdf") ? (
               <a
                 href={selectedProofUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-primary hover:underline"
+                className={styles.pdfDownloadLink}
               >
                 Unduh / Buka Dokumen PDF Struk
               </a>
@@ -292,7 +293,7 @@ export default function AdminPayments() {
               <img
                 src={selectedProofUrl}
                 alt="Bukti Transfer"
-                className="max-h-[60vh] object-contain rounded-lg shadow-lg"
+                className={styles.proofImage}
               />
             )
           )}

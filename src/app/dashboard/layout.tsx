@@ -11,6 +11,7 @@ import Button from "@/components/Button/Button";
 import UploadBox from "@/components/UploadBox/UploadBox";
 import { dbService } from "@/services/dbService";
 import { toast } from "react-hot-toast";
+import styles from "./layout.module.css";
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -52,10 +53,10 @@ export default function DashboardLayout({ children }) {
 
   if (user.status === "suspended") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background px-4 text-center">
-        <div className="max-w-md p-8 rounded-2xl border border-danger/30 bg-danger/5 space-y-4">
-          <h2 className="text-xl font-bold text-danger">Akun Ditangguhkan</h2>
-          <p className="text-sm text-text-secondary leading-relaxed">
+      <div className={styles.suspendedRoot}>
+        <div className={styles.suspendedBox}>
+          <h2 className={styles.suspendedTitle}>Akun Ditangguhkan</h2>
+          <p className={styles.suspendedDesc}>
             Akun Anda telah ditangguhkan oleh administrator. Harap hubungi dukungan pelanggan di support@turnitinchecker.com untuk memulihkan akun Anda.
           </p>
           <Button variant="outline" onClick={() => router.push("/")}>
@@ -103,12 +104,12 @@ export default function DashboardLayout({ children }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-background">
+    <div className={styles.container}>
       {/* Sidebar Navigation */}
       <Sidebar onBuyCreditsClick={() => setIsBuyModalOpen(true)} />
 
       {/* Main Content Pane */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-7xl mx-auto w-full">
+      <main className={styles.mainContent}>
         {children}
       </main>
 
@@ -119,7 +120,7 @@ export default function DashboardLayout({ children }) {
         title="Beli Kredit Baru"
         size="md"
       >
-        <form onSubmit={handleBuySubmit} className="space-y-5">
+        <form onSubmit={handleBuySubmit} className={styles.form}>
           <Input
             label="Jumlah Kredit"
             type="number"
@@ -131,9 +132,9 @@ export default function DashboardLayout({ children }) {
           />
 
           {/* Cost breakdown */}
-          <div className="p-4 bg-zinc-900 border border-border/80 rounded-xl flex items-center justify-between text-sm">
-            <span className="text-text-secondary">Total Pembayaran:</span>
-            <span className="font-bold text-emerald-400 font-mono text-base">
+          <div className={styles.costBreakdown}>
+            <span className={styles.labelSecondary}>Total Pembayaran:</span>
+            <span className={styles.costValue}>
               {new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR",
@@ -143,24 +144,24 @@ export default function DashboardLayout({ children }) {
           </div>
 
           {/* Bank Info Details */}
-          <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl text-xs space-y-2">
-            <span className="block font-bold text-white uppercase tracking-wider">Informasi Transfer Bank</span>
-            <div className="grid grid-cols-3 gap-y-1">
-              <span className="text-text-secondary">Bank:</span>
-              <span className="col-span-2 font-semibold text-white">{bankSettings.bankName}</span>
-              <span className="text-text-secondary">No. Rekening:</span>
-              <span className="col-span-2 font-bold text-white font-mono">{bankSettings.bankAccountNumber}</span>
-              <span className="text-text-secondary">Atas Nama:</span>
-              <span className="col-span-2 font-semibold text-white">{bankSettings.bankAccountHolder}</span>
+          <div className={styles.bankInfoBlock}>
+            <span className={styles.bankHeader}>Informasi Transfer Bank</span>
+            <div className={styles.bankDetailsGrid}>
+              <span className={styles.labelSecondary}>Bank:</span>
+              <span className={styles.bankValueSemi}>{bankSettings.bankName}</span>
+              <span className={styles.labelSecondary}>No. Rekening:</span>
+              <span className={styles.bankValueBoldMono}>{bankSettings.bankAccountNumber}</span>
+              <span className={styles.labelSecondary}>Atas Nama:</span>
+              <span className={styles.bankValueSemi}>{bankSettings.bankAccountHolder}</span>
             </div>
-            <span className="block text-zinc-500 font-medium mt-1 leading-normal">
+            <span className={styles.bankFootnote}>
               *Harap transfer nominal sesuai jumlah di atas lalu unggah struk bukti transfer.
             </span>
           </div>
 
           {/* Proof File Uploader */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-300 tracking-wide">
+          <div className={styles.uploadSection}>
+            <label className={styles.uploadLabel}>
               Unggah Bukti Transfer
             </label>
             <UploadBox
@@ -172,7 +173,7 @@ export default function DashboardLayout({ children }) {
           </div>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3 pt-2">
+          <div className={styles.actionsFooter}>
             <Button
               variant="outline"
               onClick={() => setIsBuyModalOpen(false)}
