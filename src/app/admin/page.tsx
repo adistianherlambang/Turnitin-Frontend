@@ -20,25 +20,6 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-// Simulated monthly metrics
-const MONTHLY_SUBMISSIONS_DATA = [
-  { name: "Jan", total: 45 },
-  { name: "Feb", total: 80 },
-  { name: "Mar", total: 120 },
-  { name: "Apr", total: 95 },
-  { name: "May", total: 155 },
-  { name: "Jun", total: 220 }
-];
-
-const MONTHLY_REVENUE_DATA = [
-  { name: "Jan", revenue: 225000 },
-  { name: "Feb", revenue: 400000 },
-  { name: "Mar", revenue: 600000 },
-  { name: "Apr", revenue: 475000 },
-  { name: "May", revenue: 775000 },
-  { name: "Jun", revenue: 1100000 }
-];
-
 export default function AdminDashboard() {
   const [users, setUsers] = useState<any[]>([]);
   const [payments, setPayments] = useState<any[]>([]);
@@ -81,6 +62,28 @@ export default function AdminDashboard() {
   const estimatedRevenue = payments
     .filter(p => p.status === "approved")
     .reduce((sum, p) => sum + p.amount, 0);
+
+  // Dynamic Monthly Aggregations (Current Year)
+  const currentYear = new Date().getFullYear();
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const monthlySubmissionsData = monthNames.map((name, index) => {
+    const total = submissions.filter((sub) => {
+      if (!sub.createdAt) return false;
+      const date = new Date(sub.createdAt);
+      return date.getFullYear() === currentYear && date.getMonth() === index;
+    }).length;
+    return { name, total };
+  });
+
+  const monthlyRevenueData = monthNames.map((name, index) => {
+    const revenue = payments.filter((pay) => {
+      if (!pay.createdAt || pay.status !== "approved") return false;
+      const date = new Date(pay.createdAt);
+      return date.getFullYear() === currentYear && date.getMonth() === index;
+    }).reduce((sum, pay) => sum + (pay.amount || 0), 0);
+    return { name, revenue };
+  });
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -161,7 +164,7 @@ export default function AdminDashboard() {
           <h4 className={styles.chartTitle}>Statistik Pengajuan Bulanan</h4>
           <div className={styles.chartWrapper}>
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={MONTHLY_SUBMISSIONS_DATA}>
+              <AreaChart data={monthlySubmissionsData}>
                 <defs>
                   <linearGradient id="colorSub" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#2563EB" stopOpacity={0.4}/>
@@ -183,7 +186,7 @@ export default function AdminDashboard() {
           <h4 className={styles.chartTitle}>Estimasi Pendapatan Bulanan (IDR)</h4>
           <div className={styles.chartWrapper}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={MONTHLY_REVENUE_DATA}>
+              <BarChart data={monthlyRevenueData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#27272A" />
                 <XAxis dataKey="name" stroke="#A1A1AA" fontSize={11} />
                 <YAxis stroke="#A1A1AA" fontSize={11} />
