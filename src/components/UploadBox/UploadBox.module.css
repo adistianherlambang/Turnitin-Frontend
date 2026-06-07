@@ -1,94 +1,214 @@
-@reference "../../app/globals.css";
-
 .wrapper {
-  @apply w-full;
+  width: 100%;
 }
 .hiddenInput {
-  @apply hidden;
+  display: none;
 }
 
 /* Idle State Dropzone */
 .idleDropzone {
-  @apply flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-8 cursor-pointer transition-all;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  border-style: dashed;
+  border-radius: 1rem;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
 .isDragActive {
-  @apply border-primary bg-primary/5 scale-[0.99];
+  border-color: var(--color-primary);
+  background-color: rgba(37, 99, 235, 0.05);
+  transform: scale(0.99);
 }
 .isDragInactive {
-  @apply border-border hover:border-zinc-700 bg-zinc-900/10 hover:bg-zinc-900/30;
+  border-color: var(--color-border);
+  background-color: rgba(24, 24, 27, 0.1);
+}
+.isDragInactive:hover {
+  border-color: #3f3f46;
+  background-color: rgba(24, 24, 27, 0.3);
 }
 .iconContainer {
-  @apply p-4 rounded-full bg-zinc-900 border border-zinc-800 text-text-secondary group-hover:text-white mb-4;
+  padding: 1rem;
+  border-radius: 9999px;
+  background-color: #18181b;
+  border: 1px solid #27272a;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.idleDropzone:hover .iconContainer {
+  color: #ffffff;
 }
 .svgIcon {
-  @apply w-8 h-8;
+  width: 2rem;
+  height: 2rem;
 }
 .titleText {
-  @apply text-sm font-semibold text-white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 .descText {
-  @apply text-xs text-text-secondary mt-1;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
 }
 .infoText {
-  @apply text-[10px] text-zinc-500 mt-4 uppercase font-semibold tracking-wider;
+  font-size: 10px;
+  color: #52525b;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 /* Uploading State */
 .uploadingContainer {
-  @apply border border-border bg-zinc-900/20 rounded-2xl p-6 flex flex-col items-center text-center;
+  border: 1px solid var(--color-border);
+  background-color: rgba(24, 24, 27, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 .progressCircleWrapper {
-  @apply relative w-16 h-16 flex items-center justify-center mb-4;
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 .progressSvg {
-  @apply animate-spin w-16 h-16 text-primary;
+  animation: spin 2s linear infinite;
+  width: 4rem;
+  height: 4rem;
+  color: var(--color-primary);
 }
 .progressBgCircle {
-  @apply text-zinc-800;
+  color: #27272a;
 }
 .progressValue {
-  @apply absolute text-xs font-bold text-white font-mono;
+  position: absolute;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: var(--font-mono);
 }
 .uploadingTitle {
-  @apply text-sm font-semibold text-white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
 }
 .uploadingDesc {
-  @apply text-xs text-text-secondary mt-1;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
 }
 
 /* Success State */
 .successContainer {
-  @apply border border-success/30 bg-success/5 rounded-2xl p-6 flex flex-col items-center text-center;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  background-color: rgba(34, 197, 94, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 .successIconContainer {
-  @apply p-3 rounded-full bg-success/10 border border-success/20 text-success mb-3;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: var(--color-success);
+  margin-bottom: 0.75rem;
 }
 .successIcon {
-  @apply w-6 h-6;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 .fileName {
-  @apply text-sm font-bold text-white truncate max-w-xs;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20rem;
 }
 .successText {
-  @apply text-xs text-success mt-1;
+  font-size: 0.75rem;
+  color: var(--color-success);
+  margin-top: 0.25rem;
 }
 .actionButton {
-  @apply mt-4 text-xs font-semibold text-text-secondary hover:text-white bg-zinc-900 hover:bg-zinc-800 px-3 py-1.5 rounded-lg border border-border transition-colors;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background-color: #18181b;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.actionButton:hover {
+  color: #ffffff;
+  background-color: #27272a;
 }
 
 /* Error State */
 .errorContainer {
-  @apply border border-danger/30 bg-danger/5 rounded-2xl p-6 flex flex-col items-center text-center;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: rgba(239, 68, 68, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 .errorIconContainer {
-  @apply p-3 rounded-full bg-danger/10 border border-danger/20 text-danger mb-3;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--color-danger);
+  margin-bottom: 0.75rem;
 }
 .errorIcon {
-  @apply w-6 h-6;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 .errorTitle {
-  @apply text-sm font-bold text-white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 .errorText {
-  @apply text-xs text-danger mt-1.5 max-w-xs leading-relaxed;
+  font-size: 0.75rem;
+  color: var(--color-danger);
+  margin-top: 0.375rem;
+  max-width: 20rem;
+  line-height: 1.625;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

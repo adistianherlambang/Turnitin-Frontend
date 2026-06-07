@@ -1,35 +1,75 @@
-@reference "../../app/globals.css";
-
 .spinnerBase {
-  @apply rounded-full border-t-primary border-r-transparent border-b-zinc-800 border-l-zinc-800 animate-spin;
+  border-radius: 9999px;
+  border-top-color: var(--color-primary);
+  border-right-color: transparent;
+  border-bottom-color: #27272a;
+  border-left-color: #27272a;
+  border-style: solid;
+  animation: spin 1s linear infinite;
 }
 .size-sm {
-  @apply w-5 h-5 border-2;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-width: 2px;
 }
 .size-md {
-  @apply w-8 h-8 border-3;
+  width: 2rem;
+  height: 2rem;
+  border-width: 3px;
 }
 .size-lg {
-  @apply w-12 h-12 border-4;
+  width: 3rem;
+  height: 3rem;
+  border-width: 4px;
 }
 
 .fullPageContainer {
-  @apply fixed inset-0 z-50 bg-background/80 backdrop-blur-md flex items-center justify-center;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .inlineContainer {
-  @apply flex items-center justify-center p-6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
 }
 
 /* Skeleton animation and base colors */
 .skeleton {
-  @apply bg-zinc-800 animate-pulse-slow;
+  background-color: #27272a;
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 .shape-rect {
-  @apply rounded-xl;
+  border-radius: 0.75rem;
 }
 .shape-circle {
-  @apply rounded-full;
+  border-radius: 9999px;
 }
 .shape-text {
-  @apply rounded-md;
+  border-radius: 0.375rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .3;
+  }
 }
