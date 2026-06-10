@@ -31,7 +31,7 @@ export default function Register() {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       tempErrors.email = "Format email tidak valid";
     }
-    
+
     if (!password) {
       tempErrors.password = "Password wajib diisi";
     } else if (password.length < 6) {
@@ -41,7 +41,7 @@ export default function Register() {
     if (password !== confirmPassword) {
       tempErrors.confirmPassword = "Konfirmasi password tidak cocok";
     }
-    
+
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };

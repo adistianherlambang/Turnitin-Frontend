@@ -22,10 +22,10 @@ export default function Home() {
         <div className={styles.glowGrid}></div>
 
         <div className={styles.heroContent}>
-          <div className={styles.badge}>
+          {/* <div className={styles.badge}>
             ✨ Cek Plagiasi Turnitin Berbasis AI Tercepat
-          </div>
-          
+          </div> */}
+
           <h1 className={styles.heroTitle}>
             Cek Plagiasi Dokumen Anda Dengan{" "}
             <span className={styles.gradientText}>

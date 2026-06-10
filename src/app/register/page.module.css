@@ -14,6 +14,7 @@
     padding-right: 1.5rem;
   }
 }
+
 @media (min-width: 1024px) {
   .container {
     padding-left: 2rem;
@@ -24,13 +25,13 @@
 .card {
   width: 100%;
   max-width: 28rem;
-  background: rgba(30, 30, 30, 0.35);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* background: rgba(30, 30, 30, 0.35); */
+  /* backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); */
   padding: 2rem;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  /* border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); */
   animation: fadeIn 0.5s ease-out;
   display: flex;
   flex-direction: column;
@@ -87,6 +88,7 @@
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
