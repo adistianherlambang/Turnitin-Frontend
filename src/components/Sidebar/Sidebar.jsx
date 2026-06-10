@@ -179,19 +179,18 @@ export const Sidebar = ({ onBuyCreditsClick }) => {
 
       {/* Sidebar Container */}
       <aside
-        className={`${styles.sidebar} ${
-          isOpen ? styles["sidebar-open"] : styles["sidebar-closed"]
-        }`}
+        className={`${styles.sidebar} ${isOpen ? styles["sidebar-open"] : styles["sidebar-closed"]
+          }`}
       >
         {/* Sidebar Brand Header */}
         <div className={styles.brandHeader}>
-          <div className={styles.brandIconWrapper}>
+          {/* <div className={styles.brandIconWrapper}>
             <svg className={styles.brandIcon} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
             </svg>
-          </div>
+          </div> */}
           <div>
-            <span className={styles.brandTitle}>Turnitin Checker</span>
+            <span className={styles.brandTitle}>Turnitin Logo</span>
             <span className={styles.brandSubtitle}>
               {isAdmin ? "Admin Portal" : "User Portal"}
             </span>
