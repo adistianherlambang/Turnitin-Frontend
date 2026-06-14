@@ -32,6 +32,16 @@
   border-color: #3f3f46;
   background-color: rgba(24, 24, 27, 0.3);
 }
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed !important;
+  border-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.02);
+}
+.disabled:hover {
+  border-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.02);
+}
 .iconContainer {
   padding: 1rem;
   border-radius: 9999px;

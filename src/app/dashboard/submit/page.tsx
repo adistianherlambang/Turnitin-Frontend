@@ -21,6 +21,8 @@ export default function SubmitCheck() {
   const [checkTypes, setCheckTypes] = useState<any[]>([]);
   const [loadingTypes, setLoadingTypes] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [storageFull, setStorageFull] = useState(false);
+  const [storageInfo, setStorageInfo] = useState<any>(null);
   
   // Selection States
   const [selectedType, setSelectedType] = useState<any>(null); // the full checkType object
@@ -53,12 +55,37 @@ export default function SubmitCheck() {
     return () => unsub();
   }, []);
 
+  // Check storage limits
+  useEffect(() => {
+    const checkStorage = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_STORAGE_SERVER || "http://localhost:5001"}/api/storage`);
+        const data = await res.json();
+        if (data && data.success) {
+          setStorageFull(data.storage.isFull);
+          setStorageInfo(data.storage);
+        }
+      } catch (err) {
+        console.error("Gagal memeriksa penyimpanan:", err);
+      }
+    };
+    checkStorage();
+  }, []);
+
   const handleSelectType = (type) => {
+    if (storageFull) {
+      toast.error("Tidak dapat melanjutkan: Penyimpanan server penuh.");
+      return;
+    }
     setSelectedType(type);
     setStep(2);
   };
 
   const handleExclusionsNext = () => {
+    if (storageFull) {
+      toast.error("Tidak dapat melanjutkan: Penyimpanan server penuh.");
+      return;
+    }
     if (viewMode === "lama") {
       // Validate percent vs word count (only one is allowed)
       if (percentLimit && wordLimit) {
@@ -190,6 +217,12 @@ export default function SubmitCheck() {
         </p>
       </div>
 
+      {storageFull && (
+        <div className={styles.storageFullWarning}>
+          ⚠️ <strong>Penyimpanan Server Penuh ({storageInfo?.totalSizeMB} MB / {storageInfo?.limitMB} MB).</strong> Pengecekan baru tidak dapat diajukan untuk sementara waktu. Harap hubungi administrator untuk membersihkan ruang penyimpanan.
+        </div>
+      )}
+
       {/* Progress Wizard Header */}
       <div className={styles.wizardHeader}>
         {[
@@ -230,7 +263,7 @@ export default function SubmitCheck() {
                 <div
                   key={type.id}
                   onClick={() => handleSelectType(type)}
-                  className={styles.typeCard}
+                  className={`${styles.typeCard} ${storageFull ? styles.typeCardDisabled : ""}`}
                 >
                   <div>
                     <span className={styles.typeBadge}>
@@ -373,7 +406,7 @@ export default function SubmitCheck() {
             <Button variant="outline" onClick={() => setStep(1)}>
               Kembali
             </Button>
-            <Button onClick={handleExclusionsNext}>
+            <Button onClick={handleExclusionsNext} disabled={storageFull}>
               Lanjutkan
             </Button>
           </div>
@@ -394,6 +427,7 @@ export default function SubmitCheck() {
               onUploadSuccess={handleUploadSuccess}
               onUploadError={(err) => toast.error(err)}
               allowedExtensions={[".pdf", ".doc", ".docx", ".txt"]}
+              disabled={storageFull}
             />
           </div>
 

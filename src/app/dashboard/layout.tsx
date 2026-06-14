@@ -20,12 +20,31 @@ export default function DashboardLayout({ children }) {
   const [amount, setAmount] = useState(5);
   const [proofUrl, setProofUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [storageFull, setStorageFull] = useState(false);
   const [bankSettings, setBankSettings] = useState({
     bankName: "Bank Central Asia (BCA)",
     bankAccountNumber: "8029381029",
     bankAccountHolder: "PT Turnitin Indonesia Group",
     creditPrice: 5000
   });
+
+  // Check storage limits
+  useEffect(() => {
+    const checkStorage = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_STORAGE_SERVER || "http://localhost:5001"}/api/storage`);
+        const data = await res.json();
+        if (data && data.success) {
+          setStorageFull(data.storage.isFull);
+        }
+      } catch (err) {
+        console.error("Gagal memeriksa penyimpanan:", err);
+      }
+    };
+    if (isBuyModalOpen) {
+      checkStorage();
+    }
+  }, [isBuyModalOpen]);
 
   // Fetch settings for bank info
   useEffect(() => {
@@ -121,6 +140,12 @@ export default function DashboardLayout({ children }) {
         size="md"
       >
         <form onSubmit={handleBuySubmit} className={styles.form}>
+          {storageFull && (
+            <div className={styles.storageFullWarning}>
+              ⚠️ <strong>Penyimpanan Server Penuh.</strong> Untuk sementara Anda tidak dapat melakukan pembelian kredit baru karena tidak dapat mengunggah bukti transfer.
+            </div>
+          )}
+
           <Input
             label="Jumlah Kredit"
             type="number"
@@ -129,6 +154,7 @@ export default function DashboardLayout({ children }) {
             value={amount}
             onChange={(e) => setAmount(Math.max(1, parseInt(e.target.value) || 0))}
             required
+            disabled={storageFull}
           />
 
           {/* Cost breakdown */}
@@ -169,6 +195,7 @@ export default function DashboardLayout({ children }) {
               onUploadSuccess={(url) => setProofUrl(url)}
               onUploadError={(err) => toast.error(err)}
               allowedExtensions={[".jpg", ".jpeg", ".png", ".pdf"]}
+              disabled={storageFull}
             />
           </div>
 
@@ -184,7 +211,7 @@ export default function DashboardLayout({ children }) {
             <Button
               type="submit"
               loading={submitting}
-              disabled={!proofUrl}
+              disabled={!proofUrl || storageFull}
               className="glow-primary"
             >
               Kirim Konfirmasi

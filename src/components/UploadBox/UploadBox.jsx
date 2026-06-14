@@ -9,7 +9,8 @@ export const UploadBox = ({
   onUploadSuccess,
   onUploadError,
   allowedExtensions = [".pdf", ".doc", ".docx", ".txt"],
-  maxSizeMB = 10
+  maxSizeMB = 10,
+  disabled = false
 }) => {
   const [isDragActive, setIsDragActive] = useState(false);
   const [file, setFile] = useState(null);
@@ -134,22 +135,26 @@ export const UploadBox = ({
 
       {status === "idle" && (
         <div
-          onDragEnter={handleDrag}
-          onDragOver={handleDrag}
-          onDragLeave={handleDrag}
-          onDrop={handleDrop}
-          onClick={triggerFileInput}
+          onDragEnter={disabled ? undefined : handleDrag}
+          onDragOver={disabled ? undefined : handleDrag}
+          onDragLeave={disabled ? undefined : handleDrag}
+          onDrop={disabled ? undefined : handleDrop}
+          onClick={disabled ? undefined : triggerFileInput}
           className={`${styles.idleDropzone} ${
             isDragActive ? styles.isDragActive : styles.isDragInactive
-          }`}
+          } ${disabled ? styles.disabled : ""}`}
         >
           <div className={styles.iconContainer}>
             <svg className={styles.svgIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
           </div>
-          <span className={styles.titleText}>Drag & drop berkas Anda di sini</span>
-          <span className={styles.descText}>atau klik untuk menelusuri folder</span>
+          <span className={styles.titleText}>
+            {disabled ? "Unggah berkas dinonaktifkan" : "Drag & drop berkas Anda di sini"}
+          </span>
+          <span className={styles.descText}>
+            {disabled ? "Penyimpanan server penuh" : "atau klik untuk menelusuri folder"}
+          </span>
           <span className={styles.infoText}>
             Format: {allowedExtensions.join(", ")} (Maks. {maxSizeMB}MB)
           </span>

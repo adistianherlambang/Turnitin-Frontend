@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styles from "./Table.module.css";
 
 interface TableProps {
-  headers?: string[];
+  headers?: React.ReactNode[];
   children: ReactNode;
   className?: string;
 }
