@@ -219,7 +219,7 @@ export default function SubmitCheck() {
 
       {storageFull && (
         <div className={styles.storageFullWarning}>
-          ⚠️ <strong>Penyimpanan Server Penuh ({storageInfo?.totalSizeMB} MB / {storageInfo?.limitMB} MB).</strong> Pengecekan baru tidak dapat diajukan untuk sementara waktu. Harap hubungi administrator untuk membersihkan ruang penyimpanan.
+          ⚠️ <strong>Penyimpanan Server Penuh ({storageInfo?.totalSizeMB} MB / {storageInfo?.limitMB && storageInfo.limitMB >= 1024 ? `${(storageInfo.limitMB / 1024).toFixed(0)} GB` : `${storageInfo?.limitMB} MB`}).</strong> Pengecekan baru tidak dapat diajukan untuk sementara waktu. Harap hubungi administrator untuk membersihkan ruang penyimpanan.
         </div>
       )}
 

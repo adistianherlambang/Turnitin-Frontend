@@ -193,7 +193,7 @@ export default function AdminStorage() {
             <div>
               <span className={styles.cardLabel}>Penggunaan Ruang Disk</span>
               <span className={styles.cardValueBig}>
-                {storageData.totalSizeMB} MB <span className={styles.cardValueUnit}>/ {storageData.limitMB} MB ({percentUsed.toFixed(1)}%)</span>
+                {storageData.totalSizeMB} MB <span className={styles.cardValueUnit}>/ {storageData.limitMB >= 1024 ? `${(storageData.limitMB / 1024).toFixed(0)} GB` : `${storageData.limitMB} MB`} ({percentUsed.toFixed(1)}%)</span>
               </span>
             </div>
             <span className={`${styles.statusBadge} ${isFull ? styles.statusBadgeFull : styles.statusBadgeNormal}`}>
@@ -210,7 +210,7 @@ export default function AdminStorage() {
           </div>
 
           <span className={styles.cardFootnote}>
-            *Batas maksimal penyimpanan disk untuk mengunggah dokumen adalah 100 MB. Jika kapasitas penuh, sistem akan otomatis memblokir unggahan dokumen user dan pengiriman bukti transfer pembayaran.
+            *Batas maksimal penyimpanan disk untuk mengunggah dokumen adalah {storageData.limitMB >= 1024 ? `${(storageData.limitMB / 1024).toFixed(0)} GB` : `${storageData.limitMB} MB`}. Jika kapasitas penuh, sistem akan otomatis memblokir unggahan dokumen user dan pengiriman bukti transfer pembayaran.
           </span>
         </div>
       )}

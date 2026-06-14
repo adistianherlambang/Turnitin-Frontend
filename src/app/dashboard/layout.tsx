@@ -21,11 +21,13 @@ export default function DashboardLayout({ children }) {
   const [proofUrl, setProofUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [storageFull, setStorageFull] = useState(false);
+  const [paymentSuccessInfo, setPaymentSuccessInfo] = useState<{ id: string; amount: number; credits: number } | null>(null);
   const [bankSettings, setBankSettings] = useState({
     bankName: "Bank Central Asia (BCA)",
     bankAccountNumber: "8029381029",
     bankAccountHolder: "PT Turnitin Indonesia Group",
-    creditPrice: 5000
+    creditPrice: 5000,
+    contactWhatsapp: "6281234567890"
   });
 
   // Check storage limits
@@ -107,9 +109,12 @@ export default function DashboardLayout({ children }) {
         status: "pending"
       }, paymentId);
 
-      toast.success("Permintaan top-up berhasil diajukan. Mohon tunggu persetujuan admin!");
-      setIsBuyModalOpen(false);
-      resetForm();
+      setPaymentSuccessInfo({
+        id: paymentId,
+        amount: totalCost,
+        credits: Number(amount)
+      });
+      toast.success("Permintaan top-up berhasil diajukan!");
     } catch (err: any) {
       toast.error("Gagal mengajukan pembayaran: " + err.message);
     } finally {
@@ -120,6 +125,27 @@ export default function DashboardLayout({ children }) {
   const resetForm = () => {
     setAmount(5);
     setProofUrl("");
+    setPaymentSuccessInfo(null);
+  };
+
+  const handleCloseSuccess = () => {
+    setIsBuyModalOpen(false);
+    resetForm();
+  };
+
+  const getFormattedAmount = (val: number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0
+    }).format(val);
+  };
+
+  const getWhatsappUrl = () => {
+    if (!paymentSuccessInfo) return "";
+    const formatted = getFormattedAmount(paymentSuccessInfo.amount);
+    const message = `Halo Admin, saya ingin konfirmasi pembayaran kredit Turnitin dengan ID: ${paymentSuccessInfo.id} sebesar ${formatted}. Mohon segera diproses. Terima kasih.`;
+    return `https://wa.me/${bankSettings.contactWhatsapp || "6281234567890"}?text=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -135,16 +161,80 @@ export default function DashboardLayout({ children }) {
       {/* Global Topup Credit Modal */}
       <Modal
         isOpen={isBuyModalOpen}
-        onClose={() => setIsBuyModalOpen(false)}
-        title="Beli Kredit Baru"
+        onClose={handleCloseSuccess}
+        title={paymentSuccessInfo ? "Pembayaran Terkirim" : "Beli Kredit Baru"}
         size="md"
       >
-        <form onSubmit={handleBuySubmit} className={styles.form}>
-          {storageFull && (
-            <div className={styles.storageFullWarning}>
-              ⚠️ <strong>Penyimpanan Server Penuh.</strong> Untuk sementara Anda tidak dapat melakukan pembelian kredit baru karena tidak dapat mengunggah bukti transfer.
+        {paymentSuccessInfo ? (
+          <div className={styles.successScreen}>
+            <div className={styles.successIconWrapper}>
+              <svg className={styles.successIconSvg} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+              </svg>
             </div>
-          )}
+            
+            <h3 className={styles.successTitle}>Konfirmasi Pembayaran</h3>
+            <p className={styles.successText}>
+              Permintaan top-up Anda telah masuk antrean sistem. Harap konfirmasi manual ke admin melalui WhatsApp agar diproses segera.
+            </p>
+
+            <div className={styles.receiptBox}>
+              <div className={styles.receiptRow}>
+                <span className={styles.receiptLabel}>ID Pembayaran:</span>
+                <div className={styles.paymentIdWrapper}>
+                  <span className={styles.paymentIdText}>{paymentSuccessInfo.id}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(paymentSuccessInfo.id);
+                      toast.success("ID Pembayaran disalin ke clipboard!");
+                    }}
+                    className={styles.copyBtn}
+                    title="Salin ID"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div className={styles.receiptRow}>
+                <span className={styles.receiptLabel}>Jumlah Kredit:</span>
+                <span className={styles.receiptValueBold}>{paymentSuccessInfo.credits} Kredit</span>
+              </div>
+              <div className={styles.receiptRow}>
+                <span className={styles.receiptLabel}>Total Pembayaran:</span>
+                <span className={styles.receiptValueEmerald}>
+                  {getFormattedAmount(paymentSuccessInfo.amount)}
+                </span>
+              </div>
+            </div>
+
+            <div className={styles.successActions}>
+              <a
+                href={getWhatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.whatsappBtn}
+              >
+                <svg className={styles.whatsappIcon} viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 2.8 1.4 4.8 1.4 5.3 0 9.7-4.3 9.7-9.7 0-5.3-4.3-9.7-9.7-9.7C6.07 1.154 1.87 5.454 1.87 10.754c0 2 .5 3.3 1.4 4.8l-1 3.6 3.7-1z" />
+                </svg>
+                Konfirmasi via WhatsApp
+              </a>
+
+              <Button variant="outline" onClick={handleCloseSuccess} className={styles.fullWidthBtn}>
+                Selesai & Tutup
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={handleBuySubmit} className={styles.form}>
+            {storageFull && (
+              <div className={styles.storageFullWarning}>
+                ⚠️ <strong>Penyimpanan Server Penuh.</strong> Untuk sementara Anda tidak dapat melakukan pembelian kredit baru karena tidak dapat mengunggah bukti transfer.
+              </div>
+            )}
 
           <Input
             label="Jumlah Kredit"
@@ -218,6 +308,7 @@ export default function DashboardLayout({ children }) {
             </Button>
           </div>
         </form>
+      )}
       </Modal>
     </div>
   );

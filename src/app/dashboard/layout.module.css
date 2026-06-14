@@ -166,3 +166,142 @@
   line-height: 1.5;
   text-align: center;
 }
+
+.successScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.5rem 0;
+  gap: 1rem;
+}
+
+.successIconWrapper {
+  padding: 1rem;
+  border-radius: 9999px;
+  background-color: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  color: #34d399;
+}
+
+.successIconSvg {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.successTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.successText {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 24rem;
+}
+
+.receiptBox {
+  width: 100%;
+  background-color: #18181b;
+  border: 1px solid rgba(39, 39, 42, 0.8);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-sizing: border-box;
+}
+
+.receiptRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+.receiptLabel {
+  color: var(--color-text-secondary);
+}
+
+.paymentIdWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.paymentIdText {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.copyBtn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  transition: all 150ms ease;
+}
+
+.copyBtn:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.receiptValueBold {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.receiptValueEmerald {
+  font-weight: 800;
+  color: #34d399;
+  font-family: var(--font-mono);
+}
+
+.successActions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.whatsappBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #25d366;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+  transition: all 150ms ease;
+}
+
+.whatsappBtn:hover {
+  background-color: #22c35e;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+  transform: translateY(-1px);
+}
+
+.whatsappIcon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.fullWidthBtn {
+  width: 100%;
+}
