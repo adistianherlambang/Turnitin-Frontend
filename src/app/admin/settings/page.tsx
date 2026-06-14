@@ -20,7 +20,7 @@ export default function AdminSettings() {
   const [contactWhatsapp, setContactWhatsapp] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [creditPrice, setCreditPrice] = useState(5000);
-  
+
   const [websiteName, setWebsiteName] = useState("");
   const [footer, setFooter] = useState("");
   const [seoTitle, setSeoTitle] = useState("");
@@ -50,7 +50,7 @@ export default function AdminSettings() {
   const handleSaveSettings = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    
+
     try {
       const updateData = {
         bankName,
@@ -129,7 +129,7 @@ export default function AdminSettings() {
               label="Nomor WhatsApp Admin (Kode Negara)"
               value={contactWhatsapp}
               onChange={(e) => setContactWhatsapp(e.target.value)}
-              placeholder="Contoh: 6281234567890"
+              placeholder="Contoh: 6281776743211"
               required
             />
             <Input
@@ -161,7 +161,7 @@ export default function AdminSettings() {
               required
             />
           </div>
-          
+
           <div className={styles.seoSection}>
             <Input
               label="Meta Title SEO"

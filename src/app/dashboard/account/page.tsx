@@ -23,8 +23,8 @@ export default function UserAccount() {
         if (data && data.length > 0) {
           const s = data.find(item => item.id === "general") || data[0];
           setSupportSettings({
-            contactWhatsapp: s.contactWhatsapp || "6281234567890",
-            contactEmail: s.contactEmail || "support@turnitinchecker.com"
+            contactWhatsapp: s.contactWhatsapp,
+            contactEmail: s.contactEmail
           });
         }
       });

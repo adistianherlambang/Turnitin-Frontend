@@ -87,7 +87,7 @@ const SEED_DATA = {
       bankName: "Bank Central Asia (BCA)",
       bankAccountNumber: "8029381029",
       bankAccountHolder: "PT Turnitin Indonesia Group",
-      contactWhatsapp: "6281234567890",
+      contactWhatsapp: "6281776743211",
       contactEmail: "support@turnitinchecker.com",
       creditPrice: 5000,
       websiteName: "Turnitin Checker AI",

@@ -22,7 +22,7 @@ const SEED_DATA = {
       bankName: "Bank Central Asia (BCA)",
       bankAccountNumber: "8029381029",
       bankAccountHolder: "PT Turnitin Indonesia Group",
-      contactWhatsapp: "6281234567890",
+      contactWhatsapp: "6281776743211",
       contactEmail: "support@turnitinchecker.com",
       creditPrice: 5000,
       websiteName: "Turnitin Checker AI",
@@ -213,7 +213,7 @@ const SEED_DATA = {
 // Initialize LocalStorage Database if not exists
 const initMockDB = () => {
   if (typeof window === "undefined") return;
-  
+
   const storedData = localStorage.getItem("turnitin_mock_db");
   if (!storedData) {
     localStorage.setItem("turnitin_mock_db", JSON.stringify(SEED_DATA));
@@ -243,21 +243,21 @@ export const dbService = {
     if (isFirebaseEnabled) {
       let colRef = collection(db, collectionName);
       let q = colRef;
-      
+
       // Apply filters if provided
       if (queryFilters.length > 0) {
         const clauses = queryFilters.map(f => where(f.field, f.operator, f.value));
         q = query(colRef, ...clauses);
       }
-      
+
       const snap = await getDocs(q);
       return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } else {
       const dbData = getMockDB();
       const colData = dbData[collectionName];
-      
+
       if (!colData) return [];
-      
+
       // If array (like creditTransactions)
       if (Array.isArray(colData)) {
         let list = [...colData];
@@ -271,7 +271,7 @@ export const dbService = {
         });
         return list;
       }
-      
+
       // If object
       let list = Object.values(colData);
       queryFilters.forEach(f => {
@@ -295,7 +295,7 @@ export const dbService = {
       const dbData = getMockDB();
       const colData = dbData[collectionName];
       if (!colData) return null;
-      
+
       if (Array.isArray(colData)) {
         return colData.find(item => item.id === docId) || null;
       }
@@ -332,20 +332,20 @@ export const dbService = {
       if (!dbData[collectionName]) {
         dbData[collectionName] = Array.isArray(SEED_DATA[collectionName]) ? [] : {};
       }
-      
+
       const id = customId || `${collectionName.substring(0, 3)}-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
       const newDoc = {
         id,
         ...data,
         createdAt: data.createdAt || new Date().toISOString()
       };
-      
+
       if (Array.isArray(dbData[collectionName])) {
         dbData[collectionName].push(newDoc);
       } else {
         dbData[collectionName][id] = newDoc;
       }
-      
+
       saveMockDB(dbData);
       return newDoc;
     }
@@ -361,7 +361,7 @@ export const dbService = {
       const dbData = getMockDB();
       const colData = dbData[collectionName];
       if (!colData) throw new Error(`Collection ${collectionName} does not exist`);
-      
+
       if (Array.isArray(colData)) {
         const index = colData.findIndex(item => item.id === docId);
         if (index !== -1) {
@@ -376,7 +376,7 @@ export const dbService = {
           throw new Error(`Document ${docId} not found`);
         }
       }
-      
+
       saveMockDB(dbData);
       return { id: docId, ...data };
     }
@@ -392,13 +392,13 @@ export const dbService = {
       const dbData = getMockDB();
       const colData = dbData[collectionName];
       if (!colData) return docId;
-      
+
       if (Array.isArray(colData)) {
         dbData[collectionName] = colData.filter(item => item.id !== docId);
       } else {
         delete colData[docId];
       }
-      
+
       saveMockDB(dbData);
       return docId;
     }
@@ -409,12 +409,12 @@ export const dbService = {
     if (isFirebaseEnabled) {
       let colRef = collection(db, collectionName);
       let q = colRef;
-      
+
       if (queryFilters.length > 0) {
         const clauses = queryFilters.map(f => where(f.field, f.operator, f.value));
         q = query(colRef, ...clauses);
       }
-      
+
       return onSnapshot(q, (snap) => {
         const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         callback(data);
@@ -430,9 +430,9 @@ export const dbService = {
           callback([]);
           return;
         }
-        
+
         let list = Array.isArray(colData) ? [...colData] : Object.values(colData);
-        
+
         // Apply filters
         queryFilters.forEach(f => {
           list = list.filter(item => {
@@ -441,27 +441,27 @@ export const dbService = {
             return true;
           });
         });
-        
+
         // Sort order by createdAt descending by default if applicable
         if (list.length > 0 && list[0].createdAt) {
           list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         } else if (list.length > 0 && list[0].sortOrder !== undefined) {
           list.sort((a, b) => a.sortOrder - b.sortOrder);
         }
-        
+
         callback(list);
       };
-      
+
       // Initial trigger
       runCallback();
-      
+
       // Register event listener
       const handleUpdate = () => {
         runCallback();
       };
-      
+
       window.addEventListener("mock_db_update", handleUpdate);
-      
+
       // Return unsubscribe function
       return () => {
         window.removeEventListener("mock_db_update", handleUpdate);

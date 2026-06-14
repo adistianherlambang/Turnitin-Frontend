@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }) {
     bankAccountNumber: "8029381029",
     bankAccountHolder: "PT Turnitin Indonesia Group",
     creditPrice: 5000,
-    contactWhatsapp: "6281234567890"
+    contactWhatsapp: "6281776743211"
   });
 
   // Check storage limits
@@ -144,8 +144,9 @@ export default function DashboardLayout({ children }) {
   const getWhatsappUrl = () => {
     if (!paymentSuccessInfo) return "";
     const formatted = getFormattedAmount(paymentSuccessInfo.amount);
-    const message = `Halo Admin, saya ingin konfirmasi pembayaran kredit Turnitin dengan ID: ${paymentSuccessInfo.id} sebesar ${formatted}. Mohon segera diproses. Terima kasih.`;
-    return `https://wa.me/${bankSettings.contactWhatsapp || "6281234567890"}?text=${encodeURIComponent(message)}`;
+    const proofLine = proofUrl ? `\nBukti Transfer: ${proofUrl}` : "";
+    const message = `Halo Admin, saya ingin konfirmasi pembayaran kredit Turnitin.\n\nID Pembayaran: ${paymentSuccessInfo.id}\nJumlah Kredit: ${paymentSuccessInfo.credits} Kredit\nTotal: ${formatted}${proofLine}\n\nMohon segera diproses. Terima kasih.`;
+    return `https://wa.me/${bankSettings.contactWhatsapp}?text=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -172,7 +173,7 @@ export default function DashboardLayout({ children }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            
+
             <h3 className={styles.successTitle}>Konfirmasi Pembayaran</h3>
             <p className={styles.successText}>
               Permintaan top-up Anda telah masuk antrean sistem. Harap konfirmasi manual ke admin melalui WhatsApp agar diproses segera.
@@ -217,8 +218,8 @@ export default function DashboardLayout({ children }) {
                 rel="noopener noreferrer"
                 className={styles.whatsappBtn}
               >
-                <svg className={styles.whatsappIcon} viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 2.8 1.4 4.8 1.4 5.3 0 9.7-4.3 9.7-9.7 0-5.3-4.3-9.7-9.7-9.7C6.07 1.154 1.87 5.454 1.87 10.754c0 2 .5 3.3 1.4 4.8l-1 3.6 3.7-1z" />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17 2.91005C16.0831 1.98416 14.991 1.25002 13.7875 0.750416C12.584 0.250812 11.2931 -0.00426317 9.99 5.38951e-05C4.53 5.38951e-05 0.0800002 4.45005 0.0800002 9.91005C0.0800002 11.6601 0.54 13.3601 1.4 14.8601L0 20.0001L5.25 18.6201C6.7 19.4101 8.33 19.8301 9.99 19.8301C15.45 19.8301 19.9 15.3801 19.9 9.92005C19.9 7.27005 18.87 4.78005 17 2.91005ZM9.99 18.1501C8.51 18.1501 7.06 17.7501 5.79 17.0001L5.49 16.8201L2.37 17.6401L3.2 14.6001L3 14.2901C2.17755 12.9771 1.74092 11.4593 1.74 9.91005C1.74 5.37005 5.44 1.67005 9.98 1.67005C12.18 1.67005 14.25 2.53005 15.8 4.09005C16.5676 4.85392 17.1759 5.7626 17.5896 6.76338C18.0033 7.76417 18.2142 8.83714 18.21 9.92005C18.23 14.4601 14.53 18.1501 9.99 18.1501ZM14.51 11.9901C14.26 11.8701 13.04 11.2701 12.82 11.1801C12.59 11.1001 12.43 11.0601 12.26 11.3001C12.09 11.5501 11.62 12.1101 11.48 12.2701C11.34 12.4401 11.19 12.4601 10.94 12.3301C10.69 12.2101 9.89 11.9401 8.95 11.1001C8.21 10.4401 7.72 9.63005 7.57 9.38005C7.43 9.13005 7.55 9.00005 7.68 8.87005C7.79 8.76005 7.93 8.58005 8.05 8.44005C8.17 8.30005 8.22 8.19005 8.3 8.03005C8.38 7.86005 8.34 7.72005 8.28 7.60005C8.22 7.48005 7.72 6.26005 7.52 5.76005C7.32 5.28005 7.11 5.34005 6.96 5.33005H6.48C6.31 5.33005 6.05 5.39005 5.82 5.64005C5.6 5.89005 4.96 6.49005 4.96 7.71005C4.96 8.93005 5.85 10.1101 5.97 10.2701C6.09 10.4401 7.72 12.9401 10.2 14.0101C10.79 14.2701 11.25 14.4201 11.61 14.5301C12.2 14.7201 12.74 14.6901 13.17 14.6301C13.65 14.5601 14.64 14.0301 14.84 13.4501C15.05 12.8701 15.05 12.3801 14.98 12.2701C14.91 12.1601 14.76 12.1101 14.51 11.9901Z" fill="white" />
                 </svg>
                 Konfirmasi via WhatsApp
               </a>
@@ -236,79 +237,79 @@ export default function DashboardLayout({ children }) {
               </div>
             )}
 
-          <Input
-            label="Jumlah Kredit"
-            type="number"
-            min="1"
-            max="1000"
-            value={amount}
-            onChange={(e) => setAmount(Math.max(1, parseInt(e.target.value) || 0))}
-            required
-            disabled={storageFull}
-          />
-
-          {/* Cost breakdown */}
-          <div className={styles.costBreakdown}>
-            <span className={styles.labelSecondary}>Total Pembayaran:</span>
-            <span className={styles.costValue}>
-              {new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                minimumFractionDigits: 0
-              }).format(amount * bankSettings.creditPrice)}
-            </span>
-          </div>
-
-          {/* Bank Info Details */}
-          <div className={styles.bankInfoBlock}>
-            <span className={styles.bankHeader}>Informasi Transfer Bank</span>
-            <div className={styles.bankDetailsGrid}>
-              <span className={styles.labelSecondary}>Bank:</span>
-              <span className={styles.bankValueSemi}>{bankSettings.bankName}</span>
-              <span className={styles.labelSecondary}>No. Rekening:</span>
-              <span className={styles.bankValueBoldMono}>{bankSettings.bankAccountNumber}</span>
-              <span className={styles.labelSecondary}>Atas Nama:</span>
-              <span className={styles.bankValueSemi}>{bankSettings.bankAccountHolder}</span>
-            </div>
-            <span className={styles.bankFootnote}>
-              *Harap transfer nominal sesuai jumlah di atas lalu unggah struk bukti transfer.
-            </span>
-          </div>
-
-          {/* Proof File Uploader */}
-          <div className={styles.uploadSection}>
-            <label className={styles.uploadLabel}>
-              Unggah Bukti Transfer
-            </label>
-            <UploadBox
-              uploadType="payments"
-              onUploadSuccess={(url) => setProofUrl(url)}
-              onUploadError={(err) => toast.error(err)}
-              allowedExtensions={[".jpg", ".jpeg", ".png", ".pdf"]}
+            <Input
+              label="Jumlah Kredit"
+              type="number"
+              min="1"
+              max="1000"
+              value={amount}
+              onChange={(e) => setAmount(Math.max(1, parseInt(e.target.value) || 0))}
+              required
               disabled={storageFull}
             />
-          </div>
 
-          {/* Actions */}
-          <div className={styles.actionsFooter}>
-            <Button
-              variant="outline"
-              onClick={() => setIsBuyModalOpen(false)}
-              disabled={submitting}
-            >
-              Batal
-            </Button>
-            <Button
-              type="submit"
-              loading={submitting}
-              disabled={!proofUrl || storageFull}
-              className="glow-primary"
-            >
-              Kirim Konfirmasi
-            </Button>
-          </div>
-        </form>
-      )}
+            {/* Cost breakdown */}
+            <div className={styles.costBreakdown}>
+              <span className={styles.labelSecondary}>Total Pembayaran:</span>
+              <span className={styles.costValue}>
+                {new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                  minimumFractionDigits: 0
+                }).format(amount * bankSettings.creditPrice)}
+              </span>
+            </div>
+
+            {/* Bank Info Details */}
+            <div className={styles.bankInfoBlock}>
+              <span className={styles.bankHeader}>Informasi Transfer Bank</span>
+              <div className={styles.bankDetailsGrid}>
+                <span className={styles.labelSecondary}>Bank:</span>
+                <span className={styles.bankValueSemi}>{bankSettings.bankName}</span>
+                <span className={styles.labelSecondary}>No. Rekening:</span>
+                <span className={styles.bankValueBoldMono}>{bankSettings.bankAccountNumber}</span>
+                <span className={styles.labelSecondary}>Atas Nama:</span>
+                <span className={styles.bankValueSemi}>{bankSettings.bankAccountHolder}</span>
+              </div>
+              <span className={styles.bankFootnote}>
+                *Harap transfer nominal sesuai jumlah di atas lalu unggah struk bukti transfer.
+              </span>
+            </div>
+
+            {/* Proof File Uploader */}
+            <div className={styles.uploadSection}>
+              <label className={styles.uploadLabel}>
+                Unggah Bukti Transfer
+              </label>
+              <UploadBox
+                uploadType="payments"
+                onUploadSuccess={(url) => setProofUrl(url)}
+                onUploadError={(err) => toast.error(err)}
+                allowedExtensions={[".jpg", ".jpeg", ".png", ".pdf"]}
+                disabled={storageFull}
+              />
+            </div>
+
+            {/* Actions */}
+            <div className={styles.actionsFooter}>
+              <Button
+                variant="outline"
+                onClick={() => setIsBuyModalOpen(false)}
+                disabled={submitting}
+              >
+                Batal
+              </Button>
+              <Button
+                type="submit"
+                loading={submitting}
+                disabled={!proofUrl || storageFull}
+                className="glow-primary"
+              >
+                Kirim Konfirmasi
+              </Button>
+            </div>
+          </form>
+        )}
       </Modal>
     </div>
   );
