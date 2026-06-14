@@ -6,9 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { dbService } from "@/services/dbService";
 import Card from "@/components/Card/Card";
 import Button from "@/components/Button/Button";
-import Input from "@/components/Input/Input";
-import Checkbox from "@/components/Input/Input"; // wait, Input exports Checkbox
-import { Checkbox as CustomCheckbox } from "@/components/Input/Input"; // import properly
+import Input, { Checkbox as CustomCheckbox } from "@/components/Input/Input";
 import UploadBox from "@/components/UploadBox/UploadBox";
 import Loading from "@/components/Loading/Loading";
 import { toast } from "react-hot-toast";
@@ -26,10 +24,20 @@ export default function SubmitCheck() {
   
   // Selection States
   const [selectedType, setSelectedType] = useState<any>(null); // the full checkType object
+  const [viewMode, setViewMode] = useState<"lama" | "baru">("lama");
+
+  // Old View States
   const [excludeBibliography, setExcludeBibliography] = useState(false);
   const [excludeQuotes, setExcludeQuotes] = useState(false);
   const [percentLimit, setPercentLimit] = useState("");
   const [wordLimit, setWordLimit] = useState("");
+
+  // New View States
+  const [excludeBibliographyNew, setExcludeBibliographyNew] = useState(false);
+  const [excludeQuotesNew, setExcludeQuotesNew] = useState(false);
+  const [excludeCitedText, setExcludeCitedText] = useState(false);
+  const [excludeSmallMatches, setExcludeSmallMatches] = useState(false);
+  const [smallMatchesThreshold, setSmallMatchesThreshold] = useState("");
   
   const [fileUrl, setFileUrl] = useState("");
   const [fileName, setFileName] = useState("");
@@ -51,10 +59,25 @@ export default function SubmitCheck() {
   };
 
   const handleExclusionsNext = () => {
-    // Validate percent vs word count (only one is allowed)
-    if (percentLimit && wordLimit) {
-      toast.error("Hanya salah satu dari batas persen ATAU batas jumlah kata yang boleh diisi.");
-      return;
+    if (viewMode === "lama") {
+      // Validate percent vs word count (only one is allowed)
+      if (percentLimit && wordLimit) {
+        toast.error("Hanya salah satu dari batas persen ATAU batas jumlah kata yang boleh diisi.");
+        return;
+      }
+    } else {
+      // Validate small matches threshold
+      if (excludeSmallMatches) {
+        if (!smallMatchesThreshold) {
+          toast.error("Harap tentukan batas kata (threshold) untuk pengecualian kecocokan kecil.");
+          return;
+        }
+        const val = Number(smallMatchesThreshold);
+        if (isNaN(val) || val <= 0) {
+          toast.error("Batas kata (threshold) harus berupa angka positif.");
+          return;
+        }
+      }
     }
     setStep(3);
   };
@@ -132,10 +155,19 @@ export default function SubmitCheck() {
         status: "waiting",
         notes: "",
         options: {
-          excludeBibliography,
-          excludeQuotes,
-          percentLimit: percentLimit ? Number(percentLimit) : null,
-          wordLimit: wordLimit ? Number(wordLimit) : null
+          viewMode,
+          ...(viewMode === "lama" ? {
+            excludeBibliography,
+            excludeQuotes,
+            percentLimit: percentLimit ? Number(percentLimit) : null,
+            wordLimit: wordLimit ? Number(wordLimit) : null
+          } : {
+            excludeBibliography: excludeBibliographyNew,
+            excludeQuotes: excludeQuotesNew,
+            excludeCitedText,
+            excludeSmallMatches,
+            smallMatchesThreshold: excludeSmallMatches && smallMatchesThreshold ? Number(smallMatchesThreshold) : null
+          })
         }
       }, submissionId);
 
@@ -226,49 +258,115 @@ export default function SubmitCheck() {
           <h3 className={styles.stepTitle}>Langkah 2: Opsi Pengecualian Turnitin</h3>
           
           <div className={styles.panel}>
-            <div className="space-y-4">
-              <CustomCheckbox
-                id="bib"
-                label="Kecualikan Daftar Pustaka (Exclude Bibliography)"
-                checked={excludeBibliography}
-                onChange={(e) => setExcludeBibliography(e.target.checked)}
-              />
-              <CustomCheckbox
-                id="quotes"
-                label="Kecualikan Teks Yang Dikutip (Exclude Quotes)"
-                checked={excludeQuotes}
-                onChange={(e) => setExcludeQuotes(e.target.checked)}
-              />
+            {/* View Mode Tabs */}
+            <div className={styles.viewModeToggle}>
+              <button
+                type="button"
+                className={`${styles.toggleBtn} ${viewMode === "lama" ? styles.toggleBtnActive : ""}`}
+                onClick={() => setViewMode("lama")}
+              >
+                Tampilan Lama
+              </button>
+              <button
+                type="button"
+                className={`${styles.toggleBtn} ${viewMode === "baru" ? styles.toggleBtnActive : ""}`}
+                onClick={() => setViewMode("baru")}
+              >
+                Tampilan Baru
+              </button>
             </div>
 
-            <div className={styles.exclusionsGrid}>
-              <Input
-                label="Pengecualian Tingkat Persen (%)"
-                type="number"
-                placeholder="Contoh: 2"
-                value={percentLimit}
-                onChange={(e) => {
-                  setPercentLimit(e.target.value);
-                  if (e.target.value) setWordLimit(""); // reset other
-                }}
-                disabled={!!wordLimit}
-              />
-              <Input
-                label="Pengecualian Batas Jumlah Kata"
-                type="number"
-                placeholder="Contoh: 10"
-                value={wordLimit}
-                onChange={(e) => {
-                  setWordLimit(e.target.value);
-                  if (e.target.value) setPercentLimit(""); // reset other
-                }}
-                disabled={!!percentLimit}
-              />
-            </div>
-            
-            <span className={styles.footnoteText}>
-              *Hanya satu batas yang diperbolehkan diisi (Batas Persen ATAU Batas Jumlah Kata). Kosongkan jika ingin memakai setting default Turnitin.
-            </span>
+            {viewMode === "lama" ? (
+              <>
+                <div className="space-y-4">
+                  <CustomCheckbox
+                    id="bib"
+                    label="Kecualikan Daftar Pustaka (Exclude Bibliography)"
+                    checked={excludeBibliography}
+                    onChange={(e) => setExcludeBibliography(e.target.checked)}
+                  />
+                  <CustomCheckbox
+                    id="quotes"
+                    label="Kecualikan Teks Yang Dikutip (Exclude Quotes)"
+                    checked={excludeQuotes}
+                    onChange={(e) => setExcludeQuotes(e.target.checked)}
+                  />
+                </div>
+
+                <div className={styles.exclusionsGrid}>
+                  <Input
+                    label="Pengecualian Tingkat Persen (%)"
+                    type="number"
+                    placeholder="Contoh: 2"
+                    value={percentLimit}
+                    onChange={(e) => {
+                      setPercentLimit(e.target.value);
+                      if (e.target.value) setWordLimit(""); // reset other
+                    }}
+                    disabled={!!wordLimit}
+                  />
+                  <Input
+                    label="Pengecualian Batas Jumlah Kata"
+                    type="number"
+                    placeholder="Contoh: 10"
+                    value={wordLimit}
+                    onChange={(e) => {
+                      setWordLimit(e.target.value);
+                      if (e.target.value) setPercentLimit(""); // reset other
+                    }}
+                    disabled={!!percentLimit}
+                  />
+                </div>
+                
+                <span className={styles.footnoteText}>
+                  *Hanya satu batas yang diperbolehkan diisi (Batas Persen ATAU Batas Jumlah Kata). Kosongkan jika ingin memakai setting default Turnitin.
+                </span>
+              </>
+            ) : (
+              <>
+                <div className="space-y-4">
+                  <CustomCheckbox
+                    id="bibNew"
+                    label="Exclude bibliography"
+                    checked={excludeBibliographyNew}
+                    onChange={(e) => setExcludeBibliographyNew(e.target.checked)}
+                  />
+                  <CustomCheckbox
+                    id="quotesNew"
+                    label="Exclude quoted text"
+                    checked={excludeQuotesNew}
+                    onChange={(e) => setExcludeQuotesNew(e.target.checked)}
+                  />
+                  <CustomCheckbox
+                    id="citedNew"
+                    label="Exclude cited text"
+                    checked={excludeCitedText}
+                    onChange={(e) => setExcludeCitedText(e.target.checked)}
+                  />
+                  <CustomCheckbox
+                    id="smallMatchesNew"
+                    label="Exclude small matches"
+                    checked={excludeSmallMatches}
+                    onChange={(e) => setExcludeSmallMatches(e.target.checked)}
+                  />
+                </div>
+
+                <div className={styles.newExclusionsWrapper}>
+                  <div className={styles.thresholdInputContainer}>
+                    <span className={styles.thresholdLabelPre}>set matches exclusion threshold</span>
+                    <input
+                      type="number"
+                      placeholder="e.g. 10"
+                      value={smallMatchesThreshold}
+                      onChange={(e) => setSmallMatchesThreshold(e.target.value)}
+                      disabled={!excludeSmallMatches}
+                      className={styles.thresholdInput}
+                    />
+                    <span className={styles.thresholdLabelPost}>words</span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           <div className={styles.stepFooter}>
@@ -322,21 +420,52 @@ export default function SubmitCheck() {
                 <span className={styles.summaryLabel}>Dokumen Unggahan</span>
                 <span className={styles.summaryValuePrimary}>{fileName}</span>
               </div>
-              <div className={styles.summaryItem}>
-                <span className={styles.summaryLabel}>Pengecualian Daftar Pustaka</span>
-                <span className={styles.summaryValueMedium}>{excludeBibliography ? "Aktif" : "Tidak Aktif"}</span>
-              </div>
-              <div className={styles.summaryItem}>
-                <span className={styles.summaryLabel}>Pengecualian Kutipan</span>
-                <span className={styles.summaryValueMedium}>{excludeQuotes ? "Aktif" : "Tidak Aktif"}</span>
-              </div>
-              {(percentLimit || wordLimit) && (
-                <div className={`${styles.summaryItem} ${styles.summaryColSpan2}`}>
-                  <span className={styles.summaryLabel}>Filter Limitasi Khusus</span>
-                  <span className={styles.summaryValueMedium}>
-                    {percentLimit ? `Kecualikan sumber kemiripan < ${percentLimit}%` : `Kecualikan sumber kemiripan < ${wordLimit} kata`}
-                  </span>
-                </div>
+              {viewMode === "lama" ? (
+                <>
+                  <div className={styles.summaryItem}>
+                    <span className={styles.summaryLabel}>Pengecualian Daftar Pustaka</span>
+                    <span className={styles.summaryValueMedium}>{excludeBibliography ? "Aktif" : "Tidak Aktif"}</span>
+                  </div>
+                  <div className={styles.summaryItem}>
+                    <span className={styles.summaryLabel}>Pengecualian Kutipan</span>
+                    <span className={styles.summaryValueMedium}>{excludeQuotes ? "Aktif" : "Tidak Aktif"}</span>
+                  </div>
+                  {(percentLimit || wordLimit) && (
+                    <div className={`${styles.summaryItem} ${styles.summaryColSpan2}`}>
+                      <span className={styles.summaryLabel}>Filter Limitasi Khusus</span>
+                      <span className={styles.summaryValueMedium}>
+                        {percentLimit ? `Kecualikan sumber kemiripan < ${percentLimit}%` : `Kecualikan sumber kemiripan < ${wordLimit} kata`}
+                      </span>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className={styles.summaryItem}>
+                    <span className={styles.summaryLabel}>Exclude Bibliography</span>
+                    <span className={styles.summaryValueMedium}>{excludeBibliographyNew ? "Aktif" : "Tidak Aktif"}</span>
+                  </div>
+                  <div className={styles.summaryItem}>
+                    <span className={styles.summaryLabel}>Exclude Quoted Text</span>
+                    <span className={styles.summaryValueMedium}>{excludeQuotesNew ? "Aktif" : "Tidak Aktif"}</span>
+                  </div>
+                  <div className={styles.summaryItem}>
+                    <span className={styles.summaryLabel}>Exclude Cited Text</span>
+                    <span className={styles.summaryValueMedium}>{excludeCitedText ? "Aktif" : "Tidak Aktif"}</span>
+                  </div>
+                  <div className={styles.summaryItem}>
+                    <span className={styles.summaryLabel}>Exclude Small Matches</span>
+                    <span className={styles.summaryValueMedium}>{excludeSmallMatches ? "Aktif" : "Tidak Aktif"}</span>
+                  </div>
+                  {excludeSmallMatches && smallMatchesThreshold && (
+                    <div className={`${styles.summaryItem} ${styles.summaryColSpan2}`}>
+                      <span className={styles.summaryLabel}>Exclude Small Matches Threshold</span>
+                      <span className={styles.summaryValueMedium}>
+                        Kecualikan kecocokan kecil &lt; {smallMatchesThreshold} kata
+                      </span>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 

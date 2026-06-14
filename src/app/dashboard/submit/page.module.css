@@ -349,3 +349,92 @@
   color: var(--color-danger);
   font-weight: 600;
 }
+
+/* View Mode Toggle Switch/Tabs */
+.viewModeToggle {
+  display: flex;
+  background-color: rgba(24, 24, 27, 0.6);
+  border: 1px solid rgba(63, 63, 70, 0.4);
+  padding: 0.25rem;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.toggleBtn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggleBtn:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.toggleBtnActive {
+  background-color: var(--color-primary);
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+/* Threshold Input & Wrapper */
+.newExclusionsWrapper {
+  border-top: 1px solid rgba(39, 39, 42, 0.6);
+  padding-top: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.thresholdInputContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background-color: rgba(24, 24, 27, 0.4);
+  border: 1px solid rgba(39, 39, 42, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+}
+
+.thresholdLabelPre {
+  color: #d4d4d8;
+}
+
+.thresholdLabelPost {
+  color: #a1a1aa;
+  font-weight: 600;
+}
+
+.thresholdInput {
+  width: 4.5rem;
+  background-color: #18181b;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: center;
+  transition: all 150ms ease;
+}
+
+.thresholdInput:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.thresholdInput:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: rgba(24, 24, 27, 0.8);
+}
+
