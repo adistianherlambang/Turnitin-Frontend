@@ -177,12 +177,23 @@ const SEED_DATA = {
   },
   creditTransactions: [
     {
+      id: "txn-1",
+      userId: "regular-user-id",
+      type: "bonus",
+      amount: 5,
+      beforeBalance: 0,
+      afterBalance: 5,
+      referenceId: "promo-bonus-initial",
+      description: "Bonus pendaftaran pengguna baru",
+      createdAt: new Date(Date.now() - 15 * 24 * 3600 * 1000).toISOString()
+    },
+    {
       id: "txn-2",
       userId: "regular-user-id",
       type: "topup",
       amount: 20,
-      beforeBalance: 0,
-      afterBalance: 20,
+      beforeBalance: 5,
+      afterBalance: 25,
       referenceId: "pay-1",
       description: "Pembelian kredit via transfer bank (Approved)",
       createdAt: new Date(Date.now() - 10 * 24 * 3600 * 1000).toISOString()
@@ -192,8 +203,8 @@ const SEED_DATA = {
       userId: "regular-user-id",
       type: "usage",
       amount: -2,
-      beforeBalance: 20,
-      afterBalance: 18,
+      beforeBalance: 25,
+      afterBalance: 23,
       referenceId: "sub-1",
       description: "Penggunaan kredit untuk Cek Turnitin No-Repository",
       createdAt: new Date(Date.now() - 8 * 24 * 3600 * 1000).toISOString()

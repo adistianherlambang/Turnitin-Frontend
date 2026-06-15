@@ -102,13 +102,25 @@ export const authService = {
       passwordHash: hashedPwd,
       photoURL: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name.replace(/\s+/g, ""))}`,
       role: "user",
-      credits: 0,
+      credits: 5,
       status: "active",
       createdAt: new Date().toISOString()
     };
 
     // Simpan ke Firestore
     await dbService.addDocument("users", profile, userId);
+
+    // Catat transaksi bonus kredit pendaftaran
+    await dbService.addDocument("creditTransactions", {
+      userId,
+      type: "bonus",
+      amount: 5,
+      beforeBalance: 0,
+      afterBalance: 5,
+      referenceId: "signup-bonus",
+      description: "Bonus kredit pendaftaran akun baru",
+      createdAt: new Date().toISOString()
+    });
 
     setSession(userId);
     return profile;
