@@ -59,7 +59,7 @@ export default function SubmitCheck() {
   useEffect(() => {
     const checkStorage = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_STORAGE_SERVER || "http://localhost:5001"}/api/storage`);
+        const res = await fetch(`/api/r2/storage`);
         const data = await res.json();
         if (data && data.success) {
           setStorageFull(data.storage.isFull);

@@ -38,14 +38,13 @@ export default function AdminStorage() {
 
   const fetchStorageInfo = async () => {
     try {
-      const serverUrl = process.env.NEXT_PUBLIC_STORAGE_SERVER || "http://localhost:5001";
-      const res = await axios.get(`${serverUrl}/api/storage`);
+      const res = await axios.get(`/api/r2/storage`);
       if (res.data && res.data.success) {
         setStorageData(res.data.storage);
       }
     } catch (err: any) {
       console.error("Gagal memuat status penyimpanan:", err);
-      toast.error("Gagal menghubungkan ke storage server backend.");
+      toast.error("Gagal membaca storage Cloudflare R2.");
     } finally {
       setLoading(false);
     }
@@ -107,17 +106,16 @@ export default function AdminStorage() {
 
     setDeleting(true);
     try {
-      const serverUrl = process.env.NEXT_PUBLIC_STORAGE_SERVER || "http://localhost:5001";
-      const res = await axios.post(`${serverUrl}/api/storage/delete-bulk`, { urls: selectedUrls });
+      const res = await axios.post(`/api/r2/delete`, { urls: selectedUrls });
       if (res.data && res.data.success) {
-        toast.success(`Berhasil menghapus ${res.data.deleted.length} berkas!`);
+        toast.success(`Berhasil menghapus ${res.data.deleted.length} berkas dari R2!`);
         setStorageData(res.data.storage);
         setSelectedUrls([]);
       } else {
         toast.error("Gagal menghapus berkas.");
       }
     } catch (err: any) {
-      toast.error("Kesalahan koneksi saat menghapus berkas: " + err.message);
+      toast.error("Kesalahan saat menghapus berkas: " + err.message);
     } finally {
       setDeleting(false);
     }
@@ -130,10 +128,9 @@ export default function AdminStorage() {
 
     setDeleting(true);
     try {
-      const serverUrl = process.env.NEXT_PUBLIC_STORAGE_SERVER || "http://localhost:5001";
-      const res = await axios.post(`${serverUrl}/api/storage/delete-bulk`, { urls: [url] });
+      const res = await axios.post(`/api/r2/delete`, { urls: [url] });
       if (res.data && res.data.success) {
-        toast.success("Berkas berhasil dihapus!");
+        toast.success("Berkas berhasil dihapus dari R2!");
         setStorageData(res.data.storage);
         setSelectedUrls((prev) => prev.filter((item) => item !== url));
       } else {
@@ -180,9 +177,9 @@ export default function AdminStorage() {
     <div className={styles.container}>
       {/* Page Title */}
       <div>
-        <h1 className={styles.title}>Manajemen Penyimpanan Server</h1>
+        <h1 className={styles.title}>Manajemen Penyimpanan (Cloudflare R2)</h1>
         <p className={styles.subtitle}>
-          Monitor sisa ruang disk dari berkas unggahan dan bersihkan berkas-berkas usang untuk menjaga kapasitas server.
+          Monitor penggunaan storage Cloudflare R2 dan bersihkan berkas-berkas usang untuk menjaga kapasitas.
         </p>
       </div>
 
