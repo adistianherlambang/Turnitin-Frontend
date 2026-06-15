@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import axios from "axios";
 import styles from "./UploadBox.module.css";
 
 export const UploadBox = ({
@@ -32,21 +31,21 @@ export const UploadBox = ({
   const validateFile = (selectedFile) => {
     if (!selectedFile) return false;
 
-    // Check extension
     const ext = "." + selectedFile.name.split(".").pop().toLowerCase();
     if (!allowedExtensions.includes(ext)) {
+      const msg = `Format berkas tidak didukung. Format yang diizinkan: ${allowedExtensions.join(", ")}`;
       setStatus("error");
-      setErrorMsg(`Format berkas tidak didukung. Format yang diizinkan: ${allowedExtensions.join(", ")}`);
-      if (onUploadError) onUploadError(errorMsg);
+      setErrorMsg(msg);
+      if (onUploadError) onUploadError(msg);
       return false;
     }
 
-    // Check size
     const sizeMB = selectedFile.size / (1024 * 1024);
     if (sizeMB > maxSizeMB) {
+      const msg = `Ukuran berkas melebihi batas maksimal ${maxSizeMB}MB.`;
       setStatus("error");
-      setErrorMsg(`Ukuran berkas melebihi batas maksimal ${maxSizeMB}MB.`);
-      if (onUploadError) onUploadError(errorMsg);
+      setErrorMsg(msg);
+      if (onUploadError) onUploadError(msg);
       return false;
     }
 
@@ -57,35 +56,72 @@ export const UploadBox = ({
     setStatus("uploading");
     setProgress(0);
 
-    const formData = new FormData();
-    formData.append("file", targetFile);
-    formData.append("type", uploadType);
-
     try {
-      const res = await axios.post(`/api/r2/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        onUploadProgress: (progressEvent) => {
-          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setProgress(percent);
-        }
+      // Step 1: Request a presigned PUT URL from our Next.js API
+      const presignRes = await fetch("/api/r2/presign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: uploadType,
+          filename: targetFile.name,
+          contentType: targetFile.type || "application/octet-stream",
+          size: targetFile.size,
+        }),
       });
 
-      if (res.data && res.data.success) {
-        setStatus("success");
-        setFile(targetFile);
-        if (onUploadSuccess) {
-          onUploadSuccess(res.data.url, targetFile.name);
-        }
-      } else {
-        throw new Error(res.data.error || "Gagal mengunggah berkas");
+      const presignData = await presignRes.json();
+
+      if (!presignRes.ok || !presignData.success) {
+        throw new Error(presignData.error || "Gagal mendapatkan URL upload");
+      }
+
+      const { presignedUrl, publicUrl } = presignData;
+
+      // Step 2: Upload directly to R2 using XMLHttpRequest (supports progress)
+      await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.upload.addEventListener("progress", (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded * 100) / event.total);
+            setProgress(percent);
+          }
+        });
+
+        xhr.addEventListener("load", () => {
+          // R2 presigned PUT returns 200 on success
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(null);
+          } else {
+            reject(new Error(`Upload gagal: server mengembalikan status ${xhr.status}`));
+          }
+        });
+
+        xhr.addEventListener("error", () => {
+          reject(new Error("Koneksi terputus saat mengunggah berkas"));
+        });
+
+        xhr.addEventListener("abort", () => {
+          reject(new Error("Upload dibatalkan"));
+        });
+
+        xhr.open("PUT", presignedUrl);
+        xhr.setRequestHeader("Content-Type", targetFile.type || "application/octet-stream");
+        xhr.send(targetFile);
+      });
+
+      // Step 3: Upload success
+      setStatus("success");
+      setFile(targetFile);
+      if (onUploadSuccess) {
+        onUploadSuccess(publicUrl, targetFile.name);
       }
     } catch (err) {
+      const msg = err instanceof Error ? err.message : "Terjadi kesalahan saat mengunggah";
       setStatus("error");
-      setErrorMsg(err.response?.data?.error || err.message || "Terjadi kesalahan saat mengunggah");
+      setErrorMsg(msg);
       if (onUploadError) {
-        onUploadError(err.response?.data?.error || err.message || "Gagal mengunggah");
+        onUploadError(msg);
       }
     }
   };
@@ -164,7 +200,6 @@ export const UploadBox = ({
       {status === "uploading" && (
         <div className={styles.uploadingContainer}>
           <div className={styles.progressCircleWrapper}>
-            {/* Spinning Circle */}
             <svg className={styles.progressSvg} viewBox="0 0 36 36">
               <circle className={styles.progressBgCircle} strokeWidth="3" stroke="currentColor" fill="none" r="16" cx="18" cy="18" />
               <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" strokeWidth="3" strokeDasharray={`${progress}, 100`} />
