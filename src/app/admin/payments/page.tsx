@@ -156,6 +156,20 @@ export default function AdminPayments() {
     }).format(val);
   };
 
+  const getProxyUrl = (url: string) => {
+    if (!url) return "";
+    try {
+      if (url.startsWith("/") || url.includes("/api/r2/view/")) {
+        return url;
+      }
+      const urlObj = new URL(url);
+      const key = urlObj.pathname.startsWith("/") ? urlObj.pathname.slice(1) : urlObj.pathname;
+      return `/api/r2/view/${key}`;
+    } catch (err) {
+      return url;
+    }
+  };
+
   return (
     <div className={styles.container}>
       {/* Title */}
@@ -282,7 +296,7 @@ export default function AdminPayments() {
           {selectedProofUrl && (
             selectedProofUrl.endsWith(".pdf") ? (
               <a
-                href={selectedProofUrl}
+                href={getProxyUrl(selectedProofUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.pdfDownloadLink}
@@ -291,7 +305,7 @@ export default function AdminPayments() {
               </a>
             ) : (
               <img
-                src={selectedProofUrl}
+                src={getProxyUrl(selectedProofUrl)}
                 alt="Bukti Transfer"
                 className={styles.proofImage}
               />

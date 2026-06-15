@@ -90,11 +90,6 @@ export default function DashboardLayout({ children }) {
 
   const handleBuySubmit = async (e) => {
     e.preventDefault();
-    if (!proofUrl) {
-      toast.error("Harap unggah bukti transfer pembayaran Anda!");
-      return;
-    }
-
     setSubmitting(true);
     try {
       const paymentId = `PAY-${Math.floor(10000 + Math.random() * 90000)}`;
@@ -105,7 +100,7 @@ export default function DashboardLayout({ children }) {
         userId: user.uid || user.id,
         amount: totalCost,
         credits: Number(amount),
-        proofFile: proofUrl,
+        proofFile: proofUrl || "",
         status: "pending"
       }, paymentId);
 
@@ -144,7 +139,19 @@ export default function DashboardLayout({ children }) {
   const getWhatsappUrl = () => {
     if (!paymentSuccessInfo) return "";
     const formatted = getFormattedAmount(paymentSuccessInfo.amount);
-    const proofLine = proofUrl ? `\nBukti Transfer: ${proofUrl}` : "";
+    
+    let proofProxyUrl = "";
+    if (proofUrl) {
+      try {
+        const urlObj = new URL(proofUrl);
+        const key = urlObj.pathname.startsWith("/") ? urlObj.pathname.slice(1) : urlObj.pathname;
+        proofProxyUrl = `${window.location.origin}/api/r2/view/${key}`;
+      } catch (err) {
+        proofProxyUrl = proofUrl;
+      }
+    }
+
+    const proofLine = proofProxyUrl ? `\nBukti Transfer: ${proofProxyUrl}` : "\n*(Catatan: Saya melampirkan foto bukti transfer secara manual di chat ini)*";
     const message = `Halo Admin, saya ingin konfirmasi pembayaran kredit Turnitin.\n\nID Pembayaran: ${paymentSuccessInfo.id}\nJumlah Kredit: ${paymentSuccessInfo.credits} Kredit\nTotal: ${formatted}${proofLine}\n\nMohon segera diproses. Terima kasih.`;
     return `https://wa.me/${bankSettings.contactWhatsapp}?text=${encodeURIComponent(message)}`;
   };
@@ -176,7 +183,9 @@ export default function DashboardLayout({ children }) {
 
             <h3 className={styles.successTitle}>Konfirmasi Pembayaran</h3>
             <p className={styles.successText}>
-              Permintaan top-up Anda telah masuk antrean sistem. Harap konfirmasi manual ke admin melalui WhatsApp agar diproses segera.
+              {proofUrl 
+                ? "Permintaan top-up Anda telah masuk antrean sistem. Harap konfirmasi manual ke admin melalui WhatsApp agar diproses segera."
+                : "Permintaan top-up Anda telah masuk antrean sistem. Harap klik tombol di bawah untuk konfirmasi ke WhatsApp dan kirim/lampirkan foto bukti transfer secara manual."}
             </p>
 
             <div className={styles.receiptBox}>
@@ -279,7 +288,7 @@ export default function DashboardLayout({ children }) {
             {/* Proof File Uploader */}
             <div className={styles.uploadSection}>
               <label className={styles.uploadLabel}>
-                Unggah Bukti Transfer
+                Unggah Bukti Transfer <span style={{ fontWeight: 'normal', opacity: 0.7 }}>(Opsional)</span>
               </label>
               <UploadBox
                 uploadType="payments"
@@ -288,6 +297,9 @@ export default function DashboardLayout({ children }) {
                 allowedExtensions={[".jpg", ".jpeg", ".png", ".pdf"]}
                 disabled={storageFull}
               />
+              <p className={styles.uploadTip}>
+                *Jika menemui error saat mengunggah (seperti kendala sertifikat/jaringan), Anda dapat melewati upload di sini dan mengirimkan gambar bukti transfer Anda secara manual di WhatsApp Admin setelah menekan tombol di bawah.
+              </p>
             </div>
 
             {/* Actions */}
@@ -302,7 +314,7 @@ export default function DashboardLayout({ children }) {
               <Button
                 type="submit"
                 loading={submitting}
-                disabled={!proofUrl || storageFull}
+                disabled={storageFull}
                 className="glow-primary"
               >
                 Kirim Konfirmasi
