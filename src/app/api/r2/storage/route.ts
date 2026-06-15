@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import { ListObjectsV2Command } from "@aws-sdk/client-s3";
-import r2Client, { R2_BUCKET, R2_PUBLIC_URL, STORAGE_LIMIT_BYTES, ALLOWED_FOLDERS } from "@/lib/r2";
+import { getR2Client, getR2Bucket, R2_PUBLIC_URL, STORAGE_LIMIT_BYTES, ALLOWED_FOLDERS } from "@/lib/r2";
 
 export const runtime = "nodejs";
 
 export async function GET() {
   try {
+    const r2Client = getR2Client();
+    const bucket = getR2Bucket();
+    const publicUrl = R2_PUBLIC_URL();
+
     let totalSizeBytes = 0;
     const filesList: {
       name: string;
@@ -23,7 +27,7 @@ export async function GET() {
       do {
         const res = await r2Client.send(
           new ListObjectsV2Command({
-            Bucket: R2_BUCKET,
+            Bucket: bucket,
             Prefix: `${folder}/`,
             ContinuationToken: continuationToken,
           })
@@ -37,7 +41,7 @@ export async function GET() {
             key: obj.Key,
             folder,
             size: obj.Size,
-            url: `${R2_PUBLIC_URL}/${obj.Key}`,
+            url: `${publicUrl}/${obj.Key}`,
             createdAt: obj.LastModified?.toISOString() ?? new Date().toISOString(),
           });
         }

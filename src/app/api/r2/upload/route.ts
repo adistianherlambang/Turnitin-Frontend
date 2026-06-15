@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import r2Client, { R2_BUCKET, R2_PUBLIC_URL, ALLOWED_FOLDERS } from "@/lib/r2";
+import { getR2Client, getR2Bucket, R2_PUBLIC_URL, ALLOWED_FOLDERS } from "@/lib/r2";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
+    const r2Client = getR2Client();
+    const bucket = getR2Bucket();
+    const publicUrl = R2_PUBLIC_URL();
+
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
     const type = formData.get("type") as string | null;
@@ -38,7 +42,7 @@ export async function POST(req: NextRequest) {
     // Upload to R2
     await r2Client.send(
       new PutObjectCommand({
-        Bucket: R2_BUCKET,
+        Bucket: bucket,
         Key: key,
         Body: buffer,
         ContentType: file.type || "application/octet-stream",
@@ -47,11 +51,11 @@ export async function POST(req: NextRequest) {
     );
 
     // Build public URL
-    const publicUrl = `${R2_PUBLIC_URL}/${key}`;
+    const fileUrl = `${publicUrl}/${key}`;
 
     return NextResponse.json({
       success: true,
-      url: publicUrl,
+      url: fileUrl,
       key,
       size: file.size,
       filename: `turnitin_${Date.now()}_${sanitizedName}`,

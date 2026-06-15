@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DeleteObjectsCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
-import r2Client, { R2_BUCKET, R2_PUBLIC_URL, STORAGE_LIMIT_BYTES, ALLOWED_FOLDERS } from "@/lib/r2";
+import { getR2Client, getR2Bucket, R2_PUBLIC_URL, STORAGE_LIMIT_BYTES, ALLOWED_FOLDERS } from "@/lib/r2";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
+    const r2Client = getR2Client();
+    const bucket = getR2Bucket();
+    const publicUrl = R2_PUBLIC_URL();
+
     const body = await req.json();
 
     // Accept either `keys` (R2 object keys) or `urls` (public URLs to extract keys from)
@@ -15,15 +19,17 @@ export async function POST(req: NextRequest) {
       keys = body.keys;
     } else if (body.urls && Array.isArray(body.urls)) {
       // Extract key from public URL: https://pub-xxx.r2.dev/{key}
-      keys = body.urls.map((url: string) => {
-        try {
-          const urlObj = new URL(url);
-          // Remove leading slash
-          return urlObj.pathname.slice(1);
-        } catch {
-          return null;
-        }
-      }).filter(Boolean);
+      keys = body.urls
+        .map((url: string) => {
+          try {
+            const urlObj = new URL(url);
+            // Remove leading slash
+            return urlObj.pathname.slice(1);
+          } catch {
+            return null;
+          }
+        })
+        .filter(Boolean);
     }
 
     if (keys.length === 0) {
@@ -42,7 +48,7 @@ export async function POST(req: NextRequest) {
       const batch = keys.slice(i, i + BATCH_SIZE);
       const result = await r2Client.send(
         new DeleteObjectsCommand({
-          Bucket: R2_BUCKET,
+          Bucket: bucket,
           Delete: {
             Objects: batch.map((key) => ({ Key: key })),
             Quiet: false,
@@ -67,7 +73,7 @@ export async function POST(req: NextRequest) {
       do {
         const res = await r2Client.send(
           new ListObjectsV2Command({
-            Bucket: R2_BUCKET,
+            Bucket: bucket,
             Prefix: `${folder}/`,
             ContinuationToken: continuationToken,
           })
@@ -80,7 +86,7 @@ export async function POST(req: NextRequest) {
             key: obj.Key,
             folder,
             size: obj.Size,
-            url: `${R2_PUBLIC_URL}/${obj.Key}`,
+            url: `${publicUrl}/${obj.Key}`,
             createdAt: obj.LastModified?.toISOString() ?? new Date().toISOString(),
           });
         }
