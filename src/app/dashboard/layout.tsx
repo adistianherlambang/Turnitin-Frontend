@@ -12,6 +12,7 @@ import UploadBox from "@/components/UploadBox/UploadBox";
 import { dbService } from "@/services/dbService";
 import { toast } from "react-hot-toast";
 import styles from "./layout.module.css";
+import { getProxyUrl } from "@/lib/r2-client";
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -142,13 +143,8 @@ export default function DashboardLayout({ children }) {
     
     let proofProxyUrl = "";
     if (proofUrl) {
-      try {
-        const urlObj = new URL(proofUrl);
-        const key = urlObj.pathname.startsWith("/") ? urlObj.pathname.slice(1) : urlObj.pathname;
-        proofProxyUrl = `${window.location.origin}/api/r2/view/${key}`;
-      } catch (err) {
-        proofProxyUrl = proofUrl;
-      }
+      const proxy = getProxyUrl(proofUrl);
+      proofProxyUrl = proxy.startsWith("/") ? `${window.location.origin}${proxy}` : proxy;
     }
 
     const proofLine = proofProxyUrl ? `\nBukti Transfer: ${proofProxyUrl}` : "\n*(Catatan: Saya melampirkan foto bukti transfer secara manual di chat ini)*";

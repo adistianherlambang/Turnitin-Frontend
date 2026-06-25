@@ -12,6 +12,7 @@ import Loading from "@/components/Loading/Loading";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { getProxyUrl } from "@/lib/r2-client";
 
 export default function UserHistory() {
   const { user } = useAuth();
@@ -150,7 +151,7 @@ export default function UserHistory() {
                   <td>
                     {sub.documentFile ? (
                       <a
-                        href={sub.documentFile}
+                        href={getProxyUrl(sub.documentFile)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.downloadLink}
@@ -167,7 +168,7 @@ export default function UserHistory() {
                   <td>
                     {sub.status === "completed" && sub.resultFile ? (
                       <a
-                        href={sub.resultFile}
+                        href={getProxyUrl(sub.resultFile)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.resultLink}

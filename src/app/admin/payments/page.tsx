@@ -13,6 +13,7 @@ import Modal from "@/components/Modal/Modal";
 import ConfirmDialog from "@/components/ConfirmDialog/ConfirmDialog";
 import { toast } from "react-hot-toast";
 import styles from "./page.module.css";
+import { getProxyUrl } from "@/lib/r2-client";
 
 export default function AdminPayments() {
   const [payments, setPayments] = useState<any[]>([]);
@@ -156,19 +157,7 @@ export default function AdminPayments() {
     }).format(val);
   };
 
-  const getProxyUrl = (url: string) => {
-    if (!url) return "";
-    try {
-      if (url.startsWith("/") || url.includes("/api/r2/view/")) {
-        return url;
-      }
-      const urlObj = new URL(url);
-      const key = urlObj.pathname.startsWith("/") ? urlObj.pathname.slice(1) : urlObj.pathname;
-      return `/api/r2/view/${key}`;
-    } catch (err) {
-      return url;
-    }
-  };
+
 
   return (
     <div className={styles.container}>

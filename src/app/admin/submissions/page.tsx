@@ -13,6 +13,7 @@ import Modal from "@/components/Modal/Modal";
 import UploadBox from "@/components/UploadBox/UploadBox";
 import { toast } from "react-hot-toast";
 import styles from "./page.module.css";
+import { getProxyUrl } from "@/lib/r2-client";
 
 export default function AdminSubmissions() {
   const [submissions, setSubmissions] = useState<any[]>([]);
@@ -216,7 +217,7 @@ export default function AdminSubmissions() {
                   <td>
                     {sub.documentFile ? (
                       <a
-                        href={sub.documentFile}
+                        href={getProxyUrl(sub.documentFile)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.downloadButton}

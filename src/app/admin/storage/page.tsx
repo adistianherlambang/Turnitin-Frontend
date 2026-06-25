@@ -8,6 +8,7 @@ import Button from "@/components/Button/Button";
 import Loading from "@/components/Loading/Loading";
 import EmptyState from "@/components/EmptyState/EmptyState";
 import styles from "./page.module.css";
+import { getProxyUrl } from "@/lib/r2-client";
 
 interface StorageFile {
   name: string;
@@ -322,7 +323,7 @@ export default function AdminStorage() {
                   <td>
                     <div className={styles.actionsCell}>
                       <a
-                        href={file.url}
+                        href={getProxyUrl(file.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.actionLink}
